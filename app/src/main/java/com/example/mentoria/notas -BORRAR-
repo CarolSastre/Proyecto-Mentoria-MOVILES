@@ -1,0 +1,39 @@
+(https://github.com/rafapuig/PMDM-Android-Compose/tree/master/clean_architecture)
+- En la carpeta 'counter' hay un ejemplo que implementa tanto el mvvm como el MVI (el que pide para el proyecto)
+- La estructura general de los paquetes la he visto más del ejemplo 'todolist_repository_flows_impl'
+
+Clean Architecture MVI - (Java) https://medium.com/@sharmapraveen91/mastering-mvi-clean-architecture-for-android-a-comprehensive-guide-with-clean-code-and-tdd-best-98272fabe4f2
+com.example.ejemploapp
+├── data
+│   ├── remote
+│   ├── local
+│   ├── repository
+│   └── model
+├── domain
+│   ├── usecases
+│   ├── entities
+│   └── repository
+├── presentation
+│   ├── ui
+│   ├── viewmodel
+│   ├── state
+│   └── intent
+
+com.example.mentoria
+├── data
+│   └── remote
+│       ├── dto
+│       └── mappers
+├── domain
+│   ├── models
+│   └── repositories
+├── presentation
+│   ├── components
+│   ├── screens
+│   └── viewmodels
+└── ui
+    └──themes
+
+
+Login - https://medium.com/@davidorellana98/simple-login-auth-con-jetpack-compose-usando-una-rest-api-con-retrofit-817b9af9bf9b
+Documentación ofical de Android studio - https://developer.android.com/jetpack/androidx/releases/lifecycle?hl=es-419#kts
