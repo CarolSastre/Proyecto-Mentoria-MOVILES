@@ -20,20 +20,47 @@ com.example.ejemploapp
 │   └── intent
 
 com.example.mentoria
-├── data
-│   └── remote
-│       ├── dto
-│       └── mappers
-├── domain
-│   ├── models
-│   └── repositories
-├── presentation
-│   ├── components
-│   ├── screens
-│   └── viewmodels
+├── core
+│   ├── data
+│   │   ├── local
+│   │   │   ├── converter
+│   │   │   └── entities
+│   │   └── remote
+│   │       ├── dto
+│   │       ├── mappers
+│   │       └── util
+│   ├── di (?)
+│   └── domain
+│       ├── models
+│       └── repositories
+├── features
+│   ├── mentoria
+│   │   ├── domain
+│   │   │   └── usecases
+│   │   └── presentation
+│   │       ├── components
+│   │       ├── screens
+│   │       └── viewmodels
+│   ├── auth
+│   │   ├── domain
+│   │   │   └── usecases
+│   │   └── presentation
+│   │       ├── components
+│   │       ├── screens
+│   │       └── viewmodels
 └── ui
     └──themes
 
 
 Login - https://medium.com/@davidorellana98/simple-login-auth-con-jetpack-compose-usando-una-rest-api-con-retrofit-817b9af9bf9b
 Documentación ofical de Android studio - https://developer.android.com/jetpack/androidx/releases/lifecycle?hl=es-419#kts
+
+Search bar:
+https://developer.android.com/develop/ui/compose/components/search-bar?hl=es-419#search-bar-filtered-list-key-points
+https://medium.com/@DeepakSingh22/search-bar-in-android-jetpack-compose-design-material-3-42351eaed12c
+
+Tabs:
+https://developer.android.com/develop/ui/compose/components/tabs?hl=es-419
+
+Bottom navigation bar:
+https://medium.com/@DeepakSingh22/bottom-navigation-bar-in-android-jetpack-compose-using-material-3-860f7df9d813
