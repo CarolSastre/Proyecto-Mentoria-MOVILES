@@ -1,27 +1,25 @@
-package es.rafapuig.pmdm.clean.authentication.main.presentation.home
+package com.example.mentoria.main.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import es.rafapuig.pmdm.clean.authentication.auth.domain.usecase.LogoutUseCase
+import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val logoutUseCase: LogoutUseCase
-) : ViewModel() {
+): ViewModel() {
+    private val _evenChannel = Channel<HomeUiEvent>()
+    val events = _evenChannel.receiveAsFlow()
 
-    private val _eventChannel = Channel<HomeUiEvent>()
-    val events = _eventChannel.receiveAsFlow()
-
-    fun onLogout() {
+    fun onLogOut(){
         viewModelScope.launch {
             logoutUseCase()
-           // _eventChannel.send(HomeUiEvent.LoggedOut)
         }
     }
 }
 
 sealed interface HomeEvent {
-    data object LoggedOut : HomeEvent
+    data object LoggedOut: HomeEvent
 }
