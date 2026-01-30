@@ -29,7 +29,6 @@ com.example.mentoria
 │   │       ├── dto
 │   │       ├── mappers
 │   │       └── util
-│   ├── di (?)
 │   └── domain
 │       ├── models
 │       └── repositories
