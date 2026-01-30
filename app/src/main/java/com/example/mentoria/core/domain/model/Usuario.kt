@@ -8,3 +8,7 @@ data class Usuario(
     val rol: Any?,
     val nfc: String?
 )
+
+enum class Rol {
+    ALUMNO, PROFESOR, ADMIN
+}
