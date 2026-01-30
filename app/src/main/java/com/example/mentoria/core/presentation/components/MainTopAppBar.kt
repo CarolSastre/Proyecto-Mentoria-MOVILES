@@ -32,7 +32,7 @@ fun MainTopAppBar(
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
     backButton: Boolean = false,
-    onBackClick: () -> Unit?,
+    onBackClick: () -> Unit = {},
     onLogOut: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
