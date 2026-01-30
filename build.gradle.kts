@@ -4,8 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
 }
-
-/* Ingresar al URL de la Rest API
+/* TODO: Ingresar al URL de la Rest API
 buildTypes {
      release { // desplegar la app a la tienda (?)
         minifyEnabled false

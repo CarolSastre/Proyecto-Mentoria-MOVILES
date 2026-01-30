@@ -72,4 +72,3 @@ converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-k
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
