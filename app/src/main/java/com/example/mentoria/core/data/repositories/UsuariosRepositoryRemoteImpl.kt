@@ -1,0 +1,27 @@
+package com.example.mentoria.core.data.repositories
+
+import com.example.mentoria.core.data.remote.MentoriaApiService
+import com.example.mentoria.core.data.remote.mappers.toDomain
+import com.example.mentoria.core.domain.model.Usuario
+import com.example.mentoria.core.domain.repositories.UsuariosRepository
+
+class UsuariosRepositoryRemoteImpl(
+    private val api: MentoriaApiService
+) : UsuariosRepository {
+    override suspend fun fetchUsuarios(page: Int): List<Usuario> {
+        TODO("Not yet implemented")
+        return api.fecthUsuarios(page).results
+            .map { usuarioDto -> usuarioDto.toDomain() }
+    }
+
+    override suspend fun fetchProfesores(page: Int): List<Usuario> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchUsuarios(
+        query: String, page: Int
+    ) = api.searchUsuario(query, page).results.map {
+            it.toDomain()
+        }
+
+}
