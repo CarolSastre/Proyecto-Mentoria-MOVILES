@@ -2,8 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    // Serialization
-    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -52,7 +50,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.material3)
+    implementation(libs.navigation3.ui)
+    implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.androidx.datastore.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,12 +62,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     // Material3 (iconos)
     implementation(libs.androidx.compose.material.icons.extended)
-    // Coil3 (imágenes de internet?)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
-    // Navigation
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.navigation3.ui)
     // ViewModel integration with Navigation3
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     // ViewModel
@@ -78,4 +72,18 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     // Saved state module for ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+    // koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+    // Retrofit + converter Kotlinx Serialization
+    implementation(libs.retrofit)
+    implementation(libs.converter.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization.json)
+    testImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
+    debugImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
 }
