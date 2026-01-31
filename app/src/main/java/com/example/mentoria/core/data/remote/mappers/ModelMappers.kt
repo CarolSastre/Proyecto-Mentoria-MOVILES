@@ -9,6 +9,7 @@ import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.domain.model.Departamento
 import com.example.mentoria.core.domain.model.Horario
 import com.example.mentoria.core.domain.model.RegistroAcceso
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -40,7 +41,7 @@ fun UsuarioDto.toDomain() = Usuario(
     dni = dni,
     nfc = nfc,
     password = password,
-    rol = rol,
+    rol = Rol.valueOf(rol),
     nombre = nombre,
     apellidos = apellidos
 )

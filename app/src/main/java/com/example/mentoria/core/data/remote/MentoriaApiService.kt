@@ -1,5 +1,6 @@
 package com.example.mentoria.core.data.remote
 
+import com.example.mentoria.features.auth.data.remote.dto.RegisterUsuarioRequest
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.data.remote.dto.UsuarioResponse
 import retrofit2.http.Body
@@ -15,8 +16,8 @@ interface MentoriaApiService {
         //const val BASE_URL = "https://api.themoviedb.org/3/"
     }
 
-    // TODO: aquí hay que definir (y modificar) los endpoints
-    @GET("")
+    // TODO: aquí hay que definir (y modificar) los endpoints, los puestos aquí son completamente provisionales
+    @GET("/getUsuarios")
     suspend fun fetchUsuarios(
         page: Int = 1,
         region: String? = DEFAULT_REGION): List<UsuarioDto>
@@ -30,7 +31,7 @@ interface MentoriaApiService {
         query: String,
         page: Int = 1): UsuarioResponse
 
-    @POST("usuario")
+    @POST("registro")
     suspend fun createUsuario(@Body usuario: RegisterUsuarioRequest): UsuarioDto
 
 

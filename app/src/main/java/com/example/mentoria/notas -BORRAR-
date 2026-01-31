@@ -61,14 +61,16 @@ com.tuapp.mentoriaapp
 │   │   │   ├── remote
 │   │   │   └── repository
 │   │   ├── domain
+│   │   │   ├── model
+│   │   │   ├── repository
+│   │   │   └── usecases
 │   │   └── presentation
+│   │       ├── components
+│   │       ├── login
+│   │       └── register
 │   ├── theme
 │   └── features
 │       └── login
-│           ├── LoginScreen.kt
-│           ├── LoginViewModel.kt
-│           ├── LoginIntent.kt
-│           ├── LoginState.kt
 ├── di
 └── MentoriaApp.kt
 
