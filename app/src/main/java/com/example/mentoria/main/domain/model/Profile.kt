@@ -1,4 +1,4 @@
-package es.rafapuig.pmdm.clean.authentication.main.domain.model
+package com.example.mentoria.main.domain.model
 
 data class Profile(
     val id: String,

@@ -8,7 +8,3 @@ data class Usuario(
     val rol: Rol,
     val nfc: String?
 )
-
-enum class Rol {
-    ALUMNO, PROFESOR, ADMIN
-}

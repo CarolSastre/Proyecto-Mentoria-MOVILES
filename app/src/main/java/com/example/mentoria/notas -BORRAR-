@@ -35,7 +35,7 @@ com.example.mentoria
 └── ui
     └──themes
 
-com.tuapp.mentoriaapp
+com.example.mentoria
 ├── data
 │   ├── remote
 │   │   ├── dto

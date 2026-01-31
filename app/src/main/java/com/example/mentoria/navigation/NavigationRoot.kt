@@ -16,7 +16,6 @@ import org.koin.compose.koinInject
 
 @Composable
 fun NavigationRoot(
-    modifier: Modifier = Modifier,
     startDestination: NavKey = LoginKey,
     sessionManager: SessionManager = koinInject()
 ) {

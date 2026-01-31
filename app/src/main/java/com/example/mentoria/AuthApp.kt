@@ -6,7 +6,6 @@ import com.example.mentoria.di.commonAuthModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-
 /**
  * No olvides registrar la Application en el AndroidManifest.xml 👇
  */
