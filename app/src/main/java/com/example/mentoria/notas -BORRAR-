@@ -48,30 +48,30 @@ com.tuapp.mentoriaapp
 │   ├── model
 │   ├── repository
 │   └── util
-├── navigation
 ├── main
 │   ├── domain
 │   │   └── model
 │   └── presentation
+├── navigation
 ├── features
-│   ├── auth
-│   │   ├── data
-│   │   │   ├── local
-│   │   │   ├── mapper
-│   │   │   ├── remote
-│   │   │   └── repository
-│   │   ├── domain
-│   │   │   ├── model
-│   │   │   ├── repository
-│   │   │   └── usecases
-│   │   └── presentation
-│   │       ├── components
-│   │       ├── login
-│   │       └── register
-│   ├── theme
-│   └── features
-│       └── login
+│   └── auth
+│       ├── data
+│       │   ├── local
+│       │   ├── mapper
+│       │   ├── remote
+│       │   └── repository
+│       ├── domain
+│       │   ├── model
+│       │   ├── repository
+│       │   └── usecases
+│       └── presentation
+│           ├── components
+│           ├── login
+│           └── register
+├── ui
+│   └── themes
 ├── di
+├── AuthApp.kt
 └── MentoriaApp.kt
 
 
