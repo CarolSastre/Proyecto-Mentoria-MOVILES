@@ -17,23 +17,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Nfc
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,12 +37,9 @@ import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Usuario
-import com.example.mentoria.core.presentation.components.MainScaffold
 import com.example.mentoria.core.presentation.components.MainTopAppBar
-import com.example.mentoria.core.presentation.components.NFCButton
 import com.example.mentoria.core.presentation.components.ProfileImage
 import com.example.mentoria.core.presentation.components.RegistroDetailsCard
-import com.example.mentoria.navigation.LocalOnNavigationBack
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -57,28 +47,54 @@ import java.time.LocalDateTime
 fun HomeScreen(
     modifier: Modifier = Modifier,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
-    onNFCClick: () -> Unit = {},
+    usuario: Usuario = Usuario(
+        dni = "12345678A",
+        nombre = "Carolina",
+        apellidos = "Sastre Garrido",
+        rol = "ADMIN",
+        password = "passw0rd",
+        nfc = null
+    ),
+    registros: List<RegistroAcceso> = listOf(
+        RegistroAcceso(
+            id = "1",
+            fechaHora = LocalDateTime.now(),
+            accesoPermitido = true,
+            mensaje = "Acceso permitido",
+            usuario = usuario
+        ),
+        RegistroAcceso(
+            id = "2",
+            fechaHora = LocalDateTime.now(),
+            accesoPermitido = false,
+            mensaje = "Acceso denegado",
+            usuario = usuario
+        )
+    ),
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
+    onBack: () -> Unit = {},
+    onNFCClick: () -> Unit = {},
     //onLogOut: () -> Unit,
     //
-    usuario: Usuario,
-    registros: List<RegistroAcceso>,
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
-    MainScaffold(
-        modifier = Modifier,
-        title = "Inicio",
-        isNFCButton = true,
-        snackBar = snackBar,
-        onNFCClick = onNFCClick,
-        onSettingsClick = onSettingsClick,
-        onSearchClick = onSearchClick,
-        //onLogOut = onLogOut,
-        //
-        usuario = usuario,
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackBar,
+            )
+        },
+        topBar = {
+            MainTopAppBar(
+                title = "",
+                usuario = usuario,
+                onSearchClick = onSearchClick,
+                onSettingsClick = onSettingsClick,
+                onBackClick = onBack,
+                //onLogOut = onLogOut
+            )
+        },
+        modifier = modifier.fillMaxSize()
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -109,6 +125,20 @@ fun HomeScreen(
                     Text("Bienvenido a la pantalla principal")
                 }
             }
+
+            FloatingActionButton(
+                onClick = { onNFCClick() },
+                modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Nfc,
+                    contentDescription = "NFC",
+                    modifier = Modifier.size(18.dp),
+                )
+            }
+
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -169,8 +199,10 @@ fun HomeScreenPreview() {
     )
 
     HomeScreen(
+        snackBar = SnackbarHostState(),
         onSearchClick = {},
         onSettingsClick = {},
+        onBack = {},
         registros = lista,
         usuario = alumnas[0]
         //onLogOut = {}
