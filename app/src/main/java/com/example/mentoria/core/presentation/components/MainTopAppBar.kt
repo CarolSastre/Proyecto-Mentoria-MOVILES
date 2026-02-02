@@ -1,6 +1,7 @@
 package com.example.mentoria.core.presentation.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
@@ -24,16 +25,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Usuario
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTopAppBar(
     title: String,
+    usuario: Usuario,
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
     backButton: Boolean = false,
-    onBackClick: () -> Unit = {},
-    onLogOut: () -> Unit
+    onBackClick: () -> Unit?,
+    //onLogOut: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -52,6 +57,12 @@ fun MainTopAppBar(
                         contentDescription = "Back"
                     )
                 }
+            } else {
+                ProfileImage(
+                    drawableResource = R.drawable.prueba_background,
+                    description = "${usuario.nombre} ${usuario.apellidos}",
+                    modifier = Modifier.padding(start = 8.dp)
+                )
             }
         },
         title = {
@@ -95,7 +106,7 @@ fun MainTopAppBar(
                         text = { Text("Cerrar sesión") },
                         onClick = {
                             expanded = false
-                            onLogOut()
+                            //onLogOut()
                         }
                     )
                 }
@@ -110,10 +121,18 @@ fun MainTopAppBar(
 fun MainTopAppBarPreview() {
     MainTopAppBar(
         title = "prueba",
+        usuario = Usuario(
+            dni = "12345678A",
+            nombre = "Carolina",
+            apellidos = "Sastre Garrido",
+            rol = "ADMIN",
+            password = "passw0rd",
+            nfc = null
+        ),
         onSearchClick = {},
         onSettingsClick = {},
         backButton = true,
         onBackClick = {},
-        onLogOut = {}
+        //onLogOut = {}
     )
 }

@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MENTORIA"
+rootProject.name = "VolverAEmpezar"
 include(":app")
  

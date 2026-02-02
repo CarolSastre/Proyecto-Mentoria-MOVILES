@@ -1,10 +1,12 @@
 package com.example.mentoria.di
 
+/*
 import com.example.mentoria.features.auth.domain.usecases.IsUserLoggedInUseCase
 import com.example.mentoria.features.auth.domain.usecases.LoginUseCase
 import com.example.mentoria.features.auth.domain.usecases.RegisterUseCase
 import com.example.mentoria.features.auth.presentation.login.LoginViewModel
 import com.example.mentoria.features.auth.presentation.register.RegisterViewModel
+ */
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -25,6 +27,7 @@ val authRepositoryModule = module {
     */
 }
 
+/*
 val commonAuthModule = module {
     // Domain
     factory { LoginUseCase(get()) }
@@ -40,3 +43,4 @@ val commonAuthModule = module {
         RegisterViewModel(get())
     }
 }
+*/

@@ -5,6 +5,6 @@ data class Usuario(
     val password: String,
     val nombre: String,
     val apellidos: String,
-    val rol: Rol,
+    val rol: Any?,
     val nfc: String?
 )
