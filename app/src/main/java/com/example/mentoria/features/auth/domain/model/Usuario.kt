@@ -1,7 +1,7 @@
 package com.example.mentoria.features.auth.domain.model
 
-data class Usuario(
-    val password: String = "",
+data class UsuarioAuth(
     val dni: String = "",
+    val password: String = "",
     val token: String = ""
 )

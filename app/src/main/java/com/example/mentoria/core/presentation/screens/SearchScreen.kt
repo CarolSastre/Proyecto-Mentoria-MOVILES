@@ -1,7 +1,5 @@
 package com.example.mentoria.core.presentation.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,10 +28,8 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
-import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.ProfileImage
-import java.time.LocalDate
 import kotlin.toString
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -132,7 +128,7 @@ fun SearchScreen(
                 ) {
                     items(
                         items = searchResults,
-                        key = { it.id }
+                        key = { it.dni }
                     ) { usuario ->
                         if (usuario.rol.toString() != "ADMIN") {
                             ListItem(
@@ -165,38 +161,24 @@ fun SearchScreen(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showSystemUi = true)
 @Composable
 fun SearchScreenPreview() {
     val lista = listOf(
         Usuario(
-            id = "1",
-            dni = "12345678A",
+            dni ="12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = Rol.ADMIN,
+            rol = "ADMIN",
             password = "passw0rd",
-            nfc = null,
-            gmail = "carolsaga02@gmail.com",
-            fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
-            baja = false,
-        ), Usuario(
-            dni = "12345678B",
+            nfc = null),
+        Usuario(
+            dni ="12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
-            rol = Rol.PROFESOR,
+            rol = "PROFESOR",
             password = "passw0rd",
-            nfc = null,
-            id = "2",
-            gmail = "carolsaga02@gmail.com",
-            fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
-            baja = false,
-        )
+            nfc = null)
     )
     SearchScreen(
         lista = lista,

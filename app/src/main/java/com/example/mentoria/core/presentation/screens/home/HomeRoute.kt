@@ -29,20 +29,17 @@ fun HomeRoute(
         /*
             HomeUiEvent.LoggedOut -> onLoggedOut()
          */
-            HomeUiEvent.OnBack -> onBack()
-            HomeUiEvent.OnSearch -> onSearchClick()
-            HomeUiEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
+            HomeUiEvent.NFC -> snackbarHostState.showSnackbar("Función aún no implementada")
             else -> snackbarHostState.showSnackbar("Error desconocido")
         }
     }
 
     HomeScreen ( // TODO: poner mejor los métodos que se van a usar
         //onLogOut = viewModel::onLogOut,
-        onSearchClick = viewModel::onSearch,
-        snackBar = snackbarHostState,
+        onSearchClick = onSearchClick,
         onSettingsClick = onSettingsClick,
-        onNFCClick = viewModel::onActivateNFC,
-        onBack = viewModel::onBack,
+        onNFCClick = viewModel::onNFC,
+        onBack = onBack,
         registros = registros,
         usuario = usuario
     )

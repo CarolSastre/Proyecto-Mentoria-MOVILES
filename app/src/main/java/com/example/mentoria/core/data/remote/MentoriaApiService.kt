@@ -1,6 +1,7 @@
 package com.example.mentoria.core.data.remote
 
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
+import com.example.mentoria.core.data.remote.dto.UsuarioResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -15,12 +16,22 @@ interface MentoriaApiService {
     }
 
     // TODO: aquí hay que definir (y modificar) los endpoints
-    @GET("/usuarios")
-    suspend fun getUsuarios(): List<UsuarioDto>
+    @GET("")
+    suspend fun fetchUsuarios(
+        page: Int = 1,
+        region: String? = DEFAULT_REGION): List<UsuarioDto>
 
-//    @GET("/usuarios/{query}")
-//    suspend fun searchUsuario(@Path("query") query: String): UsuarioResponse
+    @GET("/profesores")
+    suspend fun fetchProfesores( // ?
+        page: Int = 1,
+        region: String? = DEFAULT_REGION): List<UsuarioDto>
+    @GET("/usuarios/{query}")
+    suspend fun searchUsuario(
+        query: String,
+        page: Int = 1): UsuarioResponse
 
     //@POST("usuario")
     //suspend fun createUsuario(@Body usuario: RegisterUsuarioRequest): UsuarioDto
+
+
 }

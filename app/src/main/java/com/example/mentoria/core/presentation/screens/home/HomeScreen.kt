@@ -22,11 +22,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,21 +33,41 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
 import com.example.mentoria.core.domain.model.RegistroAcceso
-import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.MainTopAppBar
+import com.example.mentoria.core.presentation.components.NFCButton
 import com.example.mentoria.core.presentation.components.ProfileImage
 import com.example.mentoria.core.presentation.components.RegistroDetailsCard
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    snackBar: SnackbarHostState = remember { SnackbarHostState() },
-    usuario: Usuario,
-    registros: List<RegistroAcceso>,
+    usuario: Usuario = Usuario(
+        dni = "12345678A",
+        nombre = "Carolina",
+        apellidos = "Sastre Garrido",
+        rol = "ADMIN",
+        password = "passw0rd",
+        nfc = null
+    ),
+    registros: List<RegistroAcceso> = listOf(
+        RegistroAcceso(
+            id = "1",
+            fechaHora = LocalDateTime.now(),
+            accesoPermitido = true,
+            mensaje = "Acceso permitido",
+            usuario = usuario
+        ),
+        RegistroAcceso(
+            id = "2",
+            fechaHora = LocalDateTime.now(),
+            accesoPermitido = false,
+            mensaje = "Acceso denegado",
+            usuario = usuario
+        )
+    ),
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onBack: () -> Unit = {},
@@ -59,11 +76,6 @@ fun HomeScreen(
     //
 ) {
     Scaffold(
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackBar,
-            )
-        },
         topBar = {
             MainTopAppBar(
                 title = "",
@@ -107,7 +119,7 @@ fun HomeScreen(
             }
 
             FloatingActionButton(
-                onClick = { onNFCClick() },
+                onClick = { onNFCClick },
                 modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -145,31 +157,19 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     val alumnas = listOf(
         Usuario(
-            id = "1",
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = Rol.ADMIN,
+            rol = "ADMIN",
             password = "passw0rd",
-            nfc = null,
-            gmail = "carolsaga02@gmail.com",
-            fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
-            baja = false,
+            nfc = null
         ), Usuario(
             dni = "12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
-            rol = Rol.PROFESOR,
+            rol = "PROFESOR",
             password = "passw0rd",
-            nfc = null,
-            id = "2",
-            gmail = "carolsaga02@gmail.com",
-            fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
-            baja = false,
+            nfc = null
         )
     )
 
@@ -191,7 +191,6 @@ fun HomeScreenPreview() {
     )
 
     HomeScreen(
-        snackBar = SnackbarHostState(),
         onSearchClick = {},
         onSettingsClick = {},
         onBack = {},
