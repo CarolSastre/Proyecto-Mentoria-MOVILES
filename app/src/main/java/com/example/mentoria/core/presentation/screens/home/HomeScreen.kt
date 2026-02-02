@@ -22,8 +22,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +38,6 @@ import com.example.mentoria.R
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.MainTopAppBar
-import com.example.mentoria.core.presentation.components.NFCButton
 import com.example.mentoria.core.presentation.components.ProfileImage
 import com.example.mentoria.core.presentation.components.RegistroDetailsCard
 import java.time.LocalDateTime
@@ -44,6 +46,7 @@ import java.time.LocalDateTime
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    snackBar: SnackbarHostState = remember { SnackbarHostState() },
     usuario: Usuario = Usuario(
         dni = "12345678A",
         nombre = "Carolina",
@@ -76,6 +79,11 @@ fun HomeScreen(
     //
 ) {
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackBar,
+            )
+        },
         topBar = {
             MainTopAppBar(
                 title = "",
@@ -119,7 +127,7 @@ fun HomeScreen(
             }
 
             FloatingActionButton(
-                onClick = { onNFCClick },
+                onClick = { onNFCClick() },
                 modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -191,6 +199,7 @@ fun HomeScreenPreview() {
     )
 
     HomeScreen(
+        snackBar = SnackbarHostState(),
         onSearchClick = {},
         onSettingsClick = {},
         onBack = {},

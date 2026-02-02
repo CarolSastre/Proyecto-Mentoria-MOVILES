@@ -27,9 +27,10 @@ fun HomeRoute(
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
         /*
-            HomeUiEvent.LoggedOut -> onLoggedOut()
+            HomeEvent.LoggedOut -> onLoggedOut()
          */
-            HomeUiEvent.NFC -> snackbarHostState.showSnackbar("Función aún no implementada")
+            HomeEvent.OnSearch -> onSearchClick()
+            HomeEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
             else -> snackbarHostState.showSnackbar("Error desconocido")
         }
     }
@@ -37,8 +38,9 @@ fun HomeRoute(
     HomeScreen ( // TODO: poner mejor los métodos que se van a usar
         //onLogOut = viewModel::onLogOut,
         onSearchClick = onSearchClick,
+        snackBar = snackbarHostState,
         onSettingsClick = onSettingsClick,
-        onNFCClick = viewModel::onNFC,
+        onNFCClick = viewModel::onActivateNFC,
         onBack = onBack,
         registros = registros,
         usuario = usuario
