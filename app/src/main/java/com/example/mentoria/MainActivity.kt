@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import com.example.mentoria.navigation.NavigationRoot
-import com.example.mentoria.ui.theme.VolverAEmpezarTheme
+import com.example.mentoria.ui.theme.Mentoria
 import com.example.mentoria.core.presentation.screens.MainViewModel
 import com.example.mentoria.navigation.HomeKey
 import com.example.mentoria.navigation.LoginKey
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
          */
 
         setContent {
-            VolverAEmpezarTheme {
+            Mentoria {
                 /*
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
                 if (state != StartUiState.Loading) {
