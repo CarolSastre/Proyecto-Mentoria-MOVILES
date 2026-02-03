@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
@@ -78,6 +79,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Lifecycle utilities for Compose
     implementation(libs.androidx.lifecycle.runtime.compose)
+    // Lifecycle dependencies
+    //implementation(libs.androidx.lifecycle.livedata.ktx)
+    //implementation(libs.androidx.activity.ktx)
     // Saved state module for ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
     // koin
@@ -94,4 +98,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     testImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
     debugImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
+    // AndroidX dependencies
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    // Room dependencies
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 }

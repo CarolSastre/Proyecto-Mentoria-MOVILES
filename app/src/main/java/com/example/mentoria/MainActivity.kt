@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mentoria.navigation.NavigationRoot
 import com.example.mentoria.ui.theme.Mentoria
 import com.example.mentoria.core.presentation.screens.MainViewModel
@@ -17,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 //import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val viewModel: HomeViewModel by viewModel()
 
