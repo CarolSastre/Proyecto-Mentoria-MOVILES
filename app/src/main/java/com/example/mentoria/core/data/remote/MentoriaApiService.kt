@@ -16,22 +16,12 @@ interface MentoriaApiService {
     }
 
     // TODO: aquí hay que definir (y modificar) los endpoints
-    @GET("")
-    suspend fun fetchUsuarios(
-        page: Int = 1,
-        region: String? = DEFAULT_REGION): List<UsuarioDto>
+    @GET("/usuarios")
+    suspend fun getUsuarios(): List<UsuarioDto>
 
-    @GET("/profesores")
-    suspend fun fetchProfesores( // ?
-        page: Int = 1,
-        region: String? = DEFAULT_REGION): List<UsuarioDto>
     @GET("/usuarios/{query}")
-    suspend fun searchUsuario(
-        query: String,
-        page: Int = 1): UsuarioResponse
+    suspend fun searchUsuario(@Path("query") query: String): UsuarioResponse
 
     //@POST("usuario")
     //suspend fun createUsuario(@Body usuario: RegisterUsuarioRequest): UsuarioDto
-
-
 }

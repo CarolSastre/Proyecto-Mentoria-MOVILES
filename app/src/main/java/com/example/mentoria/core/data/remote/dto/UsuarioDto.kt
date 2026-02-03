@@ -13,7 +13,7 @@ data class UsuarioDto(
     @SerialName("apellidos")
     val apellidos: String = "",
     @SerialName("nfc")
-    val nfc: String = "",
+    val nfc: String? = "",
     @SerialName("password")
     val password: String = "",
     @SerialName("rol")
