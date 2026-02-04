@@ -3,17 +3,19 @@ package com.example.mentoria.core.data.remote
 import androidx.room.Room
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.data.remote.dto.UsuarioResponse
-import com.example.mentoria.core.data.remote.mappers.toDomain
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.di.AppDatabase
 import okhttp3.internal.platform.PlatformRegistry.applicationContext
 
-class FakeUsuariosApiService: MentoriaApiService {
+class FakeUsuariosApiService: UsuarioApiService {
     override suspend fun getUsuarios(
     ): List<UsuarioDto> {
+        /*
         val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "mentoria-database"
+            applicationContext!!,
+            AppDatabase::class.java, "usuarios-database"
         ).build()
+         */
 
         return listOf(
             UsuarioDto(
@@ -23,6 +25,14 @@ class FakeUsuariosApiService: MentoriaApiService {
                 apellidos = "Sastre Garrido",
                 rol = "ADMIN",
                 nfc = ""
+            ),
+            UsuarioDto(
+                dni ="12345678B",
+                nombre = "Manuela",
+                apellidos = "Carmela",
+                rol = "PROFESOR",
+                password = "passw0rd",
+                nfc = null
             )
         )
     }

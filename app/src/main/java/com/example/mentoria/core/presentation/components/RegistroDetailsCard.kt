@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
 import com.example.mentoria.core.domain.model.RegistroAcceso
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -147,14 +148,14 @@ fun RegistroAccesoPreview() {
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ADMIN,
             password = "passw0rd",
             nfc = null
         ), Usuario(
             dni = "12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
-            rol = "PROFESOR",
+            rol = Rol.PROFESOR,
             password = "passw0rd",
             nfc = null
         )

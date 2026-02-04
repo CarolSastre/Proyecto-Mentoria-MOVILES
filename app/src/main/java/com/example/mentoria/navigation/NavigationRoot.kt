@@ -3,47 +3,49 @@ package com.example.mentoria.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.example.mentoria.core.domain.model.RegistroAcceso
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
-import com.example.mentoria.core.presentation.screens.SearchScreen
+import com.example.mentoria.core.presentation.screens.search.SearchScreen
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
-import com.example.mentoria.features.auth.presentation.login.LoginRoute
-import com.example.mentoria.features.auth.presentation.register.RegisterRoute
+//import com.example.mentoria.features.auth.presentation.login.LoginRoute
+//import com.example.mentoria.features.auth.presentation.register.RegisterRoute
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationRoot(
     modifier: Modifier = Modifier,
-    startDestination: NavKey = LoginKey,
+    startDestination: NavKey = HomeKey, // LoginKey
     //sessionManager: SessionManager = koinInject()
 ) {
+    // Navegación global con Navigation 3
     val backStack = rememberNavBackStack(startDestination)
+/*
+    sessionManager.events.ObserveAsEvents { event ->
+        when (event) {
+            SessionEvent.LoggedOut -> {
+                backStack.clear()
+                backStack.add(LoginKey)
+            }
+        }
+    }
+ */
     // TODO: quitar todo esto de prueba
+
     val usuarios = listOf(
         Usuario(
-            dni = "12345678A",
-            nombre = "Carolina",
-            apellidos = "Sastre Garrido",
-            rol = "ADMIN",
-            password = "passw0rd",
-            nfc = null
-        ),
-        Usuario(
-            dni = "12345678B",
+            dni ="12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
-            rol = "PROFESOR",
+            rol = Rol.PROFESOR,
             password = "passw0rd",
-            nfc = null
-        )
-    )
+            nfc = null))
 
     val registros = listOf(
         RegistroAcceso(
@@ -51,29 +53,28 @@ fun NavigationRoot(
             fechaHora = LocalDateTime.now(),
             accesoPermitido = true,
             mensaje = "Acceso permitido",
-            usuario = usuarios[0]
+            usuario = Usuario(
+                dni ="12345678A",
+                nombre = "Carolina",
+                apellidos = "Sastre Garrido",
+                rol = Rol.ADMIN,
+                password = "passw0rd",
+                nfc = null)
         ),
         RegistroAcceso(
             id = "2",
             fechaHora = LocalDateTime.now(),
             accesoPermitido = false,
             mensaje = "Acceso denegado",
-            usuario = usuarios[1]
+            usuario = Usuario(
+                dni ="12345678A",
+                nombre = "Carolina",
+                apellidos = "Sastre Garrido",
+                rol = Rol.ADMIN,
+                password = "passw0rd",
+                nfc = null)
         )
     )
-    /*
-        sessionManager.events.ObserveAsEvents { event ->
-            when (event) {
-                SessionEvent.LoggedOut -> {
-                    backStack.clear()
-                    backStack.add(LoginKey)
-                }
-            }
-        }
-     */
-    CompositionLocalProvider {
-        LocalOnNavigationBack provides { backStack.removeLastOrNull() }
-    }
 
     NavDisplay(
         backStack = backStack,
@@ -81,12 +82,6 @@ fun NavigationRoot(
         entryProvider = { route ->
             when (route) {
                 /*
-                is DetallesKey -> NavEntry(route) {
-                    DetallesKey(
-                        id = route.id,
-                    )
-                }
-                */
                 is LoginKey -> NavEntry(route) {
                     LoginRoute(
                         onLoginSuccess = {
@@ -103,8 +98,10 @@ fun NavigationRoot(
                         onRegisterSuccess = {
                             backStack.add(HomeKey)
                         },
+                        onBack = { backStack.removeLastOrNull() }
                     )
                 }
+                 */
 
                 is HomeKey -> NavEntry(route) {
                     HomeRoute(
@@ -112,7 +109,6 @@ fun NavigationRoot(
                             backStack.add(SearchKey)
                         },
                         onSettingsClick = { /*TODO*/ },
-                        //
                         usuario = usuarios[0],
                         registros = registros
                     )
@@ -120,9 +116,9 @@ fun NavigationRoot(
 
                 is SearchKey -> NavEntry(route) {
                     SearchScreen(
-                        onResultClick = { /*TODO*/ },
-                        //
                         lista = usuarios,
+                        onResultClick = { /*TODO*/ },
+                        onBack = { backStack.removeLastOrNull() },
                     )
                 }
 

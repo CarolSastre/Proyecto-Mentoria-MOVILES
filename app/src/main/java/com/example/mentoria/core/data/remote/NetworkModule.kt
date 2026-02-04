@@ -27,8 +27,8 @@ object NetworkModule {
         .build()
 
 
-    val apiService: MentoriaApiService by lazy {
-        retrofit.create(MentoriaApiService::class.java)
+    val apiService: UsuarioApiService by lazy {
+        retrofit.create(UsuarioApiService::class.java)
     }
 
 }

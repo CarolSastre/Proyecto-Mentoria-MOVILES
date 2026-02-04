@@ -1,4 +1,4 @@
-package com.example.mentoria.core.presentation.screens
+package com.example.mentoria.core.presentation.screens.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -7,39 +7,34 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.ProfileImage
-import com.example.mentoria.navigation.LocalOnNavigationBack
-import kotlin.toString
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
-    modifier: Modifier = Modifier,
     lista: List<Usuario>,
     onResultClick: (Usuario) -> Unit,
-    onBack: () -> Unit = LocalOnNavigationBack.current,
+    onBack: () -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     var query by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
@@ -47,16 +42,6 @@ fun SearchScreen(
     val onExpandedChange: (Boolean) -> Unit = {
         expanded = it
     }
-
-    // para el route de detalles
-    /**
-     id: String
-     viewModel: SearchViewModel = koinViewModel{
-        parametersOf(
-            id= id
-        )
-    }
-     */
 
     LaunchedEffect(query) {
         searchResults.clear()
@@ -180,14 +165,14 @@ fun SearchScreenPreview() {
             dni ="12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ADMIN,
             password = "passw0rd",
             nfc = null),
         Usuario(
             dni ="12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
-            rol = "PROFESOR",
+            rol = Rol.PROFESOR,
             password = "passw0rd",
             nfc = null)
     )

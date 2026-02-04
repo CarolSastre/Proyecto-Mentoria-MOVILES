@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -156,7 +157,7 @@ fun UsuarioDetailsCardPreview() {
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ADMIN,
             password = "passw0rd",
             nfc = null
         ),
@@ -164,7 +165,7 @@ fun UsuarioDetailsCardPreview() {
             dni = "12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
-            rol = "PROFESOR",
+            rol = Rol.PROFESOR,
             password = "passw0rd",
             nfc = null
         )

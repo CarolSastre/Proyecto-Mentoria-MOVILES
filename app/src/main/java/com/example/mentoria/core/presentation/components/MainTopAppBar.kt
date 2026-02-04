@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -139,7 +140,7 @@ fun MainTopAppBarPreview() {
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ADMIN,
             password = "passw0rd",
             nfc = null
         ),
