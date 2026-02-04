@@ -1,26 +1,32 @@
 package com.example.mentoria.di
 
-import com.example.mentoria.core.data.remote.FakeRegistrosApiService
+import androidx.room.Room
 import com.example.mentoria.core.data.remote.FakeUsuariosApiService
-import com.example.mentoria.core.data.remote.UsuarioApiService
-import com.example.mentoria.core.data.repositories.DataStoreRepositoryImpl
-import com.example.mentoria.core.data.repositories.UsuariosRepositoryRemoteImpl
-import com.example.mentoria.core.datastore.dataStore
-import com.example.mentoria.core.domain.repositories.DataStoreRepository
-import com.example.mentoria.core.domain.repositories.UsuariosRepository
+import com.example.mentoria.core.datastore.AppDatabase
+import com.example.mentoria.core.presentation.SessionManager
 import com.example.mentoria.core.presentation.screens.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.scope.get
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    //single{ SessionManager() }
-    single<DataStoreRepository> { DataStoreRepositoryImpl(get()) }
-    single<UsuariosRepository> { UsuariosRepositoryRemoteImpl(
-        get(),
-        usuarioDao = get()
-    ) }
-    single { androidContext().dataStore }
-    viewModel { HomeViewModel(get()) }
+    // 1. Crear la Base de Datos (Room)
+    single {
+        Room.databaseBuilder(
+            androidContext(), // Koin nos da el contexto automáticamente
+            AppDatabase::class.java,
+            "mentoria_database" // Nombre del archivo físico
+        ).build()
+    }
+
+    // 2. Crear el DAO (Extraerlo de la base de datos para usarlo fácil)
+    single {
+        get<AppDatabase>().usuarioDao()
+    }
+
+    // Tus otras dependencias...
+    // single { SessionManager() }
+    single { FakeUsuariosApiService() }
+
+    viewModel { HomeViewModel() }
 }

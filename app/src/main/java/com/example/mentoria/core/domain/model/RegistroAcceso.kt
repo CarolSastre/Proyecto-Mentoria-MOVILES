@@ -6,6 +6,6 @@ data class RegistroAcceso(
     val id: String,
     val fechaHora: LocalDateTime,
     val accesoPermitido: Boolean,
-    val mensaje: String,
+    val mensaje: String?,
     val usuario: Usuario
 )

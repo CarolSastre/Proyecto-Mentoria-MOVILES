@@ -9,12 +9,12 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.example.mentoria.core.domain.model.RegistroAcceso
-import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
-import com.example.mentoria.core.presentation.screens.search.SearchScreen
+import com.example.mentoria.core.presentation.screens.SearchScreen
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 //import com.example.mentoria.features.auth.presentation.login.LoginRoute
 //import com.example.mentoria.features.auth.presentation.register.RegisterRoute
+import com.example.mentoria.core.presentation.screens.home.HomeScreen
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -37,13 +37,19 @@ fun NavigationRoot(
     }
  */
     // TODO: quitar todo esto de prueba
-
     val usuarios = listOf(
+        Usuario(
+            dni ="12345678A",
+            nombre = "Carolina",
+            apellidos = "Sastre Garrido",
+            rol = "ADMIN",
+            password = "passw0rd",
+            nfc = null),
         Usuario(
             dni ="12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
-            rol = Rol.PROFESOR,
+            rol = "PROFESOR",
             password = "passw0rd",
             nfc = null))
 
@@ -53,26 +59,14 @@ fun NavigationRoot(
             fechaHora = LocalDateTime.now(),
             accesoPermitido = true,
             mensaje = "Acceso permitido",
-            usuario = Usuario(
-                dni ="12345678A",
-                nombre = "Carolina",
-                apellidos = "Sastre Garrido",
-                rol = Rol.ADMIN,
-                password = "passw0rd",
-                nfc = null)
+            usuario = usuarios[0]
         ),
         RegistroAcceso(
             id = "2",
             fechaHora = LocalDateTime.now(),
             accesoPermitido = false,
             mensaje = "Acceso denegado",
-            usuario = Usuario(
-                dni ="12345678A",
-                nombre = "Carolina",
-                apellidos = "Sastre Garrido",
-                rol = Rol.ADMIN,
-                password = "passw0rd",
-                nfc = null)
+            usuario = usuarios[1]
         )
     )
 
