@@ -42,7 +42,7 @@ fun HomeRoute(
         snackBar = snackbarHostState,
         onSettingsClick = onSettingsClick,
         onNFCClick = viewModel::onActivateNFC,
-        onBack = onBack,
+        onBack = viewModel::onBack,
         registros = registros,
         usuario = usuario
     )
