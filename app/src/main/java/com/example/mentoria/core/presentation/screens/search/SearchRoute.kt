@@ -1,34 +1,28 @@
-package com.example.mentoria.core.presentation.screens.home
+package com.example.mentoria.core.presentation.screens.search
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import com.example.mentoria.core.domain.model.RegistroAcceso
+import androidx.compose.ui.Modifier
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
-import org.koin.compose.viewmodel.koinViewModel
+import com.example.mentoria.core.presentation.screens.home.HomeEvent
+import com.example.mentoria.core.presentation.screens.home.HomeScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeRoute(
-    //onLoggedOut: () -> Unit,
-    onSearchClick: () -> Unit,
-    onSettingsClick: () -> Unit,
+fun ScreenRoute(
+    onResultClick: (Usuario) -> Unit,
     onBack: () -> Unit = {},
-    usuario: Usuario,
-    registros: List<RegistroAcceso>,
-    viewModel: HomeViewModel = koinViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = koinViewModel()
 ){
-
     val snackbarHostState = remember { SnackbarHostState() }
 
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
-        /*
-            HomeEvent.LoggedOut -> onLoggedOut()
-         */
+            /*
+                HomeEvent.LoggedOut -> onLoggedOut()
+             */
             HomeEvent.OnBack -> onBack()
             HomeEvent.OnSearch -> onSearchClick()
             HomeEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
@@ -36,7 +30,7 @@ fun HomeRoute(
         }
     }
 
-    HomeScreen ( // TODO: poner mejor los métodos que se van a usar
+    HomeScreen( // TODO: poner mejor los métodos que se van a usar
         //onLogOut = viewModel::onLogOut,
         onSearchClick = viewModel::onSearch,
         snackBar = snackbarHostState,

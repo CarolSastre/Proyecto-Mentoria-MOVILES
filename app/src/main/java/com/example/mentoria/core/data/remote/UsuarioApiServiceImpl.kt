@@ -2,10 +2,10 @@ package com.example.mentoria.core.data.remote
 
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.data.remote.dto.UsuarioResponse
-class MentoriaApiServiceImpl(
+class UsuarioApiServiceImpl(
     // TODO: en este ejemplo rafa utiliza ktor, pero habría que usar retrofit?
     //private val client: HttpClient
-) : MentoriaApiService {
+) : UsuarioApiService {
 
     /* Dos ejemplos: un get y una query
     override suspend fun fetchPopularMovies(

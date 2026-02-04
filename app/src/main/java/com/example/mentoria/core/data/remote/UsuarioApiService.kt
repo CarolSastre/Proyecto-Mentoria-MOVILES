@@ -2,12 +2,10 @@ package com.example.mentoria.core.data.remote
 
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.data.remote.dto.UsuarioResponse
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface MentoriaApiService {
+interface UsuarioApiService {
     companion object {
         const val DEFAULT_REGION = "ES"
         const val API_HOST = "" // "api.themoviedb.org"
