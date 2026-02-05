@@ -18,8 +18,8 @@ interface MentoriaApiService {
     @GET("/usuarios")
     suspend fun getUsuarios(): List<UsuarioDto>
 
-    @GET("/usuarios/{query}")
-    suspend fun searchUsuario(@Path("query") query: String): UsuarioResponse
+//    @GET("/usuarios/{query}")
+//    suspend fun searchUsuario(@Path("query") query: String): UsuarioResponse
 
     //@POST("usuario")
     //suspend fun createUsuario(@Body usuario: RegisterUsuarioRequest): UsuarioDto

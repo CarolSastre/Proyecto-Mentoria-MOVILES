@@ -15,10 +15,10 @@ class HomeViewModel(
 ): ViewModel() {
     private val _uiState = MutableStateFlow(StartUiState.Loading)
     val uiState = _uiState.asStateFlow()
-    private val _evenChannel = Channel<HomeEvent>()
+    private val _evenChannel = Channel<HomeUiEvent>()
     val events = _evenChannel.receiveAsFlow()
 
-    private fun notifyEvent(event: HomeEvent) {
+    private fun notifyEvent(event: HomeUiEvent) {
         viewModelScope.launch {
             _evenChannel.send(event)
         }
@@ -31,16 +31,16 @@ class HomeViewModel(
     }
 
     fun onActivateNFC() {
-        notifyEvent(event = HomeEvent.ActivateNFC)
+        notifyEvent(event = HomeUiEvent.ActivateNFC)
     }
 
     fun onBack(){
-        notifyEvent(event = HomeEvent.OnBack)
+        notifyEvent(event = HomeUiEvent.OnBack)
     }
 
 
     fun onSearch() {
-        notifyEvent(HomeEvent.OnSearch)
+        notifyEvent(HomeUiEvent.OnSearch)
     }
 
     fun onSetting(){

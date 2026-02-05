@@ -9,12 +9,16 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.example.mentoria.core.domain.model.RegistroAcceso
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.screens.SearchScreen
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 //import com.example.mentoria.features.auth.presentation.login.LoginRoute
 //import com.example.mentoria.features.auth.presentation.register.RegisterRoute
 import com.example.mentoria.core.presentation.screens.home.HomeScreen
+import com.example.mentoria.features.auth.presentation.login.LoginRoute
+import com.example.mentoria.features.auth.presentation.register.RegisterRoute
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -39,19 +43,33 @@ fun NavigationRoot(
     // TODO: quitar todo esto de prueba
     val usuarios = listOf(
         Usuario(
-            dni ="12345678A",
+            id = "1",
+            dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ADMIN,
             password = "passw0rd",
-            nfc = null),
-        Usuario(
-            dni ="12345678B",
+            nfc = null,
+            gmail = "carolsaga02@gmail.com",
+            fechaNacimiento = LocalDate.now(),
+            departamento = null,
+            curso = null,
+            baja = false,
+        ), Usuario(
+            dni = "12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
-            rol = "PROFESOR",
+            rol = Rol.PROFESOR,
             password = "passw0rd",
-            nfc = null))
+            nfc = null,
+            id = "2",
+            gmail = "carolsaga02@gmail.com",
+            fechaNacimiento = LocalDate.now(),
+            departamento = null,
+            curso = null,
+            baja = false,
+        )
+    )
 
     val registros = listOf(
         RegistroAcceso(
@@ -75,7 +93,6 @@ fun NavigationRoot(
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { route ->
             when (route) {
-                /*
                 is LoginKey -> NavEntry(route) {
                     LoginRoute(
                         onLoginSuccess = {
@@ -95,7 +112,6 @@ fun NavigationRoot(
                         onBack = { backStack.removeLastOrNull() }
                     )
                 }
-                 */
 
                 is HomeKey -> NavEntry(route) {
                     HomeRoute(
