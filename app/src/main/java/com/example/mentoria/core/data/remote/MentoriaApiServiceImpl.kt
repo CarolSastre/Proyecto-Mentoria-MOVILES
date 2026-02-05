@@ -32,10 +32,4 @@ class MentoriaApiServiceImpl(
     override suspend fun getUsuarios(): List<UsuarioDto> {
         TODO("Not yet implemented")
     }
-
-    override suspend fun searchUsuario(
-        query: String
-    ): UsuarioResponse {
-        TODO("Not yet implemented")
-    }
 }

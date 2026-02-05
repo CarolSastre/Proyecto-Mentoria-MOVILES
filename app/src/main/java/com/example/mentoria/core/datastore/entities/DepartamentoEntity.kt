@@ -1,9 +1,11 @@
 package com.example.mentoria.core.datastore.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
-@Serializable
+@Entity(tableName = "departamentos")
 data class DepartamentoEntity(
-    val id: String,
+    @PrimaryKey val id: String,
     val nombre: String
 )

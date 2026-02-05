@@ -1,5 +1,5 @@
 [versions]
-agp = "9.0.0"
+agp = "8.13.0"
 kotlin = "2.2.21"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -38,7 +38,7 @@ material3 = "1.4.0"
 # Room
 room = "2.8.4"
 # ksp
-ksp = "2.3.2"
+ksp = "2.0.0-1.0.21"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

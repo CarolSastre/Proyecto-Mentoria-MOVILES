@@ -27,11 +27,11 @@ fun HomeRoute(
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
         /*
-            HomeEvent.LoggedOut -> onLoggedOut()
+            HomeUiEvent.LoggedOut -> onLoggedOut()
          */
-            HomeEvent.OnBack -> onBack()
-            HomeEvent.OnSearch -> onSearchClick()
-            HomeEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
+            HomeUiEvent.OnBack -> onBack()
+            HomeUiEvent.OnSearch -> onSearchClick()
+            HomeUiEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
             else -> snackbarHostState.showSnackbar("Error desconocido")
         }
     }
