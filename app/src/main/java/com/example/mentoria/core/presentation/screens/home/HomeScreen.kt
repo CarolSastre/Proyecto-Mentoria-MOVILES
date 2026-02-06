@@ -22,8 +22,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,46 +47,31 @@ import java.time.LocalDateTime
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    usuario: Usuario = Usuario(
-        dni = "12345678A",
-        nombre = "Carolina",
-        apellidos = "Sastre Garrido",
-        rol = "ADMIN",
-        password = "passw0rd",
-        nfc = null
-    ),
-    registros: List<RegistroAcceso> = listOf(
-        RegistroAcceso(
-            id = "1",
-            fechaHora = LocalDateTime.now(),
-            accesoPermitido = true,
-            mensaje = "Acceso permitido",
-            usuario = usuario
-        ),
-        RegistroAcceso(
-            id = "2",
-            fechaHora = LocalDateTime.now(),
-            accesoPermitido = false,
-            mensaje = "Acceso denegado",
-            usuario = usuario
-        )
-    ),
+    snackBar: SnackbarHostState = remember { SnackbarHostState() },
+    onNFCClick: () -> Unit = {},
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onBack: () -> Unit = {},
-    onNFCClick: () -> Unit = {},
     //onLogOut: () -> Unit,
     //
+    usuario: Usuario,
+    registros: List<RegistroAcceso>,
 ) {
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackBar,
+            )
+        },
         topBar = {
             MainTopAppBar(
                 title = "",
-                usuario = usuario,
                 onSearchClick = onSearchClick,
                 onSettingsClick = onSettingsClick,
                 onBackClick = onBack,
-                //onLogOut = onLogOut
+                //onLogOut = onLogOut,
+                //
+                usuario = usuario,
             )
         },
         modifier = modifier.fillMaxSize()
@@ -119,7 +107,7 @@ fun HomeScreen(
             }
 
             FloatingActionButton(
-                onClick = { onNFCClick },
+                onClick = { onNFCClick() },
                 modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer,

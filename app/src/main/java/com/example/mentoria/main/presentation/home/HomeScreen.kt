@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.MainTopAppBar
 
 @Composable
@@ -32,7 +33,15 @@ fun HomeScreen(
                 onSearchClick = onSearchClick,
                 onSettingsClick = onSettingsClick,
                 onBackClick = onBack,
-                onLogOut = onLogOut
+                usuario = Usuario(
+                    dni = "12345678A",
+                    nombre = "Carolina",
+                    apellidos = "Sastre Garrido",
+                    rol = "ADMIN",
+                    password = "passw0rd",
+                    nfc = null
+                )
+                //onLogOut = onLogOut
             )
         },
         modifier = modifier.fillMaxSize()

@@ -14,7 +14,6 @@ import com.example.mentoria.core.presentation.screens.SearchScreen
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 //import com.example.mentoria.features.auth.presentation.login.LoginRoute
 //import com.example.mentoria.features.auth.presentation.register.RegisterRoute
-import com.example.mentoria.core.presentation.screens.home.HomeScreen
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
