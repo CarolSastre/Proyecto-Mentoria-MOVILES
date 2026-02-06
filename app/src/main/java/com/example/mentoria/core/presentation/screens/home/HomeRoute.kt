@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
+import com.example.mentoria.navigation.LocalOnNavigationBack
 import org.koin.compose.viewmodel.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -16,7 +17,7 @@ fun HomeRoute(
     //onLoggedOut: () -> Unit,
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onBack: () -> Unit = {},
+    onBack: () -> Unit = LocalOnNavigationBack.current,
     viewModel: HomeViewModel = koinViewModel(),
     //
     usuario: Usuario,

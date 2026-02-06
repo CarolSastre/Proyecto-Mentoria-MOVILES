@@ -2,6 +2,7 @@ package com.example.mentoria.core.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
 import com.example.mentoria.main.presentation.StartUiState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +11,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    //private val logoutUseCase: LogoutUseCase
+    private val logoutUseCase: LogoutUseCase
 ): ViewModel() {
     private val _uiState = MutableStateFlow(StartUiState.Loading)
     val uiState = _uiState.asStateFlow()
@@ -25,7 +26,7 @@ class HomeViewModel(
 
     fun onLogOut(){
         viewModelScope.launch {
-            //logoutUseCase()
+            logoutUseCase()
         }
     }
 
