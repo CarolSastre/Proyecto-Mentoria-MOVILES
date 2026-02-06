@@ -6,10 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-<<<<<<< HEAD
 import androidx.appcompat.app.AppCompatActivity
-=======
->>>>>>> origin/modificaciones
 import com.example.mentoria.navigation.NavigationRoot
 import com.example.mentoria.ui.theme.Mentoria
 import com.example.mentoria.core.presentation.screens.MainViewModel
