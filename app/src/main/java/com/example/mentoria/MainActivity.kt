@@ -6,12 +6,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+<<<<<<< HEAD
 import androidx.appcompat.app.AppCompatActivity
+=======
+>>>>>>> origin/modificaciones
 import com.example.mentoria.navigation.NavigationRoot
 import com.example.mentoria.ui.theme.Mentoria
 import com.example.mentoria.core.presentation.screens.MainViewModel
 import com.example.mentoria.core.presentation.screens.home.HomeViewModel
 import com.example.mentoria.navigation.HomeKey
+import com.example.mentoria.navigation.LoginKey
 //import com.example.mentoria.navigation.LoginKey
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -44,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                         else -> error("Estado inválido")
                     }
                 }*/
-                NavigationRoot(startDestination = HomeKey)
+                NavigationRoot(startDestination = LoginKey)
             }
         }
     }

@@ -49,14 +49,19 @@ import java.time.LocalDateTime
 fun HomeScreen(
     modifier: Modifier = Modifier,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
+<<<<<<< HEAD
     usuario: Usuario,
     registros: List<RegistroAcceso>,
+=======
+    onNFCClick: () -> Unit = {},
+>>>>>>> origin/modificaciones
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onBack: () -> Unit = {},
-    onNFCClick: () -> Unit = {},
     //onLogOut: () -> Unit,
     //
+    usuario: Usuario,
+    registros: List<RegistroAcceso>,
 ) {
     Scaffold(
         snackbarHost = {
@@ -67,11 +72,12 @@ fun HomeScreen(
         topBar = {
             MainTopAppBar(
                 title = "",
-                usuario = usuario,
                 onSearchClick = onSearchClick,
                 onSettingsClick = onSettingsClick,
                 onBackClick = onBack,
-                //onLogOut = onLogOut
+                //onLogOut = onLogOut,
+                //
+                usuario = usuario,
             )
         },
         modifier = modifier.fillMaxSize()

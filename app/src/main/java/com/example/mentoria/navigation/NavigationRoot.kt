@@ -3,6 +3,7 @@ package com.example.mentoria.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
@@ -13,42 +14,41 @@ import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.screens.SearchScreen
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
+import com.example.mentoria.features.auth.presentation.login.LoginRoute
+import com.example.mentoria.features.auth.presentation.register.RegisterRoute
 //import com.example.mentoria.features.auth.presentation.login.LoginRoute
 //import com.example.mentoria.features.auth.presentation.register.RegisterRoute
+<<<<<<< HEAD
 import com.example.mentoria.core.presentation.screens.home.HomeScreen
 import com.example.mentoria.features.auth.presentation.login.LoginRoute
 import com.example.mentoria.features.auth.presentation.register.RegisterRoute
 import java.time.LocalDate
+=======
+>>>>>>> origin/modificaciones
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationRoot(
     modifier: Modifier = Modifier,
-    startDestination: NavKey = HomeKey, // LoginKey
+    startDestination: NavKey = LoginKey,
     //sessionManager: SessionManager = koinInject()
 ) {
     // Navegación global con Navigation 3
     val backStack = rememberNavBackStack(startDestination)
-/*
-    sessionManager.events.ObserveAsEvents { event ->
-        when (event) {
-            SessionEvent.LoggedOut -> {
-                backStack.clear()
-                backStack.add(LoginKey)
-            }
-        }
-    }
- */
     // TODO: quitar todo esto de prueba
     val usuarios = listOf(
         Usuario(
+<<<<<<< HEAD
             id = "1",
+=======
+>>>>>>> origin/modificaciones
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
             rol = Rol.ADMIN,
             password = "passw0rd",
+<<<<<<< HEAD
             nfc = null,
             gmail = "carolsaga02@gmail.com",
             fechaNacimiento = LocalDate.now(),
@@ -56,11 +56,17 @@ fun NavigationRoot(
             curso = null,
             baja = false,
         ), Usuario(
+=======
+            nfc = null
+        ),
+        Usuario(
+>>>>>>> origin/modificaciones
             dni = "12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
             rol = Rol.PROFESOR,
             password = "passw0rd",
+<<<<<<< HEAD
             nfc = null,
             id = "2",
             gmail = "carolsaga02@gmail.com",
@@ -68,6 +74,9 @@ fun NavigationRoot(
             departamento = null,
             curso = null,
             baja = false,
+=======
+            nfc = null
+>>>>>>> origin/modificaciones
         )
     )
 
@@ -87,12 +96,35 @@ fun NavigationRoot(
             usuario = usuarios[1]
         )
     )
+    /*
+        sessionManager.events.ObserveAsEvents { event ->
+            when (event) {
+                SessionEvent.LoggedOut -> {
+                    backStack.clear()
+                    backStack.add(LoginKey)
+                }
+            }
+        }
+     */
+    CompositionLocalProvider {
+        LocalOnNavigationBack provides { backStack.removeLastOrNull() }
+    }
 
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { route ->
             when (route) {
+<<<<<<< HEAD
+=======
+                /*
+                is DetallesKey -> NavEntry(route) {
+                    DetallesKey(
+                        id = route.id,
+                    )
+                }
+                */
+>>>>>>> origin/modificaciones
                 is LoginKey -> NavEntry(route) {
                     LoginRoute(
                         onLoginSuccess = {
@@ -119,6 +151,7 @@ fun NavigationRoot(
                             backStack.add(SearchKey)
                         },
                         onSettingsClick = { /*TODO*/ },
+                        //
                         usuario = usuarios[0],
                         registros = registros
                     )
@@ -126,9 +159,10 @@ fun NavigationRoot(
 
                 is SearchKey -> NavEntry(route) {
                     SearchScreen(
-                        lista = usuarios,
                         onResultClick = { /*TODO*/ },
                         onBack = { backStack.removeLastOrNull() },
+                        //
+                        lista = usuarios,
                     )
                 }
 

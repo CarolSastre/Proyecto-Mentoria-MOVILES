@@ -1,23 +1,28 @@
 package com.example.mentoria.features.auth.presentation.register
 
+<<<<<<< HEAD
 import android.os.Build
 import androidx.annotation.RequiresApi
+=======
+>>>>>>> origin/modificaciones
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mentoria.core.presentation.ObserveAsEvents
+import com.example.mentoria.navigation.LocalOnNavigationBack
 import org.koin.compose.viewmodel.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RegisterRoute(
     onRegisterSuccess: () -> Unit,
-    onBack: () -> Unit,
+    onBack: () -> Unit = LocalOnNavigationBack.current,
     viewModel: RegisterViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackBar = remember { SnackbarHostState() }
 
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -30,6 +35,7 @@ fun RegisterRoute(
 
     RegisterScreen(
         state = state,
+        snackBar = snackBar,
         onRegisterClick = viewModel::register,
         onError = viewModel::onError,
         onBack = onBack

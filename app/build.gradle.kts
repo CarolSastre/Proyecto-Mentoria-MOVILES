@@ -85,12 +85,16 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.androidx.datastore.core)
+<<<<<<< HEAD
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
 
     // Testing
+=======
+    implementation(libs.androidx.material3)
+>>>>>>> origin/modificaciones
     testImplementation(libs.junit)
     testImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
     debugImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")

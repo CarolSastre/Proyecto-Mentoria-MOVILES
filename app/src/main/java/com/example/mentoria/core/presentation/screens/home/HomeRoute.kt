@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
+import com.example.mentoria.navigation.LocalOnNavigationBack
 import org.koin.compose.viewmodel.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -16,10 +17,11 @@ fun HomeRoute(
     //onLoggedOut: () -> Unit,
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onBack: () -> Unit = {},
+    onBack: () -> Unit = LocalOnNavigationBack.current,
+    viewModel: HomeViewModel = koinViewModel(),
+    //
     usuario: Usuario,
     registros: List<RegistroAcceso>,
-    viewModel: HomeViewModel = koinViewModel()
 ){
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -29,7 +31,10 @@ fun HomeRoute(
         /*
             HomeUiEvent.LoggedOut -> onLoggedOut()
          */
+<<<<<<< HEAD
             HomeUiEvent.OnBack -> onBack()
+=======
+>>>>>>> origin/modificaciones
             HomeUiEvent.OnSearch -> onSearchClick()
             HomeUiEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
             else -> snackbarHostState.showSnackbar("Error desconocido")
@@ -38,11 +43,20 @@ fun HomeRoute(
 
     HomeScreen ( // TODO: poner mejor los métodos que se van a usar
         //onLogOut = viewModel::onLogOut,
+<<<<<<< HEAD
         onSearchClick = viewModel::onSearch,
         snackBar = snackbarHostState,
         onSettingsClick = onSettingsClick,
         onNFCClick = viewModel::onActivateNFC,
         onBack = viewModel::onBack,
+=======
+        snackBar = snackbarHostState,
+        onSearchClick = viewModel::onSearch,
+        onSettingsClick = onSettingsClick,
+        onNFCClick = viewModel::onActivateNFC,
+        onBack = onBack,
+        //
+>>>>>>> origin/modificaciones
         registros = registros,
         usuario = usuario
     )

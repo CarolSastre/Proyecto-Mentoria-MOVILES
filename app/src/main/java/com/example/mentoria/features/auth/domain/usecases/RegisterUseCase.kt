@@ -1,8 +1,11 @@
 package com.example.mentoria.features.auth.domain.usecases
 
+<<<<<<< HEAD
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.mentoria.core.domain.model.Rol
+=======
+>>>>>>> origin/modificaciones
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
 import java.time.LocalDate

@@ -8,6 +8,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -24,6 +26,7 @@ import com.example.mentoria.features.auth.presentation.components.TextOutOfTextF
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
+    snackBar: SnackbarHostState = remember { SnackbarHostState() },
     state: LoginUiState,
     loadingProgressBar: Boolean = false,
     imageError: Boolean = false,
@@ -35,7 +38,13 @@ fun LoginScreen(
 
     val focusManager = LocalFocusManager.current
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackBar,
+            )
+        }
+    ) { innerPadding ->
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -87,7 +96,7 @@ fun LoginScreen(
                 enabled = !state.isLoading,
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(
-                    Color.Blue
+                    MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(
@@ -112,7 +121,7 @@ fun LoginScreen(
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(
-                    Color.Blue
+                    MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(

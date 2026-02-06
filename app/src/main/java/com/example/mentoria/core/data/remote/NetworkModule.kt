@@ -1,7 +1,10 @@
 package com.example.mentoria.core.data.remote
 
+import com.example.mentoria.features.auth.data.remote.AuthApi
+import com.example.mentoria.features.auth.data.remote.FakeUsuariosApiService
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
@@ -29,3 +32,23 @@ object NetworkModule {
     }
 
 }
+
+val mockNetworkModule = module {
+    single<AuthApi> { FakeUsuariosApiService() }
+}
+
+/*
+val networkModule = module {
+    single {
+        Retrofit.Builder()
+            .baseUrl("") // TODO: poner direccion a la api
+            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .build()
+    }
+
+    // Esta línea le enseña a Koin a crear la AuthApi usando la instancia de Retrofit
+    single<AuthApi> {
+        get<Retrofit>().create(AuthApi::class.java)
+    }
+}
+ */

@@ -36,4 +36,9 @@ class LoginViewModel(
         }
     }
 
+    fun register(){
+        viewModelScope.launch {
+            _eventChannel.send(LoginUiEvent.OnRegister)
+        }
+    }
 }
