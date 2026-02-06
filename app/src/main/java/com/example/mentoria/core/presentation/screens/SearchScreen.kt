@@ -47,6 +47,16 @@ fun SearchScreen(
         expanded = it
     }
 
+    // para el route de detalles
+    /**
+     id: String
+     viewModel: SearchViewModel = koinViewModel{
+        parametersOf(
+            id= id
+        )
+    }
+     */
+
     LaunchedEffect(query) {
         searchResults.clear()
         if (query.isNotEmpty()) {

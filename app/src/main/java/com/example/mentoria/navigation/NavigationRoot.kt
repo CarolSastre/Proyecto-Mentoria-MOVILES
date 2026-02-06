@@ -3,6 +3,7 @@ package com.example.mentoria.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
@@ -12,6 +13,8 @@ import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.screens.SearchScreen
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
+import com.example.mentoria.features.auth.presentation.login.LoginRoute
+import com.example.mentoria.features.auth.presentation.register.RegisterRoute
 //import com.example.mentoria.features.auth.presentation.login.LoginRoute
 //import com.example.mentoria.features.auth.presentation.register.RegisterRoute
 import java.time.LocalDateTime
@@ -20,37 +23,30 @@ import java.time.LocalDateTime
 @Composable
 fun NavigationRoot(
     modifier: Modifier = Modifier,
-    startDestination: NavKey = HomeKey, // LoginKey
+    startDestination: NavKey = LoginKey,
     //sessionManager: SessionManager = koinInject()
 ) {
     // Navegación global con Navigation 3
     val backStack = rememberNavBackStack(startDestination)
-/*
-    sessionManager.events.ObserveAsEvents { event ->
-        when (event) {
-            SessionEvent.LoggedOut -> {
-                backStack.clear()
-                backStack.add(LoginKey)
-            }
-        }
-    }
- */
     // TODO: quitar todo esto de prueba
     val usuarios = listOf(
         Usuario(
-            dni ="12345678A",
+            dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
             rol = "ADMIN",
             password = "passw0rd",
-            nfc = null),
+            nfc = null
+        ),
         Usuario(
-            dni ="12345678B",
+            dni = "12345678B",
             nombre = "Manuela",
             apellidos = "Carmela",
             rol = "PROFESOR",
             password = "passw0rd",
-            nfc = null))
+            nfc = null
+        )
+    )
 
     val registros = listOf(
         RegistroAcceso(
@@ -68,6 +64,19 @@ fun NavigationRoot(
             usuario = usuarios[1]
         )
     )
+    /*
+        sessionManager.events.ObserveAsEvents { event ->
+            when (event) {
+                SessionEvent.LoggedOut -> {
+                    backStack.clear()
+                    backStack.add(LoginKey)
+                }
+            }
+        }
+     */
+    CompositionLocalProvider {
+        LocalOnNavigationBack provides { backStack.removeLastOrNull() }
+    }
 
     NavDisplay(
         backStack = backStack,
@@ -75,6 +84,12 @@ fun NavigationRoot(
         entryProvider = { route ->
             when (route) {
                 /*
+                is DetallesKey -> NavEntry(route) {
+                    DetallesKey(
+                        id = route.id,
+                    )
+                }
+                */
                 is LoginKey -> NavEntry(route) {
                     LoginRoute(
                         onLoginSuccess = {
@@ -94,7 +109,6 @@ fun NavigationRoot(
                         onBack = { backStack.removeLastOrNull() }
                     )
                 }
-                 */
 
                 is HomeKey -> NavEntry(route) {
                     HomeRoute(
@@ -102,6 +116,7 @@ fun NavigationRoot(
                             backStack.add(SearchKey)
                         },
                         onSettingsClick = { /*TODO*/ },
+                        //
                         usuario = usuarios[0],
                         registros = registros
                     )
@@ -109,9 +124,10 @@ fun NavigationRoot(
 
                 is SearchKey -> NavEntry(route) {
                     SearchScreen(
-                        lista = usuarios,
                         onResultClick = { /*TODO*/ },
                         onBack = { backStack.removeLastOrNull() },
+                        //
+                        lista = usuarios,
                     )
                 }
 

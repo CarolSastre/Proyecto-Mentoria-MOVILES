@@ -7,9 +7,7 @@ class SessionManager {
     private val _events = Channel<SessionEvent>()
     val events = _events.receiveAsFlow()
 
-    /*
     suspend fun notifyLoggedOut() {
         _events.send(SessionEvent.LoggedOut)
     }
-     */
 }
