@@ -11,8 +11,16 @@ class LoginUseCase(
         if (dni.isBlank() || password.isBlank()) {
             throw IllegalArgumentException("Dni o contraseña en blanco")
         }
-        // TODO: confirmar toda la info a pedir y validar
-        if (dni != "Profesor" || password != "profesor") return null
-        else return authRepository.login(dni, password)
+        if (dni != "test" || password != "1234")
+            throw IllegalArgumentException("Dni o contraseña incorrectos")
+        else return Usuario(
+            dni = "12345678A",
+            nombre = "test",
+            apellidos = "test",
+            rol = "ALUMNO",
+            password = "1234",
+            nfc = null
+        )
+        //else return authRepository.login(dni, password)
     }
 }

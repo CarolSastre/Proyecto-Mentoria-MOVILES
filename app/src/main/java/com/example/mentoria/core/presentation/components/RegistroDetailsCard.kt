@@ -84,7 +84,7 @@ fun RegistroDetailsCard(
                         SelectedProfileImage(clickModifier)
                     } else {
                         ProfileImage(
-                            drawableResource = R.drawable.prueba_background, //registro.usuario.avatar,
+                            drawableResource = R.drawable.prueba_background, // registro.usuario.perfil,
                             description = "${registro.usuario.nombre} ${registro.usuario.apellidos}",
                             clickModifier,
                         )
@@ -109,7 +109,7 @@ fun RegistroDetailsCard(
                     )
                 }
                 IconButton(
-                    onClick = { onDeleteRegistro },
+                    onClick = { onDeleteRegistro(registro.id) },
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(35.dp)
@@ -118,7 +118,7 @@ fun RegistroDetailsCard(
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "Delete",
-                        tint = Color.White// MaterialTheme.colorScheme.outline,
+                        tint = MaterialTheme.colorScheme.surfaceVariant,
                     )
                 }
             }

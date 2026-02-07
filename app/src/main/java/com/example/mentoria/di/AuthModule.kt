@@ -52,6 +52,10 @@ val commonAuthModule = module {
     }
 */
 
+    // Domain
+    factoryOf(::RegisterUseCase)
     factoryOf(::LoginUseCase)
+    // Presentation
+    viewModelOf(::RegisterViewModel)
     viewModelOf(::LoginViewModel)
 }

@@ -28,21 +28,6 @@ fun HomeScreen(
 ) {
     Scaffold(
         topBar = {
-            MainTopAppBar (
-                title = "Usuario",
-                onSearchClick = onSearchClick,
-                onSettingsClick = onSettingsClick,
-                onBackClick = onBack,
-                usuario = Usuario(
-                    dni = "12345678A",
-                    nombre = "Carolina",
-                    apellidos = "Sastre Garrido",
-                    rol = "ADMIN",
-                    password = "passw0rd",
-                    nfc = null
-                )
-                //onLogOut = onLogOut
-            )
         },
         modifier = modifier.fillMaxSize()
     ) { innerPadding ->

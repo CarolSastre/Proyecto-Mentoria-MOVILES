@@ -19,12 +19,12 @@ class RegisterViewModel(
    val events = _eventChannel.receiveAsFlow()
 
     // TODO: seguramente aquí haga falta más info
-    fun register(email:String, password: String){
+    fun register(dni:String, password: String){
         viewModelScope.launch {
             _uiState.value = RegisterUiState(isLoading = true)
 
             runCatching {
-                registerUseCase(email, password)
+                registerUseCase(dni, password)
             }.onSuccess{
                 _uiState.value = RegisterUiState()
                 _eventChannel.send(RegisterUiEvent.RegisterSuccess)

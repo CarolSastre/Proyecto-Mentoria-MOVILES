@@ -15,8 +15,6 @@ import com.example.mentoria.core.presentation.screens.SearchScreen
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 import com.example.mentoria.features.auth.presentation.login.LoginRoute
 import com.example.mentoria.features.auth.presentation.register.RegisterRoute
-//import com.example.mentoria.features.auth.presentation.login.LoginRoute
-//import com.example.mentoria.features.auth.presentation.register.RegisterRoute
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -26,7 +24,6 @@ fun NavigationRoot(
     startDestination: NavKey = LoginKey,
     //sessionManager: SessionManager = koinInject()
 ) {
-    // Navegación global con Navigation 3
     val backStack = rememberNavBackStack(startDestination)
     // TODO: quitar todo esto de prueba
     val usuarios = listOf(
@@ -106,7 +103,6 @@ fun NavigationRoot(
                         onRegisterSuccess = {
                             backStack.add(HomeKey)
                         },
-                        onBack = { backStack.removeLastOrNull() }
                     )
                 }
 
@@ -125,7 +121,6 @@ fun NavigationRoot(
                 is SearchKey -> NavEntry(route) {
                     SearchScreen(
                         onResultClick = { /*TODO*/ },
-                        onBack = { backStack.removeLastOrNull() },
                         //
                         lista = usuarios,
                     )

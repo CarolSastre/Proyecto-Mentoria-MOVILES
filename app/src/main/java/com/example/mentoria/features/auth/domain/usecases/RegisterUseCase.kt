@@ -7,6 +7,14 @@ class RegisterUseCase(
     private val repository: AuthRepository
 ) { // TODO: confirmar tda la info a padir
     suspend operator fun invoke(dni: String, password: String): Usuario {
-        return repository.register(dni, password)
+        return Usuario(
+            dni = "12345678A",
+            nombre = "test",
+            apellidos = "test",
+            rol = "ALUMNO",
+            password = "1234",
+            nfc = null
+        )
+        //return repository.register(dni, password)
     }
 }
