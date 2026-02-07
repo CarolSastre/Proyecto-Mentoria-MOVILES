@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
@@ -24,10 +26,11 @@ fun UsuarioDetails(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painterResource(R.drawable.ic_error_imagen), // TODO: perfil
+            painterResource(R.drawable.prueba_background), // TODO: perfil
             contentDescription = "Perfil",
             modifier = modifier
                 .size(60.dp)
+                .clip(CircleShape)
         )
         Column(
             modifier = modifier
@@ -38,7 +41,7 @@ fun UsuarioDetails(
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                "gmail",
+                usuario.gmail,
                 style = MaterialTheme.typography.labelLarge,
                 modifier = modifier
                     .padding(start = 6.dp),
@@ -51,8 +54,12 @@ fun UsuarioDetails(
                     .padding(start = 6.dp),
                 color = MaterialTheme.colorScheme.secondary
             )
+            var extra = "Administración"
+            if (usuario.departamento != null) extra = usuario.departamento.nombre
+            if (usuario.curso != null) extra = usuario.curso
+
             Text(
-                usuario.rol.toString(),
+                text = "${usuario.rol} - $extra",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = modifier
                     .padding(start = 6.dp),
