@@ -217,7 +217,7 @@ fun MainScaffold(
                         ) {
                             ProfileImage(
                                 drawableResource = R.drawable.prueba_background,
-                                description = "${usuario.nombre} ${usuario.apellidos}",
+                                description = "Perfil de ${usuario.nombre} ${usuario.apellidos}",
                                 modifier = modifier
                                     .padding(start = 8.dp)
                                     .fillMaxSize()
