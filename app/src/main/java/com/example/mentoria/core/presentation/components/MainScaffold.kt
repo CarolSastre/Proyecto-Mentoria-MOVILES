@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AppRegistration
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Nfc
 import androidx.compose.material.icons.filled.Schedule
@@ -72,9 +73,8 @@ fun MainScaffold(
     isNFCButton: Boolean = false,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     onNFCClick: () -> Unit,
-    onSettingsClick: () -> Unit,
     onSearchClick: () -> Unit,
-    //onLogOut: () -> Unit,
+    onLogOut: () -> Unit,
     //
     usuario: Usuario,
     content: @Composable ((PaddingValues) -> Unit)
@@ -82,8 +82,6 @@ fun MainScaffold(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    //
-    var expanded by remember { mutableStateOf(false) }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -151,6 +149,25 @@ fun MainScaffold(
                             .padding(horizontal = 8.dp),
                         selected = false,
                         onClick = { /*TODO*/ }
+                    )
+                    HorizontalDivider()
+                    NavigationDrawerItem(
+                        label = {
+                            Text(
+                                text = "Cerrar sesión",
+                                style = MaterialTheme.typography.headlineSmall
+                            )
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.Logout,
+                                contentDescription = "LogOut"
+                            )
+                        },
+                        modifier = modifier
+                            .padding(horizontal = 8.dp),
+                        selected = false,
+                        onClick = { onLogOut() }
                     )
                 }
             }
@@ -223,37 +240,6 @@ fun MainScaffold(
                                 contentDescription = "Search"
                             )
                         }
-                        /*
-                        Box {
-                            IconButton(
-                                onClick = { expanded = true }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.MoreVert,
-                                    contentDescription = "More"
-                                )
-                            }
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false }
-                            ) {
-                                DropdownMenuItem(
-                                    text = { Text("Ajustes...") },
-                                    onClick = {
-                                        expanded = false
-                                        onSettingsClick()
-                                    }
-                                )
-                                DropdownMenuItem(
-                                    text = { Text("Cerrar sesión") },
-                                    onClick = {
-                                        expanded = false
-                                        //onLogOut()
-                                    }
-                                )
-                            }
-                        }
-                        */
                     },
                     scrollBehavior = scrollBehavior,
                 )
@@ -274,9 +260,8 @@ fun MainScaffoldPreview() {
         title = "prueba",
         isNFCButton = true,
         onNFCClick = {},
-        onSettingsClick = {},
         onSearchClick = {},
-        //onLogOut = {},
+        onLogOut = {},
         //
         usuario = Usuario(
             id = "1",
