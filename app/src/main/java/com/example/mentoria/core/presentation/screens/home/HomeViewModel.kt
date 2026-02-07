@@ -2,8 +2,8 @@ package com.example.mentoria.core.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mentoria.core.presentation.screens.StartUiState
 import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
-import com.example.mentoria.main.presentation.StartUiState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,10 +32,6 @@ class HomeViewModel(
 
     fun onActivateNFC() {
         notifyEvent(event = HomeUiEvent.ActivateNFC)
-    }
-
-    fun onBack(){
-        //notifyEvent(event = HomeUiEvent.OnBack)
     }
 
     fun onSearch() {

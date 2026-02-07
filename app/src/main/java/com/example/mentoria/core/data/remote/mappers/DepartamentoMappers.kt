@@ -13,3 +13,8 @@ fun DepartamentoDto.toEntity() = DepartamentoEntity(
     id = id,
     nombre = nombre
 )
+
+fun DepartamentoDto.toDomain() = Departamento(
+    id = id,
+    nombre = nombre
+)

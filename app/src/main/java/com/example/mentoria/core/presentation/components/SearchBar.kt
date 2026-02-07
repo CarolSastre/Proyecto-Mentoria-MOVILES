@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomizableSearchBar(
+    modifier: Modifier = Modifier,
     onQueryChange: (String) -> Unit = {},
     onSearch: (String) -> Unit = {},
     searchResults: List<String> = emptyList(),
     onResultClick: (String) -> Unit = {},
-    modifier: Modifier = Modifier,
     // Customization options
     placeholder: @Composable () -> Unit = {},
     leadingIcon: @Composable (() -> Unit)? = { Icon(Icons.Default.Search, contentDescription = "Search") },

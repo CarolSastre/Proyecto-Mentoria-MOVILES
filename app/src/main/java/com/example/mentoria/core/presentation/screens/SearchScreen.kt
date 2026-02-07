@@ -1,5 +1,7 @@
 package com.example.mentoria.core.presentation.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,9 +30,12 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Departamento
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.ProfileImage
 import com.example.mentoria.navigation.LocalOnNavigationBack
+import java.time.LocalDate
 import kotlin.toString
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -172,24 +177,41 @@ fun SearchScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showSystemUi = true)
 @Composable
 fun SearchScreenPreview() {
     val lista = listOf(
         Usuario(
-            dni ="12345678A",
+            id = "1",
+            dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ALUMNO,
             password = "passw0rd",
-            nfc = null),
-        Usuario(
-            dni ="12345678B",
-            nombre = "Manuela",
-            apellidos = "Carmela",
-            rol = "PROFESOR",
-            password = "passw0rd",
-            nfc = null)
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "carolina@gmail.com",
+            baja = false,
+            curso = "7DMT",
+            departamento = null
+        ), Usuario(
+            id = "2",
+            dni = "12345678A",
+            nombre = "Profesor",
+            apellidos = "Xavier",
+            rol = Rol.PROFESOR,
+            password = "xavier1",
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "xavier@gmail.com",
+            baja = false,
+            curso = null,
+            departamento = Departamento(
+                id="1",
+                nombre="Ciencias"
+            ),
+        )
     )
     SearchScreen(
         lista = lista,

@@ -1,8 +1,13 @@
 package com.example.mentoria.features.auth.data.remote
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
+import com.example.mentoria.core.domain.model.Departamento
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
+import java.time.LocalDate
 
 class FakeUsuariosApiService: AuthApi {
     /*
@@ -27,14 +32,21 @@ class FakeUsuariosApiService: AuthApi {
     }
      */
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun login(request: LoginRequest): UsuarioDto {
         return UsuarioDto(
-            dni = "123456789A",
-            nfc = "1234567890123456",
-            password = "profesor",
-            rol = "PROFESOR",
-            nombre = "Profesor",
-            apellidos = "Prueba"
+            id = "1",
+            dni = "12345678A",
+            nombre = "Carolina",
+            apellidos = "Sastre Garrido",
+            rol = "ALUMNO",
+            password = "passw0rd",
+            nfc = null,
+            fechaNacimiento = LocalDate.now().toString(),
+            gmail = "carolina@gmail.com",
+            baja = false,
+            curso = "7DMT",
+            departamento = null
         )
     }
 }

@@ -1,10 +1,14 @@
 package com.example.mentoria.features.auth.data.repository
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.mentoria.core.data.remote.mappers.toDomain
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
+import java.time.LocalDate
 
 /**
  * Implementación del repositorio de autenticación.
@@ -29,6 +33,7 @@ class AuthRepositoryImpl(
      * @param password La contraseña del usuario.
      * @return El objeto `Usuario` si el login es exitoso, o null si falla.
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun login(email: String, password: String): Usuario? {
         /* TODO: descomentar cuando esté la api
         // Envolvemos la llamada en un bloque try-catch para manejar errores de red o del servidor.
@@ -56,12 +61,18 @@ class AuthRepositoryImpl(
             return null
         } else {
             return Usuario(
-                dni = "123456789A",
-                nfc = "1234567890123456",
-                password = "profesor",
-                rol = "PROFESOR",
-                nombre = "Profesor",
-                apellidos = "Prueba"
+                id = "0",
+                dni = "12345678A",
+                nombre = "alumno",
+                apellidos = "prueba",
+                rol = Rol.ALUMNO,
+                password = "1234",
+                nfc = null,
+                fechaNacimiento = LocalDate.now(),
+                gmail = "test@gmail.com",
+                baja = false,
+                curso = "7DMT",
+                departamento = null
             )
         }
     }

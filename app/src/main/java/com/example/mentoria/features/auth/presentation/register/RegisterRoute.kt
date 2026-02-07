@@ -21,6 +21,7 @@ fun RegisterRoute(
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
             RegisterUiEvent.RegisterSuccess -> onRegisterSuccess()
+            else -> snackBar.showSnackbar("Error desconocido")
         }
     }
 
