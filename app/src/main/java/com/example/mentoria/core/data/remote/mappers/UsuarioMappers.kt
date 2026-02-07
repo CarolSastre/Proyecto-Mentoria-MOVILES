@@ -58,14 +58,21 @@ fun UsuarioEntity.toDomain() = Usuario(
         )
     }
 )
-/*
+
+@RequiresApi(Build.VERSION_CODES.O)
 fun UsuarioDto.toDomain() = Usuario(
+    id = id,
     dni = dni,
     nfc = nfc,
     password = password,
     rol = Rol.valueOf(rol),
     nombre = nombre,
-    apellidos = apellidos
+    apellidos = apellidos,
+    fechaNacimiento = LocalDate.parse(fechaNacimiento),
+    gmail = gmail,
+    baja = baja,
+    curso = curso,
+    departamento = departamento?.toDomain()
 )
 
 /*

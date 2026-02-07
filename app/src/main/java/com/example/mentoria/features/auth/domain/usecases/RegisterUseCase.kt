@@ -9,29 +9,22 @@ import java.time.LocalDate
 
 class RegisterUseCase(
     private val repository: AuthRepository
-) { // TODO: confirmar tda la info a pedir
+) { // TODO: confirmar tda la info a padir
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend operator fun invoke(
-        dni: String,
-        nombre: String,
-        apellidos: String,
-        password: String,
-        fechaNacimiento: String,
-        gmail: String
-        ): Usuario {
+    suspend operator fun invoke(dni: String, password: String): Usuario {
         return Usuario(
-            id = "2",
-            dni = dni,
-            nombre = nombre,
-            apellidos = apellidos,
-            password = password,
-            fechaNacimiento = LocalDate.parse(fechaNacimiento),
-            gmail = gmail,
+            id = "0",
+            dni = "12345678A",
+            nombre = "alumno",
+            apellidos = "prueba",
             rol = Rol.ALUMNO,
+            password = "1234",
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "test@gmail.com",
             baja = false,
-            curso = null,
-            departamento = null,
-            nfc = null
+            curso = "7DMT",
+            departamento = null
         )
         //return repository.register(dni, password)
     }

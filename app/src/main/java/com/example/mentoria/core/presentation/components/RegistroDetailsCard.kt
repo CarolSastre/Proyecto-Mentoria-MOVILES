@@ -36,8 +36,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Departamento
 import com.example.mentoria.core.domain.model.RegistroAcceso
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -129,7 +132,7 @@ fun RegistroDetailsCard(
             )
             if (registro.mensaje != "") {
                 Text(
-                    text = registro.mensaje,
+                    text = registro.mensaje ?: "No hay ningún mensaje",
                     style = MaterialTheme.typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -144,19 +147,34 @@ fun RegistroDetailsCard(
 fun RegistroAccesoPreview() {
     val alumnas = listOf(
         Usuario(
+            id = "1",
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ALUMNO,
             password = "passw0rd",
-            nfc = null
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "carolina@gmail.com",
+            baja = false,
+            curso = "7DMT",
+            departamento = null
         ), Usuario(
-            dni = "12345678B",
-            nombre = "Manuela",
-            apellidos = "Carmela",
-            rol = "PROFESOR",
-            password = "passw0rd",
-            nfc = null
+            id = "2",
+            dni = "12345678A",
+            nombre = "Profesor",
+            apellidos = "Xavier",
+            rol = Rol.PROFESOR,
+            password = "xavier1",
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "xavier@gmail.com",
+            baja = false,
+            curso = null,
+            departamento = Departamento(
+                id="1",
+                nombre="Ciencias"
+            ),
         )
     )
 
@@ -172,7 +190,7 @@ fun RegistroAccesoPreview() {
             id = "2",
             fechaHora = LocalDateTime.now(),
             accesoPermitido = false,
-            mensaje = "Acceso denegado",
+            mensaje = null,
             usuario = alumnas[1]
         )
     )

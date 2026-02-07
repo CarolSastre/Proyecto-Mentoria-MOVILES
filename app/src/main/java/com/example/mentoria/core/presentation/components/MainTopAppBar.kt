@@ -1,5 +1,7 @@
 package com.example.mentoria.core.presentation.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -33,9 +35,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -130,18 +134,25 @@ fun MainTopAppBar(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun MainTopAppBarPreview() {
     MainTopAppBar(
         title = "prueba",
         usuario = Usuario(
+            id = "1",
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ALUMNO,
             password = "passw0rd",
-            nfc = null
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "carolina@gmail.com",
+            baja = false,
+            curso = "7DMT",
+            departamento = null
         ),
         onSearchClick = {},
         onSettingsClick = {},

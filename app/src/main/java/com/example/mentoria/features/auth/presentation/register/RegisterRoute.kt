@@ -1,37 +1,33 @@
 package com.example.mentoria.features.auth.presentation.register
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mentoria.core.presentation.ObserveAsEvents
+import com.example.mentoria.navigation.LocalOnNavigationBack
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RegisterRoute(
     onRegisterSuccess: () -> Unit,
-    onBack: () -> Unit,
-    viewModel: RegisterViewModel = koinViewModel()
+    viewModel: RegisterViewModel = koinInject()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBar = remember { SnackbarHostState() }
 
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
             RegisterUiEvent.RegisterSuccess -> onRegisterSuccess()
-            RegisterUiEvent.Error -> snackbarHostState.showSnackbar(state.error.toString())
+            else -> snackBar.showSnackbar("Error desconocido")
         }
     }
 
     RegisterScreen(
         state = state,
+        snackBar = snackBar,
         onRegisterClick = viewModel::register,
-        onError = viewModel::onError,
-        onBack = onBack
     )
 }

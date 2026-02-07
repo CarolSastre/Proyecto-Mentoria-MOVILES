@@ -1,5 +1,7 @@
 package com.example.mentoria.core.presentation.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,8 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mentoria.core.domain.model.Departamento
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
+import java.time.LocalDate
 
+// TODO: creo que este componente no se usa
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UsuarioDetailsBar(
@@ -87,25 +93,40 @@ fun UsuarioDetailsBar(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun UsuariosDetailsPreview() {
     val lista = listOf(
         Usuario(
+            id = "1",
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ALUMNO,
             password = "passw0rd",
-            nfc = null
-        ),
-        Usuario(
-            dni = "12345678B",
-            nombre = "Manuela",
-            apellidos = "Carmela",
-            rol = "PROFESOR",
-            password = "passw0rd",
-            nfc = null
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "carolina@gmail.com",
+            baja = false,
+            curso = "7DMT",
+            departamento = null
+        ), Usuario(
+            id = "2",
+            dni = "12345678A",
+            nombre = "Profesor",
+            apellidos = "Xavier",
+            rol = Rol.PROFESOR,
+            password = "xavier1",
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "xavier@gmail.com",
+            baja = false,
+            curso = null,
+            departamento = Departamento(
+                id="1",
+                nombre="Ciencias"
+            ),
         )
     )
     UsuarioDetailsBar(

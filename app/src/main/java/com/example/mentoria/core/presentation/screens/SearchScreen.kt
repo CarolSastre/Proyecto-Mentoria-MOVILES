@@ -30,19 +30,21 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Departamento
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.ProfileImage
+import com.example.mentoria.navigation.LocalOnNavigationBack
 import java.time.LocalDate
 import kotlin.toString
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
+    modifier: Modifier = Modifier,
     lista: List<Usuario>,
     onResultClick: (Usuario) -> Unit,
-    onBack: () -> Unit = {},
-    modifier: Modifier = Modifier
+    onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
     var query by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
@@ -50,6 +52,16 @@ fun SearchScreen(
     val onExpandedChange: (Boolean) -> Unit = {
         expanded = it
     }
+
+    // para el route de detalles
+    /**
+     id: String
+     viewModel: SearchViewModel = koinViewModel{
+        parametersOf(
+            id= id
+        )
+    }
+     */
 
     LaunchedEffect(query) {
         searchResults.clear()
@@ -132,7 +144,7 @@ fun SearchScreen(
                 ) {
                     items(
                         items = searchResults,
-                        key = { it.id }
+                        key = { it.dni }
                     ) { usuario ->
                         if (usuario.rol.toString() != "ADMIN") {
                             ListItem(
@@ -175,27 +187,30 @@ fun SearchScreenPreview() {
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = Rol.ADMIN,
+            rol = Rol.ALUMNO,
             password = "passw0rd",
             nfc = null,
-            gmail = "carolsaga02@gmail.com",
             fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
+            gmail = "carolina@gmail.com",
             baja = false,
+            curso = "7DMT",
+            departamento = null
         ), Usuario(
-            dni = "12345678B",
-            nombre = "Manuela",
-            apellidos = "Carmela",
-            rol = Rol.PROFESOR,
-            password = "passw0rd",
-            nfc = null,
             id = "2",
-            gmail = "carolsaga02@gmail.com",
+            dni = "12345678A",
+            nombre = "Profesor",
+            apellidos = "Xavier",
+            rol = Rol.PROFESOR,
+            password = "xavier1",
+            nfc = null,
             fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
+            gmail = "xavier@gmail.com",
             baja = false,
+            curso = null,
+            departamento = Departamento(
+                id="1",
+                nombre="Ciencias"
+            ),
         )
     )
     SearchScreen(

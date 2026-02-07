@@ -1,5 +1,7 @@
 package com.example.mentoria.core.data.repositories
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.mentoria.core.data.remote.MentoriaApiService
 import com.example.mentoria.core.data.remote.mappers.toDomain
 import com.example.mentoria.core.data.remote.mappers.toEntity
@@ -11,6 +13,7 @@ class UsuariosRepositoryRemoteImpl(
     private val api: MentoriaApiService,
     private val usuarioDao: UsuarioDao
 ): UsuariosRepository {
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getUsuarios(page: Int): List<Usuario> {
         // cargar datos del Room si existen
         val local = usuarioDao.getUsuarios()
