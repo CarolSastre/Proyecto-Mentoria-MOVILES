@@ -28,12 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.features.auth.presentation.components.PasswordOutTextField
 import com.example.mentoria.features.auth.presentation.components.TextOutOfTextField
+import com.example.mentoria.navigation.LocalOnNavigationBack
+
 @Composable
 fun RegisterScreen(
     state: RegisterUiState,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     onRegisterClick: (String, String) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
     var dni by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }

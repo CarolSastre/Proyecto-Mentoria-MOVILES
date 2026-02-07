@@ -17,7 +17,6 @@ fun HomeRoute(
     //onLoggedOut: () -> Unit,
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onBack: () -> Unit = LocalOnNavigationBack.current,
     viewModel: HomeViewModel = koinViewModel(),
     //
     usuario: Usuario,
@@ -43,7 +42,6 @@ fun HomeRoute(
         onSearchClick = viewModel::onSearch,
         onSettingsClick = onSettingsClick,
         onNFCClick = viewModel::onActivateNFC,
-        onBack = onBack,
         //
         registros = registros,
         usuario = usuario

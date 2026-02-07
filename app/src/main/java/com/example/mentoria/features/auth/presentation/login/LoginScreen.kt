@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,7 +57,7 @@ fun LoginScreen(
             /*
         Image(
             painter = painterResource(
-                id = // TODO R.drawable.ic_login_image
+                id = // TODO: R.drawable.ic_login_image, añadir logo
                 ),
             contentDescription = "Image Login",
             modifier = modifier
@@ -101,8 +102,8 @@ fun LoginScreen(
             ) {
                 Text(
                     text = "Iniciar sesión",
+                    overflow = TextOverflow.Ellipsis,
                     fontSize = 25.sp,
-                    //color = Color.White
                 )
             }
 
@@ -115,7 +116,7 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    onCreateAccountClick
+                    onCreateAccountClick()
                 },
                 modifier = Modifier.width(200.dp),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),

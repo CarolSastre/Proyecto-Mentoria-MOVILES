@@ -30,15 +30,16 @@ import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.ProfileImage
+import com.example.mentoria.navigation.LocalOnNavigationBack
 import kotlin.toString
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
+    modifier: Modifier = Modifier,
     lista: List<Usuario>,
     onResultClick: (Usuario) -> Unit,
-    onBack: () -> Unit = {},
-    modifier: Modifier = Modifier
+    onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
     var query by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
