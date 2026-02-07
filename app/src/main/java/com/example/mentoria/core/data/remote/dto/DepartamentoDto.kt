@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DepartamentoDto(
-    @SerialName("id")
-    val id: String = "",
+    @SerialName("_id")
+    val id: String,
     @SerialName("nombre")
-    val nombre: String = ""
+    val nombre: String
 )

@@ -5,14 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HorarioDto(
-    @SerialName("id")
-    val id: String = "",
+    @SerialName("_id")
+    val id: String,
     @SerialName("curso")
-    val curso: String = "",
+    val curso: String,
     @SerialName("diaSemana")
-    val diaSemana: String = "",
+    val diaSemana: String,
     @SerialName("horaInicio")
-    val horaInicio: String = "", // TODO: todas las fechas en string??
+    val horaInicio: String,
     @SerialName("horaFin")
-    val horaFin: String = ""
+    val horaFin: String
 )
