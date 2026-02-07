@@ -128,7 +128,10 @@ fun NavigationRoot(
                         onSearchClick = {
                             backStack.add(SearchKey)
                         },
-                        onSettingsClick = { /*TODO*/ },
+                        onLoggedOut = {
+                            backStack.clear()
+                            backStack.add(LoginKey)
+                        },
                         //
                         usuario = usuarios[0],
                         registros = registros

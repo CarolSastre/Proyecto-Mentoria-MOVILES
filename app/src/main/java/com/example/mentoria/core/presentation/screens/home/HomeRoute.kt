@@ -9,15 +9,15 @@ import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import com.example.mentoria.navigation.LocalOnNavigationBack
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeRoute(
-    //onLoggedOut: () -> Unit,
+    onLoggedOut: () -> Unit,
     onSearchClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    viewModel: HomeViewModel = koinViewModel(),
+    viewModel: HomeViewModel = koinInject(),
     //
     usuario: Usuario,
     registros: List<RegistroAcceso>,
@@ -27,9 +27,7 @@ fun HomeRoute(
 
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
-        /*
             HomeUiEvent.LoggedOut -> onLoggedOut()
-         */
             HomeUiEvent.OnSearch -> onSearchClick()
             HomeUiEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
             else -> snackbarHostState.showSnackbar("Error desconocido")
@@ -37,10 +35,9 @@ fun HomeRoute(
     }
 
     HomeScreen ( // TODO: poner mejor los métodos que se van a usar
-        //onLogOut = viewModel::onLogOut,
         snackBar = snackbarHostState,
         onSearchClick = viewModel::onSearch,
-        onSettingsClick = onSettingsClick,
+        onLogOut = viewModel::onLogOut,
         onNFCClick = viewModel::onActivateNFC,
         //
         registros = registros,

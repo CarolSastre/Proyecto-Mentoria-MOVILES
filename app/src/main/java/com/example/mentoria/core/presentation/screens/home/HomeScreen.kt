@@ -37,8 +37,7 @@ fun HomeScreen(
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     onNFCClick: () -> Unit = {},
     onSearchClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    //onLogOut: () -> Unit,
+    onLogOut: () -> Unit,
     //
     usuario: Usuario,
     registros: List<RegistroAcceso>,
@@ -49,9 +48,8 @@ fun HomeScreen(
         isNFCButton = true,
         snackBar = snackBar,
         onNFCClick = onNFCClick,
-        onSettingsClick = onSettingsClick,
         onSearchClick = onSearchClick,
-        //onLogOut = onLogOut,
+        onLogOut = onLogOut,
         //
         usuario = usuario,
     ) { innerPadding ->
@@ -160,9 +158,8 @@ fun HomeScreenPreview() {
 
     HomeScreen(
         onSearchClick = {},
-        onSettingsClick = {},
         registros = lista,
-        usuario = alumnas[0]
-        //onLogOut = {}
+        usuario = alumnas[0],
+        onLogOut = {}
     )
 }
