@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -94,4 +95,16 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     testImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
     debugImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
+    // room + ksp
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+}
+
+kotlin {
+    sourceSets {
+        dependencies {
+            implementation(libs.room.runtime)
+            implementation(libs.room.ktx)
+        }
+    }
 }
