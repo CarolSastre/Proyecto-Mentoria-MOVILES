@@ -37,6 +37,8 @@ fun HomeScreen(
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     onNFCClick: () -> Unit = {},
     onSearchClick: () -> Unit,
+    onCalendarioClick: () -> Unit,
+    onHorarioClick: () -> Unit,
     onLogOut: () -> Unit,
     //
     usuario: Usuario,
@@ -45,10 +47,12 @@ fun HomeScreen(
     MainScaffold(
         modifier = Modifier,
         title = "Inicio",
-        isNFCButton = true,
         snackBar = snackBar,
+        isNFCButton = true,
         onNFCClick = onNFCClick,
         onSearchClick = onSearchClick,
+        onCalendarioClick = onCalendarioClick,
+        onHorarioClick = onHorarioClick,
         onLogOut = onLogOut,
         //
         usuario = usuario,
@@ -160,6 +164,8 @@ fun HomeScreenPreview() {
         onSearchClick = {},
         registros = lista,
         usuario = alumnas[0],
+        onCalendarioClick = {},
+        onHorarioClick = {},
         onLogOut = {}
     )
 }

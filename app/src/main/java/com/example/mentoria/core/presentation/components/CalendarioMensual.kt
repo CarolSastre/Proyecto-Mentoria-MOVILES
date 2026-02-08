@@ -32,7 +32,7 @@ import java.util.Locale
 fun CalendarioMensual(
     modifier: Modifier = Modifier,
     initialDate: LocalDate = LocalDate.now(),
-    onDateSelected: @Composable (LocalDate) -> Unit,
+    onDateSelected: (LocalDate) -> Unit,
 ) {
     var currentMonth by remember { mutableStateOf(YearMonth.from(initialDate)) }
     var selectedDate by remember { mutableStateOf(initialDate) }
@@ -131,7 +131,7 @@ fun DiasSemanaHeader() {
 fun DiasGrid(
     currentMonth: YearMonth,
     selectedDate: LocalDate,
-    onDateSelected: @Composable (LocalDate) -> Unit
+    onDateSelected: (LocalDate) -> Unit
 ) {
     val daysInMonth = currentMonth.lengthOfMonth()
     val firstDayOfMonth = currentMonth.atDay(1).dayOfWeek.value // 1 = Lunes, 7 = Domingo
@@ -170,7 +170,7 @@ fun DayCell(
     day: Int,
     isSelected: Boolean,
     isToday: Boolean,
-    onClick: @Composable () -> Unit
+    onClick: () -> Unit
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -185,12 +185,11 @@ fun DayCell(
                 width = if (isToday && !isSelected) 1.dp else 0.dp,
                 color = if (isToday && !isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                 shape = RoundedCornerShape(8.dp)
-            )/*
+            )
             .clickable { // TODO: debería devolver la fecha para recoger los registros
                 onClick()
-            }*/
+            }
     ) {
-        onClick()
         Text(
             text = day.toString(),
             color = if (isSelected) MaterialTheme.colorScheme.onPrimary

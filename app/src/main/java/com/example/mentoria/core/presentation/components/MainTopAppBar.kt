@@ -48,7 +48,7 @@ import java.time.LocalDate
 fun MainTopAppBar(
     modifier: Modifier = Modifier,
     title: String,
-    onBack: () -> Unit = LocalOnNavigationBack.current,
+    onBack: () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 

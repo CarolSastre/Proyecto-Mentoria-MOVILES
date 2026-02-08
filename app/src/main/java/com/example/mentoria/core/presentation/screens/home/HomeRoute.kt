@@ -17,6 +17,8 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HomeRoute(
     onLoggedOut: () -> Unit,
     onSearchClick: () -> Unit,
+    onCalendarioClick: () -> Unit,
+    onHorarioClick: () -> Unit,
     viewModel: HomeViewModel = koinInject(),
     //
     usuario: Usuario,
@@ -29,6 +31,8 @@ fun HomeRoute(
         when(event) {
             HomeUiEvent.LoggedOut -> onLoggedOut()
             HomeUiEvent.OnSearch -> onSearchClick()
+            HomeUiEvent.OnCalendario -> onCalendarioClick()
+            HomeUiEvent.OnHorario -> onHorarioClick()
             HomeUiEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
             else -> snackbarHostState.showSnackbar("Error desconocido")
         }
@@ -36,9 +40,11 @@ fun HomeRoute(
 
     HomeScreen ( // TODO: poner mejor los métodos que se van a usar
         snackBar = snackbarHostState,
-        onSearchClick = viewModel::onSearch,
         onLogOut = viewModel::onLogOut,
         onNFCClick = viewModel::onActivateNFC,
+        onSearchClick = viewModel::onSearch,
+        onCalendarioClick = viewModel::onCalendario,
+        onHorarioClick = viewModel::onHorario,
         //
         registros = registros,
         usuario = usuario
