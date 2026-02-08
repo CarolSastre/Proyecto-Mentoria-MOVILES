@@ -25,6 +25,7 @@ import com.example.mentoria.core.domain.model.Horario
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.MainTopAppBar
+import com.example.mentoria.navigation.LocalOnNavigationBack
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
@@ -49,7 +50,8 @@ fun HorarioScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             MainTopAppBar(
-                title = "Horario ${usuario.curso}"
+                title = "Horario ${usuario.curso}",
+                onBack = LocalOnNavigationBack.current,
             )
         }
     ) { innerPadding ->

@@ -72,6 +72,8 @@ fun MainScaffold(
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     onNFCClick: () -> Unit,
     onSearchClick: () -> Unit,
+    onCalendarioClick: () -> Unit,
+    onHorarioClick: () -> Unit,
     onLogOut: () -> Unit,
     //
     usuario: Usuario,
@@ -128,7 +130,7 @@ fun MainScaffold(
                         modifier = modifier
                             .padding(horizontal = 8.dp),
                         selected = false,
-                        onClick = { /*TODO*/ }
+                        onClick = { onHorarioClick() }
                     )
                     NavigationDrawerItem(
                         label = {
@@ -146,7 +148,7 @@ fun MainScaffold(
                         modifier = modifier
                             .padding(horizontal = 8.dp),
                         selected = false,
-                        onClick = { /*TODO*/ }
+                        onClick = { onCalendarioClick() }
                     )
                     HorizontalDivider()
                     NavigationDrawerItem(
@@ -260,6 +262,8 @@ fun MainScaffoldPreview() {
         onNFCClick = {},
         onSearchClick = {},
         onLogOut = {},
+        onCalendarioClick = {},
+        onHorarioClick = {},
         //
         usuario = Usuario(
             id = "1",

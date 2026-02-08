@@ -53,7 +53,6 @@ fun RegistroDetailsCard(
     toggleSelection: (String) -> Unit,
     onDeleteRegistro: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isOpened: Boolean = false,
     isSelected: Boolean = false,
 ) {
     Card(
@@ -66,11 +65,9 @@ fun RegistroDetailsCard(
                 onLongClick = { toggleSelection(registro.id) },
             )
             .clip(CardDefaults.shape),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
-            else if (isOpened) MaterialTheme.colorScheme.secondaryContainer
-            else MaterialTheme.colorScheme.surfaceVariant,
-        ),
+
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Column(
             modifier = Modifier
@@ -126,7 +123,7 @@ fun RegistroDetailsCard(
                 }
             }
             Text(
-                text = "Curso",
+                text = registro.usuario.curso.toString(),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
             )

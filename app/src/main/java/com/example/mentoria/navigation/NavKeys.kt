@@ -4,10 +4,6 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
-/**
- * Cada destino es un NavKey serializable que representa una pantalla
- */
-
 @Serializable
 object HomeKey : NavKey
 
@@ -19,6 +15,12 @@ object LoginKey : NavKey
 
 @Serializable
 object RegisterKey : NavKey
+
+@Serializable
+object CalendarKey: NavKey
+
+@Serializable
+object HorarioKey: NavKey
 
 val LocalOnNavigationBack = compositionLocalOf<() -> Unit> { {} }
 
