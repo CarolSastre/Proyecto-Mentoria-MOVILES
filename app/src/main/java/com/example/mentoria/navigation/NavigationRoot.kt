@@ -32,7 +32,7 @@ fun NavigationRoot(
     //sessionManager: SessionManager = koinInject()
 ) {
     val backStack = rememberNavBackStack(startDestination)
-    // TODO: quitar todo esto de prueba //////////////////////
+    // TODO: quitar todo esto ///////////////
     val usuarios = listOf(
         Usuario(
             id = "1",
@@ -106,13 +106,12 @@ fun NavigationRoot(
      */
     CompositionLocalProvider {
         LocalOnNavigationBack provides { backStack.removeLastOrNull() }
-    }
 
-    NavDisplay(
-        backStack = backStack,
-        entryProvider = { route ->
-            when (route) {
-                /*
+        NavDisplay(
+            backStack = backStack,
+            entryProvider = { route ->
+                when (route) {
+                    /*
                 is DetallesKey -> NavEntry(route) {
                     DetallesKey(
                         id = route.id,
@@ -120,67 +119,68 @@ fun NavigationRoot(
                 }
                 */
 
-                is LoginKey -> NavEntry(route) {
-                    LoginRoute(
-                        onLoginSuccess = {
-                            backStack.add(HomeKey)
-                        },
-                        onNavigateToRegister = {
-                            backStack.add(RegisterKey)
-                        }
-                    )
-                }
+                    is LoginKey -> NavEntry(route) {
+                        LoginRoute(
+                            onLoginSuccess = {
+                                backStack.add(HomeKey)
+                            },
+                            onNavigateToRegister = {
+                                backStack.add(RegisterKey)
+                            }
+                        )
+                    }
 
-                is RegisterKey -> NavEntry(route) {
-                    RegisterRoute(
-                        onRegisterSuccess = {
-                            backStack.add(HomeKey)
-                        },
-                    )
-                }
+                    is RegisterKey -> NavEntry(route) {
+                        RegisterRoute(
+                            onRegisterSuccess = {
+                                backStack.add(HomeKey)
+                            },
+                        )
+                    }
 
-                is HomeKey -> NavEntry(route) {
-                    HomeRoute(
-                        onSearchClick = {
-                            backStack.add(SearchKey)
-                        },
-                        onLoggedOut = {
-                            backStack.clear()
-                            backStack.add(LoginKey)
-                        },
-                        onCalendarioClick = {
-                            backStack.add(CalendarKey)
-                        },
-                        onHorarioClick = {
-                            backStack.add(HorarioKey)
-                        },
-                        //
-                        usuario = usuarios[0],
-                        registros = registros
-                    )
-                }
+                    is HomeKey -> NavEntry(route) {
+                        HomeRoute(
+                            onSearchClick = {
+                                backStack.add(SearchKey)
+                            },
+                            onLoggedOut = {
+                                backStack.clear()
+                                backStack.add(LoginKey)
+                            },
+                            onCalendarioClick = {
+                                backStack.add(CalendarKey)
+                            },
+                            onHorarioClick = {
+                                backStack.add(HorarioKey)
+                            },
+                            //
+                            usuario = usuarios[0],
+                            registros = registros
+                        )
+                    }
 
-                is SearchKey -> NavEntry(route) {
-                    SearchScreen(
-                        onResultClick = { /*TODO*/ },
-                        //
-                        lista = usuarios,
-                    )
-                }
+                    is SearchKey -> NavEntry(route) {
+                        SearchScreen(
+                            onResultClick = { /*TODO*/ },
+                            //
+                            lista = usuarios,
+                        )
+                    }
 
-                is CalendarKey -> NavEntry(route) {
-                    CalendarioRoute()
-                }
+                    is CalendarKey -> NavEntry(route) {
+                        CalendarioRoute()
+                    }
 
-                is HorarioKey -> NavEntry(route) {
-                    HorarioRoute(
-                        usuario = usuarios[0],
-                        horarios = horarios
-                    )
-                }
+                    is HorarioKey -> NavEntry(route) {
+                        HorarioRoute(
+                            usuario = usuarios[0],
+                            horarios = horarios
+                        )
+                    }
 
-                else -> error("Ruta no reconocida: $route")
+                    else -> error("Ruta no reconocida: $route")
+                }
             }
-        }
-    )
+        )
+    }
 }

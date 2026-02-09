@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
@@ -25,6 +26,8 @@ fun HomeRoute(
     registros: List<RegistroAcceso>,
 ){
 
+    // val visible by viewModel.uiState.collectAsStateWithLifecycle()
+    
     val snackbarHostState = remember { SnackbarHostState() }
 
     viewModel.events.ObserveAsEvents { event ->

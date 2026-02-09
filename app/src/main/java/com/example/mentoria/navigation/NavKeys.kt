@@ -22,6 +22,5 @@ object CalendarKey: NavKey
 @Serializable
 object HorarioKey: NavKey
 
-val LocalOnNavigationBack = compositionLocalOf<() -> Unit> { {} }
 
-// data class DetallesKey(val id: String) : NavKey
+// data class DetallesKey(val id: String) : NavKey --------->> MIRAR DI>koin>list_navigation_viewmodel
