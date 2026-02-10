@@ -11,9 +11,11 @@ interface UsuarioDao {
     @Query("SELECT * FROM usuarios")
     suspend fun getUsuarios(): List<UsuarioEntity>
 
+    // CAMBIO: Devuelve List<Long> en lugar de Unit para evitar error "jvm signature V"
     @Insert(onConflict = REPLACE)
-    suspend fun insertAll(usuarios: List<UsuarioEntity>)
+    suspend fun insertAll(usuarios: List<UsuarioEntity>): List<Long>
 
+    // CAMBIO: Devuelve Int (filas afectadas) en lugar de Unit
     @Query("DELETE FROM usuarios")
-    suspend fun deleteAll()
+    suspend fun deleteAll(): Int
 }
