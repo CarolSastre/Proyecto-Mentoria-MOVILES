@@ -34,11 +34,12 @@ import com.example.mentoria.navigation.LocalOnNavigationBack
 fun RegisterScreen(
     state: RegisterUiState,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
-    onRegisterClick: (String, String) -> Unit,
+    onRegisterClick: (String, String, String, String, String) -> Unit,
     onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
     var dni by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var password2 by remember { mutableStateOf("") }
     var nombre by remember { mutableStateOf("") }
     var apellidos by remember { mutableStateOf("") }
     var fechaNacimiento by remember { mutableStateOf("") }
@@ -96,6 +97,14 @@ fun RegisterScreen(
                 }
             )
 
+            PasswordOutTextField( // TODO: deberías confirmar contraseña
+                textValue = password2,
+                onValueChange = { password2 = it },
+                onDone = {
+                    focusManager.clearFocus()
+                }
+            )
+
             TextOutOfTextField( // fechaNacimiento
                 text = fechaNacimiento,
                 title = "Fecha de nacimiento",
@@ -105,7 +114,10 @@ fun RegisterScreen(
             )
 
             Button( // TODO: mandar más info
-                onClick = { onRegisterClick(dni, password) },
+                onClick = {
+                    if (password != password2) state.copy(error = "Las contraseñas no coinciden")
+                    else onRegisterClick(dni, password, nombre, apellidos, fechaNacimiento)
+                },
                 enabled = !state.isLoading,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
@@ -135,7 +147,7 @@ fun RegisterScreen(
 fun RegisterScreenPreview() {
     RegisterScreen(
         state = RegisterUiState(),
-        onRegisterClick = { _, _ -> },
+        onRegisterClick = { _, _, _, _, _ -> },
         onBack = {}
     )
 }

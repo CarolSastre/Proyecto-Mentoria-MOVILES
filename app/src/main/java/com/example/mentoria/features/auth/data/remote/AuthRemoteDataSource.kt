@@ -19,7 +19,7 @@ class AuthRemoteDataSource(
     /**
      * Llama al endpoint de login de la API.
      *
-     * @param request El objeto con las credenciales del usuario (email y password).
+     * @param request El objeto con las credenciales del usuario (dni y password).
      * @return Un `UsuarioDto` si la llamada es exitosa, o lanza una excepción si hay un error.
      */
     suspend fun login(request: LoginRequest): UsuarioDto {

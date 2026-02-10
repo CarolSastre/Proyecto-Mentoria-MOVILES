@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LoginResponse (
     @SerialName("dni")
-    val email: String,
+    val dni: String,
     @SerialName("password")
     val password: String,
     @SerialName("token")

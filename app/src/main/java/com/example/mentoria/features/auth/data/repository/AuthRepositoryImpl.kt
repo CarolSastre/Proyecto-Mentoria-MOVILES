@@ -29,17 +29,17 @@ class AuthRepositoryImpl(
      * 3. Este método se encarga de mapear (convertir) el `UsuarioDto` a un `Usuario` (modelo de dominio).
      * 4. Devuelve el modelo de dominio `Usuario`, que es el que la app usa internamente.
      *
-     * @param email El email del usuario.
+     * @param dni El dni del usuario.
      * @param password La contraseña del usuario.
      * @return El objeto `Usuario` si el login es exitoso, o null si falla.
      */
     @RequiresApi(Build.VERSION_CODES.O)
-    override suspend fun login(email: String, password: String): Usuario? {
+    override suspend fun login(dni: String, password: String): Usuario? {
         /* TODO: descomentar cuando esté la api
         // Envolvemos la llamada en un bloque try-catch para manejar errores de red o del servidor.
         return try {
             // Creamos el objeto de la petición que espera la API.
-            val request = LoginRequest(email = email, password = password)
+            val request = LoginRequest(dni = dni, password = password)
 
             // Llamamos a la función del data source.
             val usuarioDto = remote.login(request)
@@ -57,7 +57,7 @@ class AuthRepositoryImpl(
          */
 
         // TODO: borrar cuando esté la api
-        if (email != "Profesor" || password != "profesor") {
+        if (dni != "Profesor" || password != "profesor") {
             return null
         } else {
             return Usuario(
@@ -78,7 +78,7 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun register(
-        email: String,
+        dni: String,
         password: String
     ): Usuario {
         TODO("Not yet implemented")
