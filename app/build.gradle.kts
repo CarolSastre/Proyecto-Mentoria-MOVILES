@@ -32,8 +32,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
@@ -89,8 +89,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
-    testImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
-    debugImplementation("com.squareup.okhttp3:mockwebserver3:5.3.0")
+    testImplementation(libs.mockwebserver3.v530)
+    debugImplementation(libs.okhttp3.mockwebserver3)
 
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
