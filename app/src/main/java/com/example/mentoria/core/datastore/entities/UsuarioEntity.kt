@@ -12,13 +12,13 @@ data class UsuarioEntity(
     val dni: String,
     val nombre: String,
     val apellidos: String,
-    val nfc: String,
+    val nfc: String?,
     val password: String?, // Puede ser nulo si viene de la API sin pass
     val rol: Rol,
     val fechaNacimiento: LocalDate?,
     val gmail: String,
     val baja: Boolean,
-    val curso: String,
+    val curso: String?,
     val fotoPerfil: String?, // <--- Asegúrate de tener esto para la foto
 
     // El warning sale aquí. Es normal porque DepartamentoEntity tiene su propia @PrimaryKey.

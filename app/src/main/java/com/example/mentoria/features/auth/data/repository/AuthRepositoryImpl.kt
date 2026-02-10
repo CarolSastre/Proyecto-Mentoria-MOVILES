@@ -2,11 +2,9 @@ package com.example.mentoria.features.auth.data.repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.mentoria.core.data.remote.mappers.toDomain
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
-import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
 import java.time.LocalDate
 
