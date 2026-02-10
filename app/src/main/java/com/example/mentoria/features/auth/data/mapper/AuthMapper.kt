@@ -4,8 +4,7 @@ import com.example.mentoria.features.auth.data.remote.dto.LoginResponse
 import com.example.mentoria.features.auth.domain.model.Usuario
 
 fun LoginResponse.toDomain() = Usuario(
-    dni = this.dni,
-    password = this.password,
+    email = this.email,
     token = this.token
 )
 

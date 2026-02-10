@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 import java.time.LocalTime
 
 @Entity(tableName = "horarios")
-class HorarioEntity (
+data class HorarioEntity(
     @PrimaryKey val id: String,
-    val curso: String,
     val diaSemana: String,
-    val horaInicio: LocalTime,
-    val horaFin: LocalTime
+    val horaInicio: LocalTime, // Requiere Converter
+    val horaFin: LocalTime,    // Requiere Converter
+    val departamentoId: String? // Guardamos ID, no el objeto Departamento
 )

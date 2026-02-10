@@ -271,7 +271,6 @@ fun HorarioSemanalPreview() {
                 nombre = "Carolina",
                 apellidos = "Sastre Garrido",
                 rol = Rol.ALUMNO,
-                password = "passw0rd",
                 nfc = null,
                 fechaNacimiento = LocalDate.now(),
                 gmail = "carolina@gmail.com",
