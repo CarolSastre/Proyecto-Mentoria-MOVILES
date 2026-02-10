@@ -26,28 +26,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.features.auth.presentation.components.PasswordOutTextField
 import com.example.mentoria.features.auth.presentation.components.TextOutOfTextField
+import com.example.mentoria.navigation.LocalOnNavigationBack
 
 @Composable
 fun RegisterScreen(
     state: RegisterUiState,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
-<<<<<<< HEAD
-    onError: (String) -> Unit,
-    onRegisterClick: (String, String, String, String, String, String) -> Unit,
-=======
     onRegisterClick: (String, String) -> Unit,
->>>>>>> origin/modificaciones
-    onBack: () -> Unit
+    onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
     var dni by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var password2 by remember { mutableStateOf("") }
     var nombre by remember { mutableStateOf("") }
     var apellidos by remember { mutableStateOf("") }
-    var gmail by remember { mutableStateOf("") }
     var fechaNacimiento by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
@@ -103,14 +96,6 @@ fun RegisterScreen(
                 }
             )
 
-            TextOutOfTextField( // gmail
-                text = gmail,
-                title = "E-mail",
-                placeholder = "ejemplo@gmail.com",
-                onValueChange = { gmail = it },
-                onClearButton = { gmail = "" }
-            )
-
             TextOutOfTextField( // fechaNacimiento
                 text = fechaNacimiento,
                 title = "Fecha de nacimiento",
@@ -120,20 +105,7 @@ fun RegisterScreen(
             )
 
             Button( // TODO: mandar más info
-                onClick = {
-                    if (password != password2) {
-                        state.copy(error = "Las contraseñas no coinciden")
-                    } else {
-                        onRegisterClick(
-                            dni,
-                            nombre,
-                            apellidos,
-                            password,
-                            fechaNacimiento,
-                            gmail
-                        )
-                    }
-                },
+                onClick = { onRegisterClick(dni, password) },
                 enabled = !state.isLoading,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
@@ -146,9 +118,6 @@ fun RegisterScreen(
             state.error?.let {
                 Spacer(Modifier.height(8.dp))
                 Text(text = it, color = MaterialTheme.colorScheme.error)
-                onError(it)
-                password = ""
-                password2 = ""
             }
 
             TextButton(onClick = onBack) {
@@ -166,8 +135,7 @@ fun RegisterScreen(
 fun RegisterScreenPreview() {
     RegisterScreen(
         state = RegisterUiState(),
-        onError = { _ -> },
-        onRegisterClick = { _, _, _, _, _, _ -> },
+        onRegisterClick = { _, _ -> },
         onBack = {}
     )
 }

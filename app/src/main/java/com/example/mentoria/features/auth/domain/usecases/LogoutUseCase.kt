@@ -14,6 +14,6 @@ class LogoutUseCase(
 ) {
     suspend operator fun invoke() {
         repository.logout()
-        //sessionManager.notifyLoggedOut()
+        sessionManager.notifyLoggedOut()
     }
 }

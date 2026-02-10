@@ -36,8 +36,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Departamento
 import com.example.mentoria.core.domain.model.RegistroAcceso
+import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -50,7 +53,6 @@ fun RegistroDetailsCard(
     toggleSelection: (String) -> Unit,
     onDeleteRegistro: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isOpened: Boolean = false,
     isSelected: Boolean = false,
 ) {
     Card(
@@ -63,11 +65,9 @@ fun RegistroDetailsCard(
                 onLongClick = { toggleSelection(registro.id) },
             )
             .clip(CardDefaults.shape),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
-            else if (isOpened) MaterialTheme.colorScheme.secondaryContainer
-            else MaterialTheme.colorScheme.surfaceVariant,
-        ),
+
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Column(
             modifier = Modifier
@@ -84,7 +84,7 @@ fun RegistroDetailsCard(
                         SelectedProfileImage(clickModifier)
                     } else {
                         ProfileImage(
-                            drawableResource = R.drawable.prueba_background, //registro.usuario.avatar,
+                            drawableResource = R.drawable.prueba_background, // registro.usuario.perfil,
                             description = "${registro.usuario.nombre} ${registro.usuario.apellidos}",
                             clickModifier,
                         )
@@ -109,7 +109,7 @@ fun RegistroDetailsCard(
                     )
                 }
                 IconButton(
-                    onClick = { onDeleteRegistro },
+                    onClick = { onDeleteRegistro(registro.id) },
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(35.dp)
@@ -118,18 +118,18 @@ fun RegistroDetailsCard(
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "Delete",
-                        tint = Color.White// MaterialTheme.colorScheme.outline,
+                        tint = MaterialTheme.colorScheme.surfaceVariant,
                     )
                 }
             }
             Text(
-                text = "Curso",
+                text = registro.usuario.curso.toString(),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
             )
             if (registro.mensaje != "") {
                 Text(
-                    text = registro.mensaje,
+                    text = registro.mensaje ?: "No hay ningún mensaje",
                     style = MaterialTheme.typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -144,19 +144,34 @@ fun RegistroDetailsCard(
 fun RegistroAccesoPreview() {
     val alumnas = listOf(
         Usuario(
+            id = "1",
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = "ADMIN",
+            rol = Rol.ALUMNO,
             password = "passw0rd",
-            nfc = null
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "carolina@gmail.com",
+            baja = false,
+            curso = "7DMT",
+            departamento = null
         ), Usuario(
-            dni = "12345678B",
-            nombre = "Manuela",
-            apellidos = "Carmela",
-            rol = "PROFESOR",
-            password = "passw0rd",
-            nfc = null
+            id = "2",
+            dni = "12345678A",
+            nombre = "Profesor",
+            apellidos = "Xavier",
+            rol = Rol.PROFESOR,
+            password = "xavier1",
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "xavier@gmail.com",
+            baja = false,
+            curso = null,
+            departamento = Departamento(
+                id="1",
+                nombre="Ciencias"
+            ),
         )
     )
 
@@ -172,7 +187,7 @@ fun RegistroAccesoPreview() {
             id = "2",
             fechaHora = LocalDateTime.now(),
             accesoPermitido = false,
-            mensaje = "Acceso denegado",
+            mensaje = null,
             usuario = alumnas[1]
         )
     )

@@ -9,23 +9,20 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.example.mentoria.core.domain.model.Departamento
+import com.example.mentoria.core.domain.model.Horario
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.screens.SearchScreen
+import com.example.mentoria.core.presentation.screens.calendario.CalendarioRoute
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
-import com.example.mentoria.features.auth.presentation.login.LoginRoute
-import com.example.mentoria.features.auth.presentation.register.RegisterRoute
-//import com.example.mentoria.features.auth.presentation.login.LoginRoute
-//import com.example.mentoria.features.auth.presentation.register.RegisterRoute
-<<<<<<< HEAD
-import com.example.mentoria.core.presentation.screens.home.HomeScreen
+import com.example.mentoria.core.presentation.screens.horario.HorarioRoute
 import com.example.mentoria.features.auth.presentation.login.LoginRoute
 import com.example.mentoria.features.auth.presentation.register.RegisterRoute
 import java.time.LocalDate
-=======
->>>>>>> origin/modificaciones
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -34,49 +31,38 @@ fun NavigationRoot(
     startDestination: NavKey = LoginKey,
     //sessionManager: SessionManager = koinInject()
 ) {
-    // Navegación global con Navigation 3
     val backStack = rememberNavBackStack(startDestination)
-    // TODO: quitar todo esto de prueba
+    // TODO: quitar todo esto ///////////////
     val usuarios = listOf(
         Usuario(
-<<<<<<< HEAD
             id = "1",
-=======
->>>>>>> origin/modificaciones
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = Rol.ADMIN,
+            rol = Rol.ALUMNO,
             password = "passw0rd",
-<<<<<<< HEAD
             nfc = null,
-            gmail = "carolsaga02@gmail.com",
-            fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
+            fechaNacimiento = LocalDate.parse("2001-06-12"),
+            gmail = "carolina@gmail.com",
             baja = false,
+            curso = "7DMT",
+            departamento = null
         ), Usuario(
-=======
-            nfc = null
-        ),
-        Usuario(
->>>>>>> origin/modificaciones
-            dni = "12345678B",
-            nombre = "Manuela",
-            apellidos = "Carmela",
-            rol = Rol.PROFESOR,
-            password = "passw0rd",
-<<<<<<< HEAD
-            nfc = null,
             id = "2",
-            gmail = "carolsaga02@gmail.com",
+            dni = "12345678A",
+            nombre = "Profesor",
+            apellidos = "Xavier",
+            rol = Rol.PROFESOR,
+            password = "xavier1",
+            nfc = null,
             fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
+            gmail = "xavier@gmail.com",
             baja = false,
-=======
-            nfc = null
->>>>>>> origin/modificaciones
+            curso = null,
+            departamento = Departamento(
+                id="1",
+                nombre="Ciencias"
+            ),
         )
     )
 
@@ -96,6 +82,18 @@ fun NavigationRoot(
             usuario = usuarios[1]
         )
     )
+
+    val horarios = listOf(
+        Horario("1", "Mates", "Lunes", LocalTime.of(8, 0), LocalTime.of(9, 30)),
+        Horario("2", "Física", "Martes", LocalTime.of(9, 0), LocalTime.of(11, 0)),
+        Horario("3", "Historia", "Miércoles", LocalTime.of(11, 0), LocalTime.of(12, 0)),
+        Horario("4", "Kotlin", "Jueves", LocalTime.of(15, 0), LocalTime.of(17, 0)),
+        Horario("5", "Inglés", "Viernes", LocalTime.of(8, 0), LocalTime.of(10, 0)),
+        Horario("6", "Deporte", "Viernes", LocalTime.of(10, 0), LocalTime.of(11, 30))
+    )
+
+    ////////////////////////////////////////
+
     /*
         sessionManager.events.ObserveAsEvents { event ->
             when (event) {
@@ -108,66 +106,81 @@ fun NavigationRoot(
      */
     CompositionLocalProvider {
         LocalOnNavigationBack provides { backStack.removeLastOrNull() }
-    }
 
-    NavDisplay(
-        backStack = backStack,
-        onBack = { backStack.removeLastOrNull() },
-        entryProvider = { route ->
-            when (route) {
-<<<<<<< HEAD
-=======
-                /*
+        NavDisplay(
+            backStack = backStack,
+            entryProvider = { route ->
+                when (route) {
+                    /*
                 is DetallesKey -> NavEntry(route) {
                     DetallesKey(
                         id = route.id,
                     )
                 }
                 */
->>>>>>> origin/modificaciones
-                is LoginKey -> NavEntry(route) {
-                    LoginRoute(
-                        onLoginSuccess = {
-                            backStack.add(HomeKey)
-                        },
-                        onNavigateToRegister = {
-                            backStack.add(RegisterKey)
-                        }
-                    )
-                }
 
-                is RegisterKey -> NavEntry(route) {
-                    RegisterRoute(
-                        onRegisterSuccess = {
-                            backStack.add(HomeKey)
-                        },
-                        onBack = { backStack.removeLastOrNull() }
-                    )
-                }
+                    is LoginKey -> NavEntry(route) {
+                        LoginRoute(
+                            onLoginSuccess = {
+                                backStack.add(HomeKey)
+                            },
+                            onNavigateToRegister = {
+                                backStack.add(RegisterKey)
+                            }
+                        )
+                    }
 
-                is HomeKey -> NavEntry(route) {
-                    HomeRoute(
-                        onSearchClick = {
-                            backStack.add(SearchKey)
-                        },
-                        onSettingsClick = { /*TODO*/ },
-                        //
-                        usuario = usuarios[0],
-                        registros = registros
-                    )
-                }
+                    is RegisterKey -> NavEntry(route) {
+                        RegisterRoute(
+                            onRegisterSuccess = {
+                                backStack.add(HomeKey)
+                            },
+                        )
+                    }
 
-                is SearchKey -> NavEntry(route) {
-                    SearchScreen(
-                        onResultClick = { /*TODO*/ },
-                        onBack = { backStack.removeLastOrNull() },
-                        //
-                        lista = usuarios,
-                    )
-                }
+                    is HomeKey -> NavEntry(route) {
+                        HomeRoute(
+                            onSearchClick = {
+                                backStack.add(SearchKey)
+                            },
+                            onLoggedOut = {
+                                backStack.clear()
+                                backStack.add(LoginKey)
+                            },
+                            onCalendarioClick = {
+                                backStack.add(CalendarKey)
+                            },
+                            onHorarioClick = {
+                                backStack.add(HorarioKey)
+                            },
+                            //
+                            usuario = usuarios[0],
+                            registros = registros
+                        )
+                    }
 
-                else -> error("Ruta no reconocida: $route")
+                    is SearchKey -> NavEntry(route) {
+                        SearchScreen(
+                            onResultClick = { /*TODO*/ },
+                            //
+                            lista = usuarios,
+                        )
+                    }
+
+                    is CalendarKey -> NavEntry(route) {
+                        CalendarioRoute()
+                    }
+
+                    is HorarioKey -> NavEntry(route) {
+                        HorarioRoute(
+                            usuario = usuarios[0],
+                            horarios = horarios
+                        )
+                    }
+
+                    else -> error("Ruta no reconocida: $route")
+                }
             }
-        }
-    )
+        )
+    }
 }

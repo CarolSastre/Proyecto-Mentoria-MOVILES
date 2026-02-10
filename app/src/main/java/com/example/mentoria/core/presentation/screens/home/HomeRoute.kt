@@ -5,58 +5,50 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import com.example.mentoria.navigation.LocalOnNavigationBack
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeRoute(
-    //onLoggedOut: () -> Unit,
+    onLoggedOut: () -> Unit,
     onSearchClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onBack: () -> Unit = LocalOnNavigationBack.current,
-    viewModel: HomeViewModel = koinViewModel(),
+    onCalendarioClick: () -> Unit,
+    onHorarioClick: () -> Unit,
+    viewModel: HomeViewModel = koinInject(),
     //
     usuario: Usuario,
     registros: List<RegistroAcceso>,
 ){
 
+    // val visible by viewModel.uiState.collectAsStateWithLifecycle()
+    
     val snackbarHostState = remember { SnackbarHostState() }
 
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
-        /*
             HomeUiEvent.LoggedOut -> onLoggedOut()
-         */
-<<<<<<< HEAD
-            HomeUiEvent.OnBack -> onBack()
-=======
->>>>>>> origin/modificaciones
             HomeUiEvent.OnSearch -> onSearchClick()
+            HomeUiEvent.OnCalendario -> onCalendarioClick()
+            HomeUiEvent.OnHorario -> onHorarioClick()
             HomeUiEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
             else -> snackbarHostState.showSnackbar("Error desconocido")
         }
     }
 
     HomeScreen ( // TODO: poner mejor los métodos que se van a usar
-        //onLogOut = viewModel::onLogOut,
-<<<<<<< HEAD
-        onSearchClick = viewModel::onSearch,
         snackBar = snackbarHostState,
-        onSettingsClick = onSettingsClick,
+        onLogOut = viewModel::onLogOut,
         onNFCClick = viewModel::onActivateNFC,
-        onBack = viewModel::onBack,
-=======
-        snackBar = snackbarHostState,
         onSearchClick = viewModel::onSearch,
-        onSettingsClick = onSettingsClick,
-        onNFCClick = viewModel::onActivateNFC,
-        onBack = onBack,
+        onCalendarioClick = viewModel::onCalendario,
+        onHorarioClick = viewModel::onHorario,
         //
->>>>>>> origin/modificaciones
         registros = registros,
         usuario = usuario
     )

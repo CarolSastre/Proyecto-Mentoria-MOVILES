@@ -12,19 +12,19 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase
-): ViewModel() {
+) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     private val _eventChannel = Channel<LoginUiEvent>()
     val events = _eventChannel.receiveAsFlow()
 
-    fun login(email: String, password: String) {
+    fun login(dni: String, password: String) {
         viewModelScope.launch {
             _uiState.value = LoginUiState(isLoading = true)
 
             runCatching {
-                loginUseCase(email, password)
+                loginUseCase(dni, password)
             }.onSuccess {
                 _uiState.value = LoginUiState()
                 _eventChannel.send(LoginUiEvent.LoginSuccess)
@@ -36,7 +36,7 @@ class LoginViewModel(
         }
     }
 
-    fun register(){
+    fun register() {
         viewModelScope.launch {
             _eventChannel.send(LoginUiEvent.OnRegister)
         }

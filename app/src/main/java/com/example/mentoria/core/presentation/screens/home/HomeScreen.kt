@@ -2,27 +2,16 @@ package com.example.mentoria.core.presentation.screens.home
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Nfc
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,16 +19,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Departamento
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
-import com.example.mentoria.core.presentation.components.MainTopAppBar
-import com.example.mentoria.core.presentation.components.ProfileImage
+import com.example.mentoria.core.presentation.components.MainScaffold
 import com.example.mentoria.core.presentation.components.RegistroDetailsCard
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -49,38 +35,27 @@ import java.time.LocalDateTime
 fun HomeScreen(
     modifier: Modifier = Modifier,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
-<<<<<<< HEAD
-    usuario: Usuario,
-    registros: List<RegistroAcceso>,
-=======
     onNFCClick: () -> Unit = {},
->>>>>>> origin/modificaciones
     onSearchClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onBack: () -> Unit = {},
-    //onLogOut: () -> Unit,
+    onCalendarioClick: () -> Unit,
+    onHorarioClick: () -> Unit,
+    onLogOut: () -> Unit,
     //
     usuario: Usuario,
     registros: List<RegistroAcceso>,
 ) {
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackBar,
-            )
-        },
-        topBar = {
-            MainTopAppBar(
-                title = "",
-                onSearchClick = onSearchClick,
-                onSettingsClick = onSettingsClick,
-                onBackClick = onBack,
-                //onLogOut = onLogOut,
-                //
-                usuario = usuario,
-            )
-        },
-        modifier = modifier.fillMaxSize()
+    MainScaffold(
+        modifier = Modifier,
+        title = "Inicio",
+        snackBar = snackBar,
+        isNFCButton = true,
+        onNFCClick = onNFCClick,
+        onSearchClick = onSearchClick,
+        onCalendarioClick = onCalendarioClick,
+        onHorarioClick = onHorarioClick,
+        onLogOut = onLogOut,
+        //
+        usuario = usuario,
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -111,20 +86,6 @@ fun HomeScreen(
                     Text("Bienvenido a la pantalla principal")
                 }
             }
-
-            FloatingActionButton(
-                onClick = { onNFCClick() },
-                modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Nfc,
-                    contentDescription = "NFC",
-                    modifier = Modifier.size(18.dp),
-                )
-            }
-
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -155,27 +116,30 @@ fun HomeScreenPreview() {
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
-            rol = Rol.ADMIN,
+            rol = Rol.ALUMNO,
             password = "passw0rd",
             nfc = null,
-            gmail = "carolsaga02@gmail.com",
             fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
+            gmail = "carolina@gmail.com",
             baja = false,
+            curso = "7DMT",
+            departamento = null
         ), Usuario(
-            dni = "12345678B",
-            nombre = "Manuela",
-            apellidos = "Carmela",
-            rol = Rol.PROFESOR,
-            password = "passw0rd",
-            nfc = null,
             id = "2",
-            gmail = "carolsaga02@gmail.com",
+            dni = "12345678B",
+            nombre = "Profesor",
+            apellidos = "Xavier",
+            rol = Rol.PROFESOR,
+            password = "xavier1",
+            nfc = null,
             fechaNacimiento = LocalDate.now(),
-            departamento = null,
-            curso = null,
+            gmail = "xavier@gmail.com",
             baja = false,
+            curso = null,
+            departamento = Departamento(
+                id="1",
+                nombre="Ciencias"
+            ),
         )
     )
 
@@ -197,12 +161,11 @@ fun HomeScreenPreview() {
     )
 
     HomeScreen(
-        snackBar = SnackbarHostState(),
         onSearchClick = {},
-        onSettingsClick = {},
-        onBack = {},
         registros = lista,
-        usuario = alumnas[0]
-        //onLogOut = {}
+        usuario = alumnas[0],
+        onCalendarioClick = {},
+        onHorarioClick = {},
+        onLogOut = {}
     )
 }

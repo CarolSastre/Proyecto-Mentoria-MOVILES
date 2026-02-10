@@ -1,8 +1,5 @@
 package com.example.mentoria.features.auth.data.remote
 
-<<<<<<< HEAD
-interface AuthApi {
-=======
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
@@ -14,5 +11,4 @@ interface AuthApi {
     suspend fun login(
         @Body request: LoginRequest
     ): UsuarioDto
->>>>>>> origin/modificaciones
 }

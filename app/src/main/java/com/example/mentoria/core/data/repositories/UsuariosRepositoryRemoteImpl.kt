@@ -13,7 +13,6 @@ class UsuariosRepositoryRemoteImpl(
     private val api: MentoriaApiService,
     private val usuarioDao: UsuarioDao
 ): UsuariosRepository {
-
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getUsuarios(page: Int): List<Usuario> {
         // cargar datos del Room si existen
