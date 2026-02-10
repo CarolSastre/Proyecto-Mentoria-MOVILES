@@ -9,21 +9,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
@@ -36,7 +32,6 @@ import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.components.ProfileImage
 import com.example.mentoria.navigation.LocalOnNavigationBack
 import java.time.LocalDate
-import kotlin.toString
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -188,7 +183,6 @@ fun SearchScreenPreview() {
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
             rol = Rol.ALUMNO,
-            password = "passw0rd",
             nfc = null,
             fechaNacimiento = LocalDate.now(),
             gmail = "carolina@gmail.com",
@@ -201,7 +195,6 @@ fun SearchScreenPreview() {
             nombre = "Profesor",
             apellidos = "Xavier",
             rol = Rol.PROFESOR,
-            password = "xavier1",
             nfc = null,
             fechaNacimiento = LocalDate.now(),
             gmail = "xavier@gmail.com",

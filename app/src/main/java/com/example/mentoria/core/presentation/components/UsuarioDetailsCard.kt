@@ -30,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
@@ -164,7 +163,6 @@ fun UsuarioDetailsCardPreview() {
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
             rol = Rol.ALUMNO,
-            password = "passw0rd",
             nfc = null,
             fechaNacimiento = LocalDate.now(),
             gmail = "carolina@gmail.com",
@@ -177,7 +175,6 @@ fun UsuarioDetailsCardPreview() {
             nombre = "Profesor",
             apellidos = "Xavier",
             rol = Rol.PROFESOR,
-            password = "xavier1",
             nfc = null,
             fechaNacimiento = LocalDate.now(),
             gmail = "xavier@gmail.com",

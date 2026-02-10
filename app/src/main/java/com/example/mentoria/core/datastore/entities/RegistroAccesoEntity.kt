@@ -2,14 +2,15 @@ package com.example.mentoria.core.datastore.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mentoria.core.domain.model.Usuario
 import java.time.LocalDateTime
 
 @Entity(tableName = "registro_acceso")
-class RegistroAccesoEntity (
+data class RegistroAccesoEntity(
     @PrimaryKey val id: String,
-    val fechaHora: LocalDateTime,
+    val fechaHora: LocalDateTime, // Requiere Converter
     val accesoPermitido: Boolean,
     val mensaje: String?,
-    val usuario: Usuario
+    // ERROR ANTERIOR: val usuario: Usuario
+    // SOLUCIÓN: Guardamos solo el ID (Clave foránea)
+    val usuarioId: String
 )

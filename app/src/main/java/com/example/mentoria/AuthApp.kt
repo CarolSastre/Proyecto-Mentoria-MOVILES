@@ -2,7 +2,7 @@ package com.example.mentoria
 
 import android.app.Application
 import com.example.mentoria.di.appModule
-import com.example.mentoria.di.commonAuthModule
+//import com.example.mentoria.di.commonAuthModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -18,7 +18,7 @@ class AuthApp : Application() {
         startKoin {
             androidContext(this@AuthApp)
 
-            modules(commonAuthModule)
+            //modules(commonAuthModule)
             modules(appModule)
 
             /*when (BuildConfig.BUILD_TYPE) {

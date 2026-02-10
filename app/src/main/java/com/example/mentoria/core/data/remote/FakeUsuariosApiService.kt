@@ -12,7 +12,6 @@ class FakeUsuariosApiService: MentoriaApiService {
                 dni = "12345678A",
                 nombre = "Carolina",
                 apellidos = "Sastre Garrido",
-                password = "carol1",
                 rol = Rol.ADMIN.toString(),
                 nfc = "",
                 fechaNacimiento = "2001-01-01",

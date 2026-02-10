@@ -12,13 +12,14 @@ import com.example.mentoria.core.datastore.entities.UsuarioEntity
 @Database(
     entities = [
         UsuarioEntity::class,
-        DepartamentoEntity::class, // Asegúrate de tener esta Entity creada
+        DepartamentoEntity::class,
         HorarioEntity::class,
         RegistroAccesoEntity::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
-@TypeConverters(Converters::class) // <--- AQUÍ REGISTRAS EL TRADUCTOR DE FECHAS
+@TypeConverters(Converters::class) // <--- ¡ESTO ES OBLIGATORIO!
 abstract class AppDatabase : RoomDatabase() {
     abstract fun usuarioDao(): UsuarioDao
 }

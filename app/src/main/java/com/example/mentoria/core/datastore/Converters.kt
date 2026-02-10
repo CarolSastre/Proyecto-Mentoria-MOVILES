@@ -1,20 +1,23 @@
 package com.example.mentoria.core.datastore
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class Converters {
-    @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
-    fun fromTimestamp(value: String?): LocalDate? {
-        return value?.let { LocalDate.parse(it) }
-    }
+    fun fromLocalDate(value: String?): LocalDate? = value?.let { LocalDate.parse(it) }
+    @TypeConverter
+    fun toLocalDate(date: LocalDate?): String? = date?.toString()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
-    fun dateToTimestamp(date: LocalDate?): String? {
-        return date?.toString()
-    }
+    fun fromLocalDateTime(value: String?): LocalDateTime? = value?.let { LocalDateTime.parse(it) }
+    @TypeConverter
+    fun toLocalDateTime(date: LocalDateTime?): String? = date?.toString()
+
+    @TypeConverter
+    fun fromLocalTime(value: String?): LocalTime? = value?.let { LocalTime.parse(it) }
+    @TypeConverter
+    fun toLocalTime(date: LocalTime?): String? = date?.toString()
 }
