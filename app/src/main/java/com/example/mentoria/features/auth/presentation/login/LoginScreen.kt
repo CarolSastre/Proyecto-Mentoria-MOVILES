@@ -30,7 +30,7 @@ fun LoginScreen(
     onLoginClick: (String, String) -> Unit,
     onCreateAccountClick: () -> Unit
 ) {
-    var email by rememberSaveable { mutableStateOf(value = "test") }
+    var dni by rememberSaveable { mutableStateOf(value = "test") }
     var password by rememberSaveable { mutableStateOf(value = "1234") }
 
     val focusManager = LocalFocusManager.current
@@ -62,11 +62,11 @@ fun LoginScreen(
             )
 
             TextOutOfTextField (
-                text = email,
+                text = dni,
                 title = "DNI",
                 placeholder = "Ej: 000000000A",
-                onValueChange = { email = it },
-                onClearButton = { email = "" }
+                onValueChange = { dni = it },
+                onClearButton = { dni = "" }
             )
 
             PasswordOutTextField(
@@ -79,7 +79,7 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    onLoginClick(email, password)
+                    onLoginClick(dni, password)
                     // TODO: pasar los datos de autentificación
                 },
                 modifier = Modifier.width(200.dp),

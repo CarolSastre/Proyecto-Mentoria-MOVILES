@@ -11,7 +11,14 @@ class RegisterUseCase(
     private val repository: AuthRepository
 ) { // TODO: confirmar tda la info a padir
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend operator fun invoke(dni: String, password: String): Usuario {
+    suspend operator fun invoke(
+        dni: String,
+        password: String,
+        nombre: String,
+        apellidos: String,
+        fechaNacimiento: String,
+        gmail: String,
+    ): Usuario {
         return Usuario(
             id = "0",
             dni = "12345678A",

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -25,24 +26,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.features.auth.presentation.components.PasswordOutTextField
 import com.example.mentoria.features.auth.presentation.components.TextOutOfTextField
+import com.example.mentoria.navigation.LocalOnNavigationBack
 
 @Composable
 fun RegisterScreen(
     state: RegisterUiState,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
-    onError: (String) -> Unit,
-    onRegisterClick: (String, String, String, String, String, String) -> Unit,
-    onBack: () -> Unit
+    onRegisterClick: (String, String, String, String, String) -> Unit,
+    onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
     var dni by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var password2 by remember { mutableStateOf("") }
     var nombre by remember { mutableStateOf("") }
     var apellidos by remember { mutableStateOf("") }
-    var gmail by remember { mutableStateOf("") }
     var fechaNacimiento by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
@@ -98,12 +97,12 @@ fun RegisterScreen(
                 }
             )
 
-            TextOutOfTextField( // gmail
-                text = gmail,
-                title = "E-mail",
-                placeholder = "ejemplo@gmail.com",
-                onValueChange = { gmail = it },
-                onClearButton = { gmail = "" }
+            PasswordOutTextField( // TODO: deberías confirmar contraseña
+                textValue = password2,
+                onValueChange = { password2 = it },
+                onDone = {
+                    focusManager.clearFocus()
+                }
             )
 
             TextOutOfTextField( // fechaNacimiento
@@ -116,21 +115,14 @@ fun RegisterScreen(
 
             Button( // TODO: mandar más info
                 onClick = {
-                    if (password != password2) {
-                        state.copy(error = "Las contraseñas no coinciden")
-                    } else {
-                        onRegisterClick(
-                            dni,
-                            nombre,
-                            apellidos,
-                            password,
-                            fechaNacimiento,
-                            gmail
-                        )
-                    }
+                    if (password != password2) state.copy(error = "Las contraseñas no coinciden")
+                    else onRegisterClick(dni, password, nombre, apellidos, fechaNacimiento)
                 },
                 enabled = !state.isLoading,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    MaterialTheme.colorScheme.primary
+                )
             ) {
                 Text("Registrarse")
             }
@@ -138,9 +130,6 @@ fun RegisterScreen(
             state.error?.let {
                 Spacer(Modifier.height(8.dp))
                 Text(text = it, color = MaterialTheme.colorScheme.error)
-                onError(it)
-                password = ""
-                password2 = ""
             }
 
             TextButton(onClick = onBack) {
@@ -158,8 +147,7 @@ fun RegisterScreen(
 fun RegisterScreenPreview() {
     RegisterScreen(
         state = RegisterUiState(),
-        onError = { _ -> },
-        onRegisterClick = { _, _, _, _, _, _ -> },
+        onRegisterClick = { _, _, _, _, _ -> },
         onBack = {}
     )
 }

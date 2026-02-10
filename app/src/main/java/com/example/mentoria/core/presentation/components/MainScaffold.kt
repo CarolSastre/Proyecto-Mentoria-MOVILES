@@ -112,7 +112,12 @@ fun MainScaffold(
                         modifier = modifier
                             .padding(horizontal = 8.dp),
                         selected = false,
-                        onClick = { /*TODO*/ }
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                            /*TODO*/
+                        }
                     )
                     NavigationDrawerItem(
                         label = {
@@ -130,7 +135,12 @@ fun MainScaffold(
                         modifier = modifier
                             .padding(horizontal = 8.dp),
                         selected = false,
-                        onClick = { onHorarioClick() }
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                            onHorarioClick()
+                        }
                     )
                     NavigationDrawerItem(
                         label = {
@@ -148,7 +158,12 @@ fun MainScaffold(
                         modifier = modifier
                             .padding(horizontal = 8.dp),
                         selected = false,
-                        onClick = { onCalendarioClick() }
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                            onCalendarioClick()
+                        }
                     )
                     HorizontalDivider()
                     NavigationDrawerItem(
@@ -167,7 +182,12 @@ fun MainScaffold(
                         modifier = modifier
                             .padding(horizontal = 8.dp),
                         selected = false,
-                        onClick = { onLogOut() }
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                            onLogOut()
+                        }
                     )
                 }
             }

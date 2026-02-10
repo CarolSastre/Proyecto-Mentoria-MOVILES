@@ -1,7 +1,5 @@
 package com.example.mentoria.features.auth.presentation.register
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentoria.features.auth.domain.usecases.RegisterUseCase
@@ -21,27 +19,19 @@ class RegisterViewModel(
    val events = _eventChannel.receiveAsFlow()
 
     // TODO: seguramente aquí haga falta más info
-    @RequiresApi(Build.VERSION_CODES.O)
     fun register(
-        dni: String,
+        dni:String,
+        password: String,
         nombre: String,
         apellidos: String,
-        password: String,
         fechaNacimiento: String,
-        gmail: String
+        gmail: String,
     ){
         viewModelScope.launch {
             _uiState.value = RegisterUiState(isLoading = true)
 
             runCatching {
-                registerUseCase(
-                    dni = dni,
-                    nombre = nombre,
-                    apellidos = apellidos,
-                    password = password,
-                    fechaNacimiento = fechaNacimiento,
-                    gmail = gmail
-                )
+                registerUseCase(dni, password, nombre, apellidos, fechaNacimiento, gmail)
             }.onSuccess{
                 _uiState.value = RegisterUiState()
                 _eventChannel.send(RegisterUiEvent.RegisterSuccess)
@@ -52,11 +42,4 @@ class RegisterViewModel(
             }
         }
     }
-
-    fun onError(message: String) {
-        viewModelScope.launch {
-            _eventChannel.send(RegisterUiEvent.Error)
-        }
-    }
-
 }
