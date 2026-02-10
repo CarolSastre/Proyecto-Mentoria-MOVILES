@@ -2,7 +2,6 @@ package com.example.mentoria.core.data.remote.mappers
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.mentoria.core.data.remote.dto.DepartamentoDto
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.datastore.entities.DepartamentoEntity
 import com.example.mentoria.core.datastore.entities.UsuarioEntity

@@ -5,11 +5,11 @@ import java.time.LocalDate
 data class Usuario(
     val id: String,
     val dni: String,
-    val password: String,
+    val password: String?,
     val nombre: String,
     val apellidos: String,
     val nfc: String?,
-    val fechaNacimiento: LocalDate,
+    val fechaNacimiento: LocalDate?,
     val gmail: String,
     val rol: Rol,
     val departamento: Departamento?,
