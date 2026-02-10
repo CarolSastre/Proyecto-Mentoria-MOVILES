@@ -24,7 +24,6 @@ class LoginUseCase(
             nombre = "alumno",
             apellidos = "prueba",
             rol = Rol.ALUMNO,
-            password = "1234",
             nfc = null,
             fechaNacimiento = LocalDate.now(),
             gmail = "test@gmail.com",

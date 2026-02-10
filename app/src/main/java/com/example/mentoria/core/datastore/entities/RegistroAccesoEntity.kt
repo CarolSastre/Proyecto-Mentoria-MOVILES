@@ -5,10 +5,12 @@ import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 
 @Entity(tableName = "registro_acceso")
-class RegistroAccesoEntity (
+data class RegistroAccesoEntity(
     @PrimaryKey val id: String,
-    val fechaHora: LocalDateTime,
+    val fechaHora: LocalDateTime, // Requiere Converter
     val accesoPermitido: Boolean,
     val mensaje: String?,
-    val usuarioId: String // <--- CAMBIO IMPORTANTE: Guardamos el ID, no el objeto Usuario
+    // ERROR ANTERIOR: val usuario: Usuario
+    // SOLUCIÓN: Guardamos solo el ID (Clave foránea)
+    val usuarioId: String
 )

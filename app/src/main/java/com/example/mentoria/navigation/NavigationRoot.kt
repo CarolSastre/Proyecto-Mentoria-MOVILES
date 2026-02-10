@@ -1,7 +1,6 @@
 package com.example.mentoria.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -24,7 +23,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-@RequiresApi(Build.VERSION_CODES.O)
+val LocalOnNavigationBack = compositionLocalOf<() -> Unit> { { } }
+
 @Composable
 fun NavigationRoot(
     modifier: Modifier = Modifier,
@@ -40,7 +40,6 @@ fun NavigationRoot(
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
             rol = Rol.ALUMNO,
-            password = "passw0rd",
             nfc = null,
             fechaNacimiento = LocalDate.parse("2001-06-12"),
             gmail = "carolina@gmail.com",
@@ -53,7 +52,6 @@ fun NavigationRoot(
             nombre = "Profesor",
             apellidos = "Xavier",
             rol = Rol.PROFESOR,
-            password = "xavier1",
             nfc = null,
             fechaNacimiento = LocalDate.now(),
             gmail = "xavier@gmail.com",

@@ -17,9 +17,9 @@ import com.example.mentoria.core.datastore.entities.UsuarioEntity
         RegistroAccesoEntity::class
     ],
     version = 1,
-    exportSchema = false // <--- Esto limpia el log de warnings
+    exportSchema = false
 )
-@TypeConverters(Converters::class)
+@TypeConverters(Converters::class) // <--- ¡ESTO ES OBLIGATORIO!
 abstract class AppDatabase : RoomDatabase() {
     abstract fun usuarioDao(): UsuarioDao
 }

@@ -5,7 +5,6 @@ import com.example.mentoria.features.auth.domain.model.Usuario
 
 fun LoginResponse.toDomain() = Usuario(
     email = this.email,
-    password = this.password,
     token = this.token
 )
 
