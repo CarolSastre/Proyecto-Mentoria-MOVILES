@@ -34,7 +34,7 @@ import com.example.mentoria.navigation.LocalOnNavigationBack
 fun RegisterScreen(
     state: RegisterUiState,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
-    onRegisterClick: (String, String, String, String, String) -> Unit,
+    onRegisterClick: (String, String, String, String, String, String) -> Unit,
     onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
     var dni by remember { mutableStateOf("") }
@@ -42,6 +42,7 @@ fun RegisterScreen(
     var password2 by remember { mutableStateOf("") }
     var nombre by remember { mutableStateOf("") }
     var apellidos by remember { mutableStateOf("") }
+    var gmail by remember { mutableStateOf("") }
     var fechaNacimiento by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
@@ -89,7 +90,15 @@ fun RegisterScreen(
                 onClearButton = { apellidos = "" }
             )
 
-            PasswordOutTextField( // TODO: deberías confirmar contraseña
+            TextOutOfTextField( // gmail
+                text = gmail,
+                title = "Correo electrónico",
+                placeholder = "Ej: rafa@ejemplo.com.",
+                onValueChange = { gmail = it },
+                onClearButton = { gmail = "" }
+            )
+
+            PasswordOutTextField(
                 textValue = password,
                 onValueChange = { password = it },
                 onDone = {
@@ -97,7 +106,7 @@ fun RegisterScreen(
                 }
             )
 
-            PasswordOutTextField( // TODO: deberías confirmar contraseña
+            PasswordOutTextField(
                 textValue = password2,
                 onValueChange = { password2 = it },
                 onDone = {
@@ -115,8 +124,9 @@ fun RegisterScreen(
 
             Button( // TODO: mandar más info
                 onClick = {
+                    // TODO: esto debería verificarse en el usecase, el error saldrá al gracias a state.error de después
                     if (password != password2) state.copy(error = "Las contraseñas no coinciden")
-                    else onRegisterClick(dni, password, nombre, apellidos, fechaNacimiento)
+                    else onRegisterClick(dni, password, nombre, apellidos, fechaNacimiento, gmail)
                 },
                 enabled = !state.isLoading,
                 modifier = Modifier.fillMaxWidth(),
@@ -147,7 +157,7 @@ fun RegisterScreen(
 fun RegisterScreenPreview() {
     RegisterScreen(
         state = RegisterUiState(),
-        onRegisterClick = { _, _, _, _, _ -> },
+        onRegisterClick = { _, _, _, _, _, _ -> },
         onBack = {}
     )
 }
