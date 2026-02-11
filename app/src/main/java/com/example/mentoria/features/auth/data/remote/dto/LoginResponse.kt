@@ -1,14 +1,11 @@
 package com.example.mentoria.features.auth.data.remote.dto
 
+import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginResponse (
-    @SerialName("dni")
-    val dni: String,
-    @SerialName("password")
-    val password: String,
-    @SerialName("token")
-    val token: String
+data class LoginResponse(
+    @SerialName("token") val token: String?,
+    @SerialName("usuario") val usuario: UsuarioDto?
 )

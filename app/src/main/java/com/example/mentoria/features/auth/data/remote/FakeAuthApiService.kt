@@ -4,7 +4,7 @@ import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 import java.time.LocalDate
 
-class FakeUsuariosApiService: AuthApi {
+class FakeUsuariosApiService{}
     /*
     override suspend fun getUsuarios(
     ): List<UsuarioDto> {
@@ -25,7 +25,7 @@ class FakeUsuariosApiService: AuthApi {
             )
         )
     }
-     */
+
 
     override suspend fun login(request: LoginRequest): UsuarioDto {
         return UsuarioDto(
@@ -42,4 +42,6 @@ class FakeUsuariosApiService: AuthApi {
             departamento = null
         )
     }
-}
+
+   */
+
