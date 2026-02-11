@@ -1,33 +1,36 @@
 package com.example.mentoria.di
 
+import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
+import com.example.mentoria.features.auth.data.local.AuthLocalDataSourceDataStoreImpl
+import com.example.mentoria.features.auth.data.remote.AuthApi
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
+import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSourceImpl
 import com.example.mentoria.features.auth.data.repository.AuthRepositoryImpl
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
-import com.example.mentoria.features.auth.domain.usecases.LoginUseCase
-import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
-import com.example.mentoria.features.auth.domain.usecases.RegisterUseCase
-import com.example.mentoria.features.auth.presentation.login.LoginViewModel
-import com.example.mentoria.features.auth.presentation.register.RegisterViewModel
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import retrofit2.Retrofit
 
-val authRepositoryModule = module {
-    // Data
-    single {
-        AuthRemoteDataSource(get())
+val authModule = module {
+    // 1. Proveer AuthApi usando Retrofit
+    single<AuthApi> {
+        get<Retrofit>().create(AuthApi::class.java)
     }
 
-    /* TODO: descomentar cuando esté el repo de autentificación */
+    // 2. Proveer AuthRemoteDataSource (La implementación REAL, no la Fake)
+    single<AuthRemoteDataSource> {
+        AuthRemoteDataSourceImpl(api = get())
+    }
+
+    // 3. Proveer AuthLocalDataSource (DataStore)
+    single<AuthLocalDataSource> {
+        AuthLocalDataSourceDataStoreImpl(dataStore = get())
+    }
+
+    // 4. Proveer Repositorio
     single<AuthRepository> {
-        AuthRepositoryImpl(
-            remote = get()
-            //local = get()
-        )
+        AuthRepositoryImpl(remote = get(), localDataSource = get())
     }
 }
-
-val commonAuthModule = module {
 /*
     // Domain
     factory { LoginUseCase(get()) }
@@ -44,12 +47,3 @@ val commonAuthModule = module {
         RegisterViewModel(get())
     }
 */
-
-    // Domain
-    factoryOf(::RegisterUseCase)
-    factoryOf(::LoginUseCase)
-    factoryOf(::LogoutUseCase)
-    // Presentation
-    viewModelOf(::RegisterViewModel)
-    viewModelOf(::LoginViewModel)
-}

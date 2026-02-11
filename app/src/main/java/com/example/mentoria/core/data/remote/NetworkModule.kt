@@ -10,7 +10,8 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 object NetworkModule {
 
-    const val BASE_URL = "" // ""https://ktor-todos.fly.dev/" //  "http://192.168.1.8:8080/" //"https://my-json-server.typicode.com/rafapuig/PMDM-Android-Compose/"
+    const val BASE_URL =
+        "http://localhost:8080" // ""https://ktor-todos.fly.dev/" //  "http://192.168.1.8:8080/" //"https://my-json-server.typicode.com/rafapuig/PMDM-Android-Compose/"
 
     private val json = Json {
         ignoreUnknownKeys = true
@@ -33,22 +34,14 @@ object NetworkModule {
 
 }
 
-val mockNetworkModule = module {
-    single<AuthApi> { FakeUsuariosApiService() }
-}
 
-/*
 val networkModule = module {
     single {
         Retrofit.Builder()
-            .baseUrl("") // TODO: poner direccion a la api
+            .baseUrl("http://localhost:8080") // TODO: poner direccion a la api
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
-
-    // Esta línea le enseña a Koin a crear la AuthApi usando la instancia de Retrofit
-    single<AuthApi> {
-        get<Retrofit>().create(AuthApi::class.java)
-    }
 }
- */
+
+
