@@ -103,8 +103,8 @@ fun MainScaffold(
                         onClick = {
                             scope.launch {
                                 drawerState.close()
+                                /*TODO*/
                             }
-                            /*TODO*/
                         }
                     )
                     NavigationDrawerItem(
@@ -126,8 +126,8 @@ fun MainScaffold(
                         onClick = {
                             scope.launch {
                                 drawerState.close()
+                                onHorarioClick()
                             }
-                            onHorarioClick()
                         }
                     )
                     NavigationDrawerItem(
@@ -173,8 +173,8 @@ fun MainScaffold(
                         onClick = {
                             scope.launch {
                                 drawerState.close()
+                                onLogOut()
                             }
-                            onLogOut()
                         }
                     )
                 }
@@ -257,7 +257,6 @@ fun MainScaffold(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(
     showSystemUi = false, showBackground = false,
     uiMode = Configuration.UI_MODE_TYPE_NORMAL

@@ -1,7 +1,7 @@
 package com.example.mentoria
 
 import android.app.Application
-import com.example.mentoria.core.data.remote.networkModule
+import com.example.mentoria.di.networkModule
 import com.example.mentoria.di.appModule
 import com.example.mentoria.di.authModule
 import com.example.mentoria.di.commonAuthModule
@@ -19,7 +19,7 @@ class MainApp : Application() { // TODO: recordar modificar AndroidManifest.xml
             modules(
                 networkModule,
                 authModule,
-                commonAuthModule,
+                //commonAuthModule,
                 appModule
             )
 

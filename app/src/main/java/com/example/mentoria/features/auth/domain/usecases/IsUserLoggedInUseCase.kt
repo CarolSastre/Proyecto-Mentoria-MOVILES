@@ -12,7 +12,7 @@ class IsUserLoggedInUseCase(
     private val repository: AuthRepository
 ) {
     suspend operator fun invoke(): Boolean {
-        return true
-        //return repository.isUserLoggedIn()
+        //return true
+        return repository.isUserLoggedIn()
     }
 }

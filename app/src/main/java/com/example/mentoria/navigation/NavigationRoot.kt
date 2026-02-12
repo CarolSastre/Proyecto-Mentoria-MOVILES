@@ -3,7 +3,10 @@ package com.example.mentoria.navigation
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -17,8 +20,10 @@ import com.example.mentoria.core.presentation.screens.SearchScreen
 import com.example.mentoria.core.presentation.screens.calendario.CalendarioRoute
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 import com.example.mentoria.core.presentation.screens.horario.HorarioRoute
+import com.example.mentoria.features.auth.data.local.SessionManager
 import com.example.mentoria.features.auth.presentation.login.LoginRoute
 import com.example.mentoria.features.auth.presentation.register.RegisterRoute
+import org.koin.compose.koinInject
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -29,9 +34,24 @@ val LocalOnNavigationBack = compositionLocalOf<() -> Unit> { { } }
 fun NavigationRoot(
     modifier: Modifier = Modifier,
     startDestination: NavKey = LoginKey,
-    //sessionManager: SessionManager = koinInject()
+    sessionManager: SessionManager = koinInject()
 ) {
     val backStack = rememberNavBackStack(startDestination)
+    val tokenState = sessionManager.getTokenFlow().collectAsStateWithLifecycle(initialValue = "")
+
+    // Efecto: Si el token desaparece (null), volvemos al Login
+    LaunchedEffect(tokenState) {
+        if (tokenState == null) {
+            backStack.clear()
+            backStack.add(LoginKey)
+        } else {
+            // Opcional: Si ya hay token y estamos en login, ir a home
+            if (backStack.lastOrNull() is LoginKey) {
+                backStack.add(HomeKey)
+            }
+        }
+    }
+
     // TODO: quitar todo esto ///////////////
     val usuarios = listOf(
         Usuario(
@@ -103,11 +123,11 @@ fun NavigationRoot(
         }
      */
 
-    NavDisplay(
-        backStack = backStack,
-        entryProvider = { route ->
-            NavEntry(route) {
-                CompositionLocalProvider(LocalOnNavigationBack provides { backStack.removeLastOrNull() }) {
+    CompositionLocalProvider(LocalOnNavigationBack provides { backStack.removeLastOrNull() }) {
+        NavDisplay(
+            backStack = backStack,
+            entryProvider = { route ->
+                NavEntry(route) {
                     when (route) {
                         /*
                     is DetallesKey -> NavEntry(route) {
@@ -174,6 +194,6 @@ fun NavigationRoot(
                     }
                 }
             }
-        }
-    )
+        )
+    }
 }

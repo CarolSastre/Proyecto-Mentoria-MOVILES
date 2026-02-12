@@ -2,6 +2,9 @@ package com.example.mentoria
 
 import android.app.Application
 import com.example.mentoria.di.appModule
+import com.example.mentoria.di.authModule
+import com.example.mentoria.di.commonAuthModule
+import com.example.mentoria.di.networkModule
 //import com.example.mentoria.di.commonAuthModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -19,7 +22,10 @@ class AuthApp : Application() {
             androidContext(this@AuthApp)
 
             //modules(commonAuthModule)
-            modules(appModule)
+            modules(
+                networkModule,
+                authModule,
+                appModule)
 
             /*when (BuildConfig.BUILD_TYPE) {
                 "staging" ->

@@ -1,13 +1,19 @@
-package com.example.mentoria.core.data.remote
+package com.example.mentoria.di
 
+import com.example.mentoria.core.data.remote.MentoriaApiService
+import com.example.mentoria.core.network.BaseUrlProvider
+import com.example.mentoria.core.network.json
 import com.example.mentoria.features.auth.data.remote.AuthApi
-import com.example.mentoria.features.auth.data.remote.FakeUsuariosApiService
+import com.example.mentoria.features.auth.data.remote.AuthInterceptor
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
+// TODO: seguramente haya que borrar
 object NetworkModule {
 
     const val BASE_URL =
@@ -34,14 +40,37 @@ object NetworkModule {
 
 }
 
-
 val networkModule = module {
+    single { json }
+
+    singleOf(::AuthInterceptor)
+
     single {
+        OkHttpClient.Builder()
+            .addInterceptor(get<AuthInterceptor>())
+            .build()
+    }
+
+    single {
+        // Para acceder a tu PC (donde corre la API), usa "10.0.2.2"
+        // 192.168.56.1
         Retrofit.Builder()
-            .baseUrl("http://localhost:8080") // TODO: poner direccion a la api
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            //.baseUrl(get<BaseUrlProvider>().baseUrl())
+            .baseUrl("http://192.168.56.1:8080") // TODO: poner direccion a la api
+            .client(get())
+            .addConverterFactory(
+                Json.asConverterFactory(
+                    "application/json".toMediaType()
+                )
+            )
             .build()
     }
 }
+    /*
+    single<AuthApi> {
+        get<Retrofit>().create(AuthApi::class.java)
+    }
+     */
+
 
 

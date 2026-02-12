@@ -10,7 +10,6 @@ import java.time.LocalDate
 class RegisterUseCase(
     private val repository: AuthRepository
 ) { // TODO: confirmar tda la info a padir
-    @RequiresApi(Build.VERSION_CODES.O)
     suspend operator fun invoke(
         dni: String,
         password: String,

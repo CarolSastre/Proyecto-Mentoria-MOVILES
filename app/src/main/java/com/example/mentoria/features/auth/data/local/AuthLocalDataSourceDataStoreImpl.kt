@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
@@ -20,10 +21,12 @@ class AuthLocalDataSourceDataStoreImpl(
         }
     }
 
+    override fun getTokenFlow(): Flow<String?> {
+        return dataStore.data.map { it[AuthPreferencesKeys.TOKEN] }
+    }
+
     override suspend fun getToken(): String? {
-        return dataStore.data.map { preferences ->
-            preferences[AuthPreferencesKeys.TOKEN]
-        }.firstOrNull()
+        return dataStore.data.map { it[AuthPreferencesKeys.TOKEN] }.firstOrNull()
     }
 
     override suspend fun clearToken() {
