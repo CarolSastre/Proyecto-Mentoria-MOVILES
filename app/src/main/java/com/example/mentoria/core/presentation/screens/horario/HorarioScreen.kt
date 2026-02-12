@@ -1,7 +1,5 @@
 package com.example.mentoria.core.presentation.screens.horario
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -9,6 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,10 +32,9 @@ import java.time.temporal.ChronoUnit
 // Constantes de diseño para la vista semanal
 private val WEEK_HOUR_HEIGHT = 64.dp // Un poco más compacta que la vista diaria
 private val SIDEBAR_WIDTH = 40.dp    // Ancho de la columna de horas
-private val WEEK_START_HOUR = 7
-private val WEEK_END_HOUR = 21
+private const val WEEK_START_HOUR = 7
+private const val WEEK_END_HOUR = 21
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HorarioScreen(
     modifier: Modifier = Modifier,
@@ -81,7 +79,7 @@ fun HorarioScreen(
                 }
             }
 
-            Divider()
+            HorizontalDivider()
 
             // 2. Zona de Scroll Vertical (Horas y Bloques)
             BoxWithConstraints(
@@ -99,7 +97,7 @@ fun HorarioScreen(
                 // B. Parrilla de fondo (Líneas divisorias)
                 GridBackground(
                     columnWidth = columnWidth,
-                    totalHeight = maxHeight
+                    //totalHeight = maxHeight
                 ) // Simplificado visualmente
 
                 // C. Los bloques de las clases
@@ -131,6 +129,7 @@ fun HoursSidebarWeekly(height: Dp) {
     Column(
         modifier = Modifier
             .width(SIDEBAR_WIDTH)
+            .height(height)
             .padding(top = 10.dp) // Ajuste fino para alinear texto con línea
     ) {
         for (hour in WEEK_START_HOUR..WEEK_END_HOUR) {
@@ -148,11 +147,11 @@ fun HoursSidebarWeekly(height: Dp) {
 }
 
 @Composable
-fun GridBackground(columnWidth: Dp, totalHeight: Dp) {
+fun GridBackground(columnWidth: Dp) {
     // Dibujamos líneas horizontales para cada hora
     Column(modifier = Modifier.padding(start = SIDEBAR_WIDTH)) {
         for (hour in WEEK_START_HOUR..WEEK_END_HOUR) {
-            Divider(
+            HorizontalDivider(
                 color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f),
                 modifier = Modifier
                     .height(WEEK_HOUR_HEIGHT)
@@ -177,7 +176,6 @@ fun GridBackground(columnWidth: Dp, totalHeight: Dp) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WeeklyCourseCard(
     horario: Horario,
@@ -251,7 +249,6 @@ fun getDayIndex(dia: String): Int {
 }
 
 // --- PREVIEW ---
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true, widthDp = 400, heightDp = 800)
 @Composable
 fun HorarioSemanalPreview() {

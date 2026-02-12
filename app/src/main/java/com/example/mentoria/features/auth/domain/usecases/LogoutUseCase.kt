@@ -1,7 +1,7 @@
 package com.example.mentoria.features.auth.domain.usecases
 
-import com.example.mentoria.core.presentation.SessionManager
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
+import com.example.mentoria.features.auth.data.local.SessionManager
 
 /**
  * No devuelve nada

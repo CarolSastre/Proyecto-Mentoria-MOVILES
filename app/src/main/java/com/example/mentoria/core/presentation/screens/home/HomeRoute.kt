@@ -37,7 +37,6 @@ fun HomeRoute(
             HomeUiEvent.OnCalendario -> onCalendarioClick()
             HomeUiEvent.OnHorario -> onHorarioClick()
             HomeUiEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
-            else -> snackbarHostState.showSnackbar("Error desconocido")
         }
     }
 

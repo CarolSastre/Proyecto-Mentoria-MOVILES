@@ -95,7 +95,7 @@ fun HeaderCalendario(
 
         // Texto del mes (ej: "Febrero 2024")
         Text(
-            text = "${currentMonth.month.getDisplayName(TextStyle.FULL, Locale("es", "ES")).replaceFirstChar { it.uppercase() }} ${currentMonth.year}",
+            text = "${currentMonth.month.getDisplayName(TextStyle.FULL, Locale.forLanguageTag("es")).replaceFirstChar { it.uppercase() }} ${currentMonth.year}",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
