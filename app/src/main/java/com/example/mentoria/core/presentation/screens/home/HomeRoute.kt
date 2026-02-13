@@ -13,7 +13,6 @@ import com.example.mentoria.navigation.LocalOnNavigationBack
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeRoute(
     onLoggedOut: () -> Unit,
