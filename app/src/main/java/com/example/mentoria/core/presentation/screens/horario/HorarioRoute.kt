@@ -10,7 +10,6 @@ import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import org.koin.compose.koinInject
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HorarioRoute (
     viewModel: HorarioViewModel = koinInject(),

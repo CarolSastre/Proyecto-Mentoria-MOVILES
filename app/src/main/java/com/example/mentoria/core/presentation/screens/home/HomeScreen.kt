@@ -30,9 +30,9 @@ import com.example.mentoria.core.presentation.components.RegistroDetailsCard
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
+    state: HomeUiState,
     modifier: Modifier = Modifier,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     onNFCClick: () -> Unit = {},
@@ -40,9 +40,6 @@ fun HomeScreen(
     onCalendarioClick: () -> Unit,
     onHorarioClick: () -> Unit,
     onLogOut: () -> Unit,
-    //
-    usuario: Usuario,
-    registros: List<RegistroAcceso>,
 ) {
     MainScaffold(
         modifier = Modifier,
@@ -55,7 +52,7 @@ fun HomeScreen(
         onHorarioClick = onHorarioClick,
         onLogOut = onLogOut,
         //
-        usuario = usuario,
+        usuario = state.usuario,
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -80,7 +77,7 @@ fun HomeScreen(
                         .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text(text = "Hola, ${usuario.nombre}!",
+                    Text(text = "Hola, ${state.usuario?.nombre}!",
                         style = MaterialTheme.typography.titleLarge
                     )
                     Text("Bienvenido a la pantalla principal")
@@ -91,7 +88,7 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 items(
-                    items = registros,
+                    items = state.registros,
                     key = { it.id }
                 ) { registro ->
                     RegistroDetailsCard(
@@ -159,9 +156,11 @@ fun HomeScreenPreview() {
     )
 
     HomeScreen(
+        state = HomeUiState(
+            usuario = alumnas[0],
+            registros = lista
+        ),
         onSearchClick = {},
-        registros = lista,
-        usuario = alumnas[0],
         onCalendarioClick = {},
         onHorarioClick = {},
         onLogOut = {}

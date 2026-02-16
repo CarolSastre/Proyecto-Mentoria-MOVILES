@@ -1,11 +1,11 @@
 package com.example.mentoria.di
 
 import com.example.mentoria.core.data.remote.FakeUsuariosApiService
-import com.example.mentoria.core.data.remote.MentoriaApiService
+import com.example.mentoria.core.data.remote.UsuarioApiService
 import org.koin.dsl.module
 
 val mockNetworkModule = module {
-    single<MentoriaApiService> { FakeUsuariosApiService() }
+    single<UsuarioApiService> { FakeUsuariosApiService() }
 }
 
 /*

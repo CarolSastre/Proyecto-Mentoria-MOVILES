@@ -4,7 +4,6 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavEntry
@@ -16,10 +15,11 @@ import com.example.mentoria.core.domain.model.Horario
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
-import com.example.mentoria.core.presentation.screens.SearchScreen
+import com.example.mentoria.core.presentation.screens.search.SearchScreen
 import com.example.mentoria.core.presentation.screens.calendario.CalendarioRoute
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 import com.example.mentoria.core.presentation.screens.horario.HorarioRoute
+import com.example.mentoria.core.presentation.screens.search.SearchRoute
 import com.example.mentoria.features.auth.data.local.SessionManager
 import com.example.mentoria.features.auth.presentation.login.LoginRoute
 import com.example.mentoria.features.auth.presentation.register.RegisterRoute
@@ -169,16 +169,11 @@ fun NavigationRoot(
                                 onHorarioClick = {
                                     backStack.add(HorarioKey)
                                 },
-                                //
-                                usuario = usuarios[0],
-                                registros = registros
                             )
 
                         is SearchKey ->
-                            SearchScreen(
-                                onResultClick = { /*TODO*/ },
-                                //
-                                lista = usuarios,
+                            SearchRoute(
+                                onNavigateToUsuario = { TODO("Crear pantalla de detalles") }
                             )
 
                         is CalendarKey ->

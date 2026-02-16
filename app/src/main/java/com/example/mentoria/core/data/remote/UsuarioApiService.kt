@@ -1,12 +1,11 @@
 package com.example.mentoria.core.data.remote
 
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
-import retrofit2.http.Body
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface MentoriaApiService {
+interface UsuarioApiService {
     companion object {
         const val DEFAULT_REGION = "ES"
         const val API_HOST = "" // "api.themoviedb.org"
@@ -16,7 +15,10 @@ interface MentoriaApiService {
 
     // TODO: aquí hay que definir (y modificar) los endpoints
     @GET("/usuarios")
-    suspend fun getUsuarios(): List<UsuarioDto>
+    fun getAllUsuarios(): Flow<List<UsuarioDto>>
+
+    @GET("/usuarios/{id}")
+    fun getUsuarioById(@Path("id") id: Int): Flow<UsuarioDto>
 
 //    @GET("/usuarios/{query}")
 //    suspend fun searchUsuario(@Path("query") query: String): UsuarioResponse

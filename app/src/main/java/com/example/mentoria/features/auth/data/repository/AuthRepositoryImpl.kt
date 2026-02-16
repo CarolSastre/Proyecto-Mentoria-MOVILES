@@ -7,6 +7,8 @@ import com.example.mentoria.core.data.remote.mappers.toDomain
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class AuthRepositoryImpl(
     private val remote: AuthRemoteDataSource,
@@ -47,7 +49,12 @@ class AuthRepositoryImpl(
         localDataSource.clearToken() // Ahora funciona porque actualizamos la interfaz en el paso 3
     }
 
-    override suspend fun isUserLoggedIn(): Boolean {
+    override suspend fun isUserLoggedIn(): Boolean { // TODO: si devolvemos un flow este no es necesario
         return localDataSource.getToken() != null
+    }
+
+    // Esta función nos servirá para saber si estamos logueados en tiempo real
+    override fun getSessionState(): Flow<Boolean> {
+        return localDataSource.getTokenFlow().map { !it.isNullOrBlank() }
     }
 }

@@ -20,7 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    //private val viewModel: MainViewModel by viewModel()
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //val splashScreen = installSplashScreen()
@@ -36,18 +36,20 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MentoriaTheme {
-                /*
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
-                if (state != StartUiState.Loading) {
-                    val startDestination = when (state) {
-                        StartUiState.Logged -> HomeKey
-                        StartUiState.NotLogged -> LoginKey
-                        else -> error("Estado inválido")
+
+                // Solo pintamos la navegación cuando dejamos de cargar
+                when (state) {
+                    StartUiState.Loading -> {
+                        // Aquí no pintamos nada (se ve el splash) o una pantalla de carga vacía
                     }
-                    NavigationRoot(startDestination = startDestination)
+                    StartUiState.Logged -> {
+                        NavigationRoot(startDestination = HomeKey)
+                    }
+                    StartUiState.NotLogged -> {
+                        NavigationRoot(startDestination = LoginKey)
+                    }
                 }
-                 */
-                NavigationRoot(startDestination = LoginKey)
             }
         }
     }
