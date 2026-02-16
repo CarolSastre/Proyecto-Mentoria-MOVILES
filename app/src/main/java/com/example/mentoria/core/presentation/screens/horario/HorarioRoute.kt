@@ -9,10 +9,11 @@ import com.example.mentoria.core.domain.model.Horario
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HorarioRoute (
-    viewModel: HorarioViewModel = koinInject(),
+    viewModel: HorarioViewModel = koinViewModel(),
     //
     usuario: Usuario,
     horarios: List<Horario>

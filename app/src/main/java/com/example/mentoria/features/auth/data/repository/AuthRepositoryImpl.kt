@@ -32,6 +32,8 @@ class AuthRepositoryImpl(
                 localDataSource.saveToken(it)
             }
 
+            println("Login Response Usuario: ${response.usuario}")
+
             // 5. Mapear Usuario (Ahora sí encuentra toDomain() gracias al import correcto)
             response.usuario?.toDomain()
 
@@ -53,7 +55,6 @@ class AuthRepositoryImpl(
         return localDataSource.getToken() != null
     }
 
-    // Esta función nos servirá para saber si estamos logueados en tiempo real
     override fun getSessionState(): Flow<Boolean> {
         return localDataSource.getTokenFlow().map { !it.isNullOrBlank() }
     }

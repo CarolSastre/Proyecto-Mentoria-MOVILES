@@ -29,13 +29,10 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     state: LoginUiState,
-    loadingProgressBar: Boolean = false,
-    imageError: Boolean = false,
-    onLoginClick: (String, String) -> Unit,
-    onCreateAccountClick: () -> Unit
+    onAction: (LoginUiAction) -> Unit,
 ) {
-    var dni by rememberSaveable { mutableStateOf(value = "test") }
-    var password by rememberSaveable { mutableStateOf(value = "1234") }
+    var dni by rememberSaveable { mutableStateOf(value = "22222222B") }
+    var password by rememberSaveable { mutableStateOf(value = "spiderman") }
 
     val focusManager = LocalFocusManager.current
 
@@ -71,7 +68,7 @@ fun LoginScreen(
                 fontSize = 30.sp
             )
 
-            TextOutOfTextField (
+            TextOutOfTextField(
                 text = dni,
                 title = "DNI",
                 placeholder = "Ej: 000000000A",
@@ -82,15 +79,13 @@ fun LoginScreen(
             PasswordOutTextField(
                 textValue = password,
                 onValueChange = { password = it },
-                onDone = {
-                    focusManager.clearFocus()
-                }
+                onDone = { focusManager.clearFocus() }
             )
 
             Button(
                 onClick = {
-                    onLoginClick(dni, password)
-                    // TODO: pasar los datos de autentificación
+                    focusManager.clearFocus()
+                    onAction(LoginUiAction.OnLoginClick(dni, password))
                 },
                 modifier = Modifier.width(200.dp),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
@@ -100,23 +95,20 @@ fun LoginScreen(
                     MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text(
-                    text = "Iniciar sesión",
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = 25.sp,
-                )
-            }
-
-            state.error?.let {
-                Text(
-                    text = it,
-                    color = MaterialTheme.colorScheme.error
-                )
+                if (state.isLoading) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp
+                    )
+                } else {
+                    Text(text = "Iniciar Sesión", fontSize = 20.sp)
+                }
             }
 
             Button(
                 onClick = {
-                    onCreateAccountClick()
+                    onAction(LoginUiAction.OnRegisterClick)
                 },
                 modifier = Modifier.width(200.dp),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
@@ -126,43 +118,9 @@ fun LoginScreen(
                 )
             ) {
                 Text(
-                    text = "Registrarse",
-                    fontSize = 25.sp,
+                    text = "Crear cuenta",
+                    fontSize = 20.sp,
                     //color = Color.White
-                )
-            }
-        }
-
-        if (imageError) {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                /*
-            Image(
-                painter = painterResource(
-                    id = // TODO R.drawable.ic_error_imagen
-                        ),
-                contentDescription = "Image Error",
-                modifier = modifier.size(250.dp)
-
-            )
-            */
-            }
-        }
-
-        if (loadingProgressBar) {
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.85f),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator(
-                    color = Color.Blue,
-                    strokeWidth = 5.dp,
-                    modifier = modifier.size(60.dp)
                 )
             }
         }
@@ -174,7 +132,6 @@ fun LoginScreen(
 fun LoginScreenPreview() {
     LoginScreen(
         state = LoginUiState(),
-        onLoginClick = { _, _ -> },
-        onCreateAccountClick = {}
+        onAction = {}
     )
 }

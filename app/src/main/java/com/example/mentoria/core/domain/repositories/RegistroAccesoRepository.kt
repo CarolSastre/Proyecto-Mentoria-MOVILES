@@ -4,9 +4,9 @@ import com.example.mentoria.core.domain.model.RegistroAcceso
 import kotlinx.coroutines.flow.Flow
 
 interface RegistroAccesoRepository {
-    fun getAllRegistros(): Flow<RegistroAcceso>
+    fun getAllRegistros(): Flow<List<RegistroAcceso>>
     fun getRegistro(): Flow<RegistroAcceso>
-    fun getRegistroFromUsuario(): Flow<RegistroAcceso>
+    fun getRegistrosFromUsuario(id: String): Flow<List<RegistroAcceso>>
     suspend fun deleteRegistro(registroId: String)
     suspend fun createRegistro(registro: RegistroAcceso)
 }

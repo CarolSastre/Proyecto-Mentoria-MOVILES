@@ -18,7 +18,7 @@ interface UsuarioApiService {
     fun getAllUsuarios(): Flow<List<UsuarioDto>>
 
     @GET("/usuarios/{id}")
-    fun getUsuarioById(@Path("id") id: Int): Flow<UsuarioDto>
+    fun getUsuarioById(@Path("id") id: String): Flow<UsuarioDto>
 
 //    @GET("/usuarios/{query}")
 //    suspend fun searchUsuario(@Path("query") query: String): UsuarioResponse

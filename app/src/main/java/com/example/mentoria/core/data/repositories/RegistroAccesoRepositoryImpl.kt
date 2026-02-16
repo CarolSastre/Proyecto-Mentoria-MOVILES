@@ -11,7 +11,7 @@ class RegistroAccesoRepositoryImpl(
     private val api: UsuarioApiService,
     private val registroAccesoDao: RegistroDao
 ): RegistroAccesoRepository {
-    override fun getAllRegistros(): Flow<RegistroAcceso> {
+    override fun getAllRegistros(): Flow<List<RegistroAcceso>> {
         val local = registroAccesoDao.getAllRegistros()
         local.map{ registros ->
             if (registros.isNotEmpty())
@@ -33,7 +33,7 @@ class RegistroAccesoRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getRegistroFromUsuario(): Flow<RegistroAcceso> {
+    override fun getRegistrosFromUsuario(id: String): Flow<List<RegistroAcceso>> {
         TODO("Not yet implemented")
     }
 

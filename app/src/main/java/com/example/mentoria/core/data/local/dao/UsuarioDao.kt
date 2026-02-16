@@ -12,7 +12,7 @@ interface UsuarioDao {
     @Query("SELECT * FROM usuarios")
     fun getUsuarios(): Flow<List<UsuarioEntity>>
     @Query("SELECT * FROM usuarios WHERE id = :id")
-    fun getUsuarioById(id: Int): Flow<UsuarioEntity>
+    fun getUsuarioById(id: String): Flow<UsuarioEntity>
 
     // CAMBIO: Devuelve List<Long> en lugar de Unit para evitar error "jvm signature V"
     @Insert(onConflict = REPLACE)

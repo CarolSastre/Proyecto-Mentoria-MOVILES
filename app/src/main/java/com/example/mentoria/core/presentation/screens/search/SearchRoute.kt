@@ -5,10 +5,11 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SearchRoute(
-    viewModel: SeachViewModel = koinInject(),
+    viewModel: SeachViewModel = koinViewModel(),
     onNavigateToUsuario: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -28,6 +29,11 @@ fun SearchRoute(
 
     SearchScreen(
         state = uiState,
-        onAction = viewModel::onAction,
+        onNavigateToUsuario = {
+            onNavigateToUsuario(it)
+        },
+        onAction = { action ->
+            onAction(action)
+        },
     )
 }

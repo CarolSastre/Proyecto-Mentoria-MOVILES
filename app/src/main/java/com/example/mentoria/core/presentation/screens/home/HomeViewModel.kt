@@ -1,13 +1,10 @@
 package com.example.mentoria.core.presentation.screens.home
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentoria.core.domain.model.Usuario
-import com.example.mentoria.core.domain.usecase.GetRegistroFromUsuarioUseCase
-import com.example.mentoria.core.presentation.screens.StartUiState
+import com.example.mentoria.core.domain.usecase.GetRegistrosFromUsuarioUseCase
 import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
-import com.example.mentoria.features.auth.domain.usecases.RegisterUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -22,13 +19,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class HomeViewModel(
     private val logoutUseCase: LogoutUseCase,
     //TODO: crear el caso de uso correspondiente
-    private val getRegistroFromUsuarioUseCase: GetRegistroFromUsuarioUseCase,
+    //private val getRegistrosFromUsuarioUseCase: GetRegistrosFromUsuarioUseCase,
 ): ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState = _uiState.asStateFlow()
@@ -58,19 +54,20 @@ class HomeViewModel(
     }
      */
 
+    /*
     init{
         uiState
             .map { it.usuario }
             .distinctUntilChanged()
             .debounce(300L)
             .flatMapLatest { usuario ->
-                getRegistroFromUsuarioUseCase(usuario?.id ?: "")
+                getRegistrosFromUsuarioUseCase(usuario?.id ?: "")
             }
             .onEach { registros ->
                 _uiState.update { it.copy(registros = registros) }
             }
             .launchIn(viewModelScope)
-    }
+    }*/
 
     private fun notifyEvent(event: HomeUiEvent) {
         viewModelScope.launch {

@@ -10,9 +10,10 @@ import com.example.mentoria.core.data.local.AppDatabase
 import com.example.mentoria.core.data.local.dataStore // Importa la extensión del paso 1
 import com.example.mentoria.core.data.repositories.UsuarioRepositoryRemoteImpl
 import com.example.mentoria.core.domain.repositories.UsuarioRepository
-import com.example.mentoria.core.domain.usecase.GetUsuariosUseCase
+import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
 import com.example.mentoria.core.presentation.screens.MainViewModel
 import com.example.mentoria.core.presentation.screens.search.SeachViewModel
+import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -40,8 +41,8 @@ val appModule = module {
     //single { SessionManager(androidContext()) }
 
     // Domain
-    factoryOf(::GetUsuariosUseCase)
-    //factoryOf(::LogoutUseCase)
+    factoryOf(::GetAllUsuariosUseCase)
+    factoryOf(::LogoutUseCase)
 
     // Presentation
     viewModelOf(::SeachViewModel)

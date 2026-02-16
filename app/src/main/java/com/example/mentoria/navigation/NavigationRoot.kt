@@ -15,11 +15,14 @@ import com.example.mentoria.core.domain.model.Horario
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
+import com.example.mentoria.core.presentation.ObserveAsEvents
 import com.example.mentoria.core.presentation.screens.search.SearchScreen
 import com.example.mentoria.core.presentation.screens.calendario.CalendarioRoute
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 import com.example.mentoria.core.presentation.screens.horario.HorarioRoute
 import com.example.mentoria.core.presentation.screens.search.SearchRoute
+import com.example.mentoria.core.presentation.screens.usuariodetails.UsuarioDetailsRoute
+import com.example.mentoria.features.auth.data.local.SessionEvent
 import com.example.mentoria.features.auth.data.local.SessionManager
 import com.example.mentoria.features.auth.presentation.login.LoginRoute
 import com.example.mentoria.features.auth.presentation.register.RegisterRoute
@@ -37,18 +40,13 @@ fun NavigationRoot(
     sessionManager: SessionManager = koinInject()
 ) {
     val backStack = rememberNavBackStack(startDestination)
-    val tokenState = sessionManager.getTokenFlow().collectAsStateWithLifecycle(initialValue = "")
+    val tokenState = sessionManager.getTokenFlow().collectAsStateWithLifecycle(initialValue = null)
 
     // Efecto: Si el token desaparece (null), volvemos al Login
     LaunchedEffect(tokenState) {
         if (tokenState == null) {
             backStack.clear()
             backStack.add(LoginKey)
-        } else {
-            // Opcional: Si ya hay token y estamos en login, ir a home
-            if (backStack.lastOrNull() is LoginKey) {
-                backStack.add(HomeKey)
-            }
         }
     }
 
@@ -111,17 +109,14 @@ fun NavigationRoot(
     )
 
     ////////////////////////////////////////
-
-    /*
-        sessionManager.events.ObserveAsEvents { event ->
-            when (event) {
-                SessionEvent.LoggedOut -> {
-                    backStack.clear()
-                    backStack.add(LoginKey)
-                }
+    sessionManager.events.ObserveAsEvents { event ->
+        when (event) {
+            SessionEvent.LoggedOut -> {
+                backStack.clear()
+                backStack.add(LoginKey)
             }
         }
-     */
+    }
 
     CompositionLocalProvider(LocalOnNavigationBack provides { backStack.removeLastOrNull() }) {
         NavDisplay(
@@ -129,14 +124,6 @@ fun NavigationRoot(
             entryProvider = { route ->
                 NavEntry(route) {
                     when (route) {
-                        /*
-                    is DetallesKey -> NavEntry(route) {
-                        DetallesKey(
-                            id = route.id,
-                        )
-                    }
-                    */
-
                         is LoginKey ->
                             LoginRoute(
                                 onLoginSuccess = {
@@ -173,7 +160,14 @@ fun NavigationRoot(
 
                         is SearchKey ->
                             SearchRoute(
-                                onNavigateToUsuario = { TODO("Crear pantalla de detalles") }
+                                onNavigateToUsuario = { usuarioId ->
+                                    backStack.add(UsuarioDetailsKey(usuarioId))
+                                }
+                            )
+
+                        is UsuarioDetailsKey ->
+                            UsuarioDetailsRoute(
+                                usuarioId = route.id,
                             )
 
                         is CalendarKey ->

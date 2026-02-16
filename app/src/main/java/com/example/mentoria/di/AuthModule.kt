@@ -15,6 +15,7 @@ import com.example.mentoria.features.auth.data.local.SessionManager
 import com.example.mentoria.features.auth.presentation.login.LoginViewModel
 import com.example.mentoria.features.auth.presentation.register.RegisterViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -29,26 +30,14 @@ val authModule = module {
     single<AuthApi> {
         get<Retrofit>().create(AuthApi::class.java)
     }
-    /*
-    // 2. Proveer AuthRemoteDataSource (La implementación REAL, no la Fake)
-    single<AuthRemoteDataSource> {
-        AuthRemoteDataSourceImpl(api = get())
-    }
 
+    // 2. Proveer AuthRemoteDataSource
+    singleOf(::AuthRemoteDataSourceImpl) { bind<AuthRemoteDataSource>() }
     // 3. Proveer AuthLocalDataSource (DataStore)
-    single<AuthLocalDataSource> {
-        AuthLocalDataSourceDataStoreImpl(dataStore = get())
-    }
-
-    // 4. Proveer Repositorio
-    single<AuthRepository> {
-        AuthRepositoryImpl(remote = get(), localDataSource = get())
-    }
-     */
-    singleOf(::AuthRemoteDataSourceImpl) bind AuthRemoteDataSource::class
+    singleOf(::AuthLocalDataSourceDataStoreImpl) { bind<AuthLocalDataSourceDataStoreImpl>() }
 
     // Y para el repositorio
-    singleOf(::AuthRepositoryImpl) bind AuthRepository::class
+    singleOf(::AuthRepositoryImpl)  { bind<AuthRepository>() }
 
     // Domain
     factoryOf(::RegisterUseCase)
@@ -59,19 +48,3 @@ val authModule = module {
     viewModelOf(::RegisterViewModel)
     viewModelOf(::LoginViewModel)
 }
-/*
-    // Domain
-    factory { LoginUseCase(get()) }
-    factory { RegisterUseCase(get()) }
-
-    factoryOf(::LoginUseCase)
-    factory { IsUserLoggedInUseCase(get()) }
-
-    // Presentation
-    viewModel {
-        LoginViewModel(get())
-    }
-    viewModel {
-        RegisterViewModel(get())
-    }
-*/
