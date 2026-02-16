@@ -2,28 +2,24 @@ package com.example.mentoria.core.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mentoria.core.presentation.screens.StartUiState
-import com.example.mentoria.features.auth.domain.usecases.IsUserLoggedInUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import com.example.mentoria.features.auth.domain.repository.AuthRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 class MainViewModel(
-    private val isUserLoggedIn: IsUserLoggedInUseCase
-): ViewModel() {
-    private val _uiState =
-        MutableStateFlow<StartUiState>(StartUiState.Loading)
+    private val repository: AuthRepository
+) : ViewModel() {
 
-    val uiState = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            val logged = isUserLoggedIn()
-            _uiState.value = if (logged) {
-                StartUiState.Logged
-            } else {
-                StartUiState.NotLogged
-            }
+    // Convertimos el Flow<Boolean> del repo en un UiState
+    val uiState: StateFlow<StartUiState> = repository.getSessionState()
+        .map { isLoggedIn ->
+            if (isLoggedIn) StartUiState.Logged else StartUiState.NotLogged
         }
-    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = StartUiState.Loading // ⚠️ IMPORTANTE: Empieza cargando
+        )
 }

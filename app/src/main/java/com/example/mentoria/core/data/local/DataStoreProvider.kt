@@ -1,4 +1,4 @@
-package com.example.mentoria.core.datastore
+package com.example.mentoria.core.data.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore

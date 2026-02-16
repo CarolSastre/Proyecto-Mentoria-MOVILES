@@ -1,4 +1,4 @@
-package com.example.mentoria.core.datastore.entities
+package com.example.mentoria.core.data.local.entities
 
 import androidx.room.Embedded
 import androidx.room.Entity

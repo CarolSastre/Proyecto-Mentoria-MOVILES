@@ -1,9 +1,7 @@
 package com.example.mentoria.di
 
-import com.example.mentoria.core.data.remote.MentoriaApiService
-import com.example.mentoria.core.network.BaseUrlProvider
+import com.example.mentoria.core.data.remote.UsuarioApiService
 import com.example.mentoria.core.network.json
-import com.example.mentoria.features.auth.data.remote.AuthApi
 import com.example.mentoria.features.auth.data.remote.AuthInterceptor
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -34,8 +32,8 @@ object NetworkModule {
         .build()
 
 
-    val apiService: MentoriaApiService by lazy {
-        retrofit.create(MentoriaApiService::class.java)
+    val apiService: UsuarioApiService by lazy {
+        retrofit.create(UsuarioApiService::class.java)
     }
 
 }

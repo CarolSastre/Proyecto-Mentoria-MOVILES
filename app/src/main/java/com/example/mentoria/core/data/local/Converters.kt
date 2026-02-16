@@ -1,4 +1,4 @@
-package com.example.mentoria.core.datastore
+package com.example.mentoria.core.data.local
 
 import androidx.room.TypeConverter
 import java.time.LocalDate

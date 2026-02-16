@@ -17,7 +17,6 @@ class AuthApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        /** 🚀 Inicializar Koin */
         startKoin {
             androidContext(this@AuthApp)
 

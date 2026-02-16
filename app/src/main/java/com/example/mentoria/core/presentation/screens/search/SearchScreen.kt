@@ -1,7 +1,5 @@
-package com.example.mentoria.core.presentation.screens
+package com.example.mentoria.core.presentation.screens.search
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,15 +35,16 @@ import java.time.LocalDate
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    lista: List<Usuario>,
-    onResultClick: (Usuario) -> Unit,
+    state: SearchUiState,
+    onAction: (SearchUiAction) -> Unit = {},
     onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
-    var query by remember { mutableStateOf("") }
-    var expanded by remember { mutableStateOf(false) }
-    val searchResults = remember { mutableStateListOf<Usuario>() }
+    val searchResults = remember { state.usuarios.toMutableList() }
     val onExpandedChange: (Boolean) -> Unit = {
-        expanded = it
+        onAction(SearchUiAction.OnExpandedChange(it))
+    }
+    val onQueryChange: (String) -> Unit = {
+        onAction(SearchUiAction.OnQueryChange(it))
     }
 
     // para el route de detalles
@@ -58,17 +57,17 @@ fun SearchScreen(
     }
      */
 
-    LaunchedEffect(query) {
+    LaunchedEffect(state.query) {
         searchResults.clear()
-        if (query.isNotEmpty()) {
+        if (state.query.isNotEmpty()) {
             searchResults.addAll(
-                lista.filter {
+                state.usuarios.filter {
                     it.nombre.startsWith(
-                        prefix = query,
+                        prefix = state.query,
                         ignoreCase = true,
                     ) ||
                             it.apellidos.startsWith(
-                                prefix = query,
+                                prefix = state.query,
                                 ignoreCase = true,
                             )
                     /*|| // TODO: se puede hacer que busque por nombre o por departamento
@@ -95,26 +94,27 @@ fun SearchScreen(
                 .semantics { traversalIndex = 0f },
             inputField = {
                 SearchBarDefaults.InputField(
-                    query = query,
+                    query = state.query,
                     onQueryChange = {
-                        query = it
+                        onQueryChange(it)
                     },
                     onSearch = {
-                        expanded = false
+                        onExpandedChange(false)
                     },
-                    expanded = expanded,
+                    expanded = state.expanded,
                     onExpandedChange = onExpandedChange,
-                    placeholder = { Text(text = "Buscar...") },
+                    placeholder = { Text(text = "Buscar nombre o apellido...") },
                     leadingIcon = {
-                        if (expanded) {
+                        if (state.expanded) {
                             Icon(
                                 imageVector = Icons.Outlined.ArrowBackIosNew,
                                 contentDescription = "Back button",
                                 modifier = Modifier
                                     .padding(start = 16.dp)
                                     .clickable {
-                                        expanded = false
-                                        query = ""
+                                        onExpandedChange(false)
+                                        onQueryChange("")
+                                        onBack()
                                     },
                             )
                         } else {
@@ -125,10 +125,9 @@ fun SearchScreen(
                             )
                         }
                     },
-                    //trailingIcon = trailingIcon
                 )
             },
-            expanded = expanded,
+            expanded = state.expanded,
             onExpandedChange = onExpandedChange,
         ) {
             if (searchResults.isNotEmpty()) {
@@ -139,7 +138,7 @@ fun SearchScreen(
                 ) {
                     items(
                         items = searchResults,
-                        key = { it.dni }
+                        key = { it.id }
                     ) { usuario ->
                         if (usuario.rol.toString() != "ADMIN") {
                             ListItem(
@@ -154,25 +153,26 @@ fun SearchScreen(
                                     )
                                 },
                                 modifier = Modifier.clickable {
-                                    onResultClick.invoke(usuario)
-                                    query = ""
-                                    expanded = false
+                                    onAction(SearchUiAction.OnUsuarioSelected(usuario.id))
+                                    onQueryChange("")
+                                    onExpandedChange(false)
                                 },
                             )
                         }
                     }
                 }
-            } else if (query.isNotEmpty()) {
+            } else if (state.query.isNotEmpty()) {
                 Text(
                     text = "No se ha encontrado ningún resultado",
                     modifier = Modifier.padding(16.dp),
+                    color = MaterialTheme.colorScheme.inverseSurface,
                 )
             }
         }
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Preview(showSystemUi = true)
 @Composable
 fun SearchScreenPreview() {
@@ -207,7 +207,11 @@ fun SearchScreenPreview() {
         )
     )
     SearchScreen(
-        lista = lista,
-        onResultClick = {}
+        state = SearchUiState(
+            query = "",
+            usuarios = lista,
+            isLoading = false,
+        ),
+        onAction = {},
     )
 }

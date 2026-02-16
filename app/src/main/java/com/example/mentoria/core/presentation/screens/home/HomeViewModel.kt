@@ -4,33 +4,38 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentoria.core.domain.model.Usuario
+import com.example.mentoria.core.domain.usecase.GetRegistroFromUsuarioUseCase
 import com.example.mentoria.core.presentation.screens.StartUiState
 import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
+import com.example.mentoria.features.auth.domain.usecases.RegisterUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class HomeViewModel(
-    private val logoutUseCase: LogoutUseCase
+    private val logoutUseCase: LogoutUseCase,
+    //TODO: crear el caso de uso correspondiente
+    private val getRegistroFromUsuarioUseCase: GetRegistroFromUsuarioUseCase,
 ): ViewModel() {
-
-    init {
-        //obeserveQuery()
-        //observeQueryChanges()
-    }
-    private val _uiState = MutableStateFlow(StartUiState.Loading)
+    private val _uiState = MutableStateFlow(HomeUiState())
     val uiState = _uiState.asStateFlow()
     private val _evenChannel = Channel<HomeUiEvent>()
     val events = _evenChannel.receiveAsFlow()
 
-    // TODO: revisar DI>koin>list_navigation_viewmodel (no es para los stateFlow, sino para par alas pantallas de detalle)
+    // TODO: revisar DI>koin>list_navigation_viewmodel (no es para los stateFlow, sino para para las pantallas de detalle)
     private val _usuarios = MutableStateFlow<List<Usuario>>(emptyList<Usuario>())
     val usuarios = _usuarios.asStateFlow()
 
@@ -52,6 +57,20 @@ class HomeViewModel(
             .launchIn(viewModelScope)
     }
      */
+
+    init{
+        uiState
+            .map { it.usuario }
+            .distinctUntilChanged()
+            .debounce(300L)
+            .flatMapLatest { usuario ->
+                getRegistroFromUsuarioUseCase(usuario?.id ?: "")
+            }
+            .onEach { registros ->
+                _uiState.update { it.copy(registros = registros) }
+            }
+            .launchIn(viewModelScope)
+    }
 
     private fun notifyEvent(event: HomeUiEvent) {
         viewModelScope.launch {

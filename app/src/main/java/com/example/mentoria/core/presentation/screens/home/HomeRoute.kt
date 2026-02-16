@@ -1,17 +1,11 @@
 package com.example.mentoria.core.presentation.screens.home
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.mentoria.core.domain.model.RegistroAcceso
-import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
-import com.example.mentoria.navigation.LocalOnNavigationBack
 import org.koin.compose.koinInject
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeRoute(
@@ -20,13 +14,10 @@ fun HomeRoute(
     onCalendarioClick: () -> Unit,
     onHorarioClick: () -> Unit,
     viewModel: HomeViewModel = koinInject(),
-    //
-    usuario: Usuario,
-    registros: List<RegistroAcceso>,
 ){
 
     // val visible by viewModel.uiState.collectAsStateWithLifecycle()
-    
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
     viewModel.events.ObserveAsEvents { event ->
@@ -39,15 +30,13 @@ fun HomeRoute(
         }
     }
 
-    HomeScreen ( // TODO: poner mejor los métodos que se van a usar
+    HomeScreen ( // TODO: poner mejor los métodos en un action
+        state = uiState.value,
         snackBar = snackbarHostState,
         onLogOut = viewModel::onLogOut,
         onNFCClick = viewModel::onActivateNFC,
         onSearchClick = viewModel::onSearch,
         onCalendarioClick = viewModel::onCalendario,
         onHorarioClick = viewModel::onHorario,
-        //
-        registros = registros,
-        usuario = usuario
     )
 }

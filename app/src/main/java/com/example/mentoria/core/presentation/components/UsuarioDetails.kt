@@ -20,7 +20,7 @@ import com.example.mentoria.core.domain.model.Usuario
 @Composable
 fun UsuarioDetails(
     modifier: Modifier = Modifier,
-    usuario: Usuario,
+    usuario: Usuario?,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -37,29 +37,29 @@ fun UsuarioDetails(
                 .padding(start = 15.dp, bottom = 6.dp)
         ) {
             Text(
-                "${usuario.nombre} ${usuario.apellidos}",
+                "${usuario?.nombre} ${usuario?.apellidos}",
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                usuario.gmail,
+                usuario?.gmail ?: "Correo electrónico no registrado",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = modifier
                     .padding(start = 6.dp),
                 color = MaterialTheme.colorScheme.secondary
             )
             Text(
-                usuario.dni,
+                usuario?.dni ?: "DNI no registrado",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = modifier
                     .padding(start = 6.dp),
                 color = MaterialTheme.colorScheme.secondary
             )
             var extra = "Administración"
-            if (usuario.departamento != null) extra = usuario.departamento.nombre
-            if (usuario.curso != null) extra = usuario.curso
+            if (usuario?.departamento != null) extra = usuario.departamento.nombre
+            if (usuario?.curso != null) extra = usuario.curso
 
             Text(
-                text = "${usuario.rol} - $extra",
+                text = "${usuario?.rol} - $extra",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = modifier
                     .padding(start = 6.dp),

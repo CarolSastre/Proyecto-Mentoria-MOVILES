@@ -1,8 +1,6 @@
 package com.example.mentoria.core.presentation.components
 
 import android.content.res.Configuration
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -64,8 +62,8 @@ fun MainScaffold(
     onHorarioClick: () -> Unit,
     onLogOut: () -> Unit,
     //
-    usuario: Usuario,
-    content: @Composable ((PaddingValues) -> Unit)
+    usuario: Usuario?,
+    content: @Composable (PaddingValues) -> Unit
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -225,7 +223,7 @@ fun MainScaffold(
                         ) {
                             ProfileImage(
                                 drawableResource = R.drawable.prueba_background,
-                                description = "Perfil de ${usuario.nombre} ${usuario.apellidos}",
+                                description = "Perfil de ${usuario?.nombre} ${usuario?.apellidos}",
                                 modifier = modifier
                                     .padding(start = 8.dp)
                                     .fillMaxSize()

@@ -1,11 +1,12 @@
 package com.example.mentoria.core.data.remote
 
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
+import kotlinx.coroutines.flow.Flow
 
-class MentoriaApiServiceImpl(
+class UsuarioApiServiceImpl(
     // TODO: en este ejemplo rafa utiliza ktor, pero habría que usar retrofit?
     //private val client: HttpClient
-) : MentoriaApiService {
+) : UsuarioApiService {
 
     /* Dos ejemplos: un get y una query
     override suspend fun fetchPopularMovies(
@@ -29,7 +30,12 @@ class MentoriaApiServiceImpl(
         }.body()
     }
     */
-    override suspend fun getUsuarios(): List<UsuarioDto> {
+
+    override fun getAllUsuarios(): Flow<List<UsuarioDto>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUsuarioById(id: Int): Flow<UsuarioDto> {
         TODO("Not yet implemented")
     }
 }
