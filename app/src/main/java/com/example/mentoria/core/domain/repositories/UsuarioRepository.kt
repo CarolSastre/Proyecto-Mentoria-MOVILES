@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface UsuarioRepository {
     fun getAllUsuarios(): Flow<List<Usuario>>
 
-    fun getUsuarioById(id: Int): Flow<Usuario>
+    fun getUsuarioById(id: String): Flow<Usuario>
 }

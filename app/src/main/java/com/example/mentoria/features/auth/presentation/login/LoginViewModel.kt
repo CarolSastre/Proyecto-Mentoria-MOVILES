@@ -8,32 +8,54 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase
-): ViewModel() {
+) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     private val _eventChannel = Channel<LoginUiEvent>()
     val events = _eventChannel.receiveAsFlow()
 
-    fun login(email: String, password: String) {
-        viewModelScope.launch {
-            _uiState.value = LoginUiState(isLoading = true)
-
-            runCatching {
-                loginUseCase(email, password)
-            }.onSuccess {
-                _uiState.value = LoginUiState()
-                _eventChannel.send(LoginUiEvent.LoginSuccess)
-            }.onFailure {
-                _uiState.value = LoginUiState(
-                    error = it.message ?: "Error inesperado"
-                )
-            }
+    fun onAction(action: LoginUiAction) {
+        when (action) {
+            is LoginUiAction.OnLoginClick -> login(action.dni, action.password)
+            LoginUiAction.OnRegisterClick -> register()
         }
     }
 
+    private fun register() {
+        viewModelScope.launch {
+            _eventChannel.send(LoginUiEvent.OnRegister)
+        }
+    }
+
+    private fun login(dni: String, password: String) {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(isLoading = true, error = null)
+            }
+
+            val result = runCatching {
+                loginUseCase(dni, password)
+            }
+
+            result.onSuccess { usuario ->
+                _uiState.update { it.copy(isLoading = false) }
+                if (usuario != null) {
+                    _eventChannel.send(LoginUiEvent.LoginSuccess)
+                    // TODO: guardar el token?
+                } else {
+                    _uiState.update { it.copy(error = "Dni o contraseña incorrecta") }
+                }
+            }.onFailure { exception ->
+                _uiState.update {
+                    it.copy(isLoading = false, error = exception.message ?: "Error desconocido")
+                }
+            }
+        }
+    }
 }

@@ -36,6 +36,7 @@ import java.time.LocalDate
 fun SearchScreen(
     modifier: Modifier = Modifier,
     state: SearchUiState,
+    onNavigateToUsuario: (String) -> Unit,
     onAction: (SearchUiAction) -> Unit = {},
     onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
@@ -46,16 +47,6 @@ fun SearchScreen(
     val onQueryChange: (String) -> Unit = {
         onAction(SearchUiAction.OnQueryChange(it))
     }
-
-    // para el route de detalles
-    /**
-     id: String
-     viewModel: SearchViewModel = koinViewModel{
-        parametersOf(
-            id= id
-        )
-    }
-     */
 
     LaunchedEffect(state.query) {
         searchResults.clear()
@@ -153,7 +144,7 @@ fun SearchScreen(
                                     )
                                 },
                                 modifier = Modifier.clickable {
-                                    onAction(SearchUiAction.OnUsuarioSelected(usuario.id))
+                                    onNavigateToUsuario(usuario.id)
                                     onQueryChange("")
                                     onExpandedChange(false)
                                 },
@@ -212,6 +203,7 @@ fun SearchScreenPreview() {
             usuarios = lista,
             isLoading = false,
         ),
+        onNavigateToUsuario = {},
         onAction = {},
     )
 }

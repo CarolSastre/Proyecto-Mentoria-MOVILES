@@ -83,7 +83,6 @@ fun MainTopAppBar(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun MainTopAppBarPreview() {

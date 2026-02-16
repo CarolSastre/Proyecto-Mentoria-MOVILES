@@ -77,7 +77,8 @@ fun HomeScreen(
                         .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text(text = "Hola, ${state.usuario?.nombre}!",
+                    val nombre = state.usuario?.nombre ?: "Usuario Invitado"
+                    Text(text = "Hola, ${nombre}!",
                         style = MaterialTheme.typography.titleLarge
                     )
                     Text("Bienvenido a la pantalla principal")
@@ -103,7 +104,6 @@ fun HomeScreen(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {

@@ -7,11 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarioRoute(
-    viewModel: CalendarioViewModel = koinInject(),
+    viewModel: CalendarioViewModel = koinViewModel(),
 ){
     val snackbarHostState = remember { SnackbarHostState() }
 

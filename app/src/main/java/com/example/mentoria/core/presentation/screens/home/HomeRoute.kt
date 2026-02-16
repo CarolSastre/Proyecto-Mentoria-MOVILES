@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeRoute(
@@ -13,7 +14,7 @@ fun HomeRoute(
     onSearchClick: () -> Unit,
     onCalendarioClick: () -> Unit,
     onHorarioClick: () -> Unit,
-    viewModel: HomeViewModel = koinInject(),
+    viewModel: HomeViewModel = koinViewModel(),
 ){
 
     // val visible by viewModel.uiState.collectAsStateWithLifecycle()

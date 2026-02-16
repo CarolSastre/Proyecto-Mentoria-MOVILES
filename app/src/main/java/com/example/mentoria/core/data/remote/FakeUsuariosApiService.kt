@@ -26,7 +26,7 @@ class FakeUsuariosApiService : UsuarioApiService {
         )
     }
 
-    override fun getUsuarioById(id: Int): Flow<UsuarioDto> {
+    override fun getUsuarioById(id: String): Flow<UsuarioDto> {
         return flowOf(
             UsuarioDto(
                 id = "1",

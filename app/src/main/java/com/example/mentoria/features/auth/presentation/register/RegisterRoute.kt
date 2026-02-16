@@ -13,7 +13,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun RegisterRoute(
     onRegisterSuccess: () -> Unit,
-    viewModel: RegisterViewModel = koinInject()
+    viewModel: RegisterViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val snackBar = remember { SnackbarHostState() }

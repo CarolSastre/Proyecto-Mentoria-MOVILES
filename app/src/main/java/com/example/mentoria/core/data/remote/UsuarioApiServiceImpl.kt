@@ -35,7 +35,7 @@ class UsuarioApiServiceImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getUsuarioById(id: Int): Flow<UsuarioDto> {
+    override fun getUsuarioById(id: String): Flow<UsuarioDto> {
         TODO("Not yet implemented")
     }
 }

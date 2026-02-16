@@ -44,7 +44,7 @@ class UsuarioRepositoryRemoteImpl(
         awaitClose { job.cancel() }
     }
 
-    override fun getUsuarioById(id: Int): Flow<Usuario> {
+    override fun getUsuarioById(id: String): Flow<Usuario> {
         val local = dao.getUsuarioById(id).map {
             return@map it.toDomain()
         }

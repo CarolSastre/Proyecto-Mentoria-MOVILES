@@ -36,35 +36,50 @@ fun UsuarioDetails(
             modifier = modifier
                 .padding(start = 15.dp, bottom = 6.dp)
         ) {
-            Text(
-                "${usuario?.nombre} ${usuario?.apellidos}",
-                style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                usuario?.gmail ?: "Correo electrónico no registrado",
-                style = MaterialTheme.typography.labelLarge,
-                modifier = modifier
-                    .padding(start = 6.dp),
-                color = MaterialTheme.colorScheme.secondary
-            )
-            Text(
-                usuario?.dni ?: "DNI no registrado",
-                style = MaterialTheme.typography.labelLarge,
-                modifier = modifier
-                    .padding(start = 6.dp),
-                color = MaterialTheme.colorScheme.secondary
-            )
-            var extra = "Administración"
-            if (usuario?.departamento != null) extra = usuario.departamento.nombre
-            if (usuario?.curso != null) extra = usuario.curso
+            if (usuario?.id == null) {
+                Text(
+                    "Usuario invitado",
+                    style = MaterialTheme.typography.titleLarge
+                )
 
-            Text(
-                text = "${usuario?.rol} - $extra",
-                style = MaterialTheme.typography.labelLarge,
-                modifier = modifier
-                    .padding(start = 6.dp),
-                color = MaterialTheme.colorScheme.secondary
-            )
+                Text(
+                    text = "ADMIN",
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = modifier
+                        .padding(start = 6.dp),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            } else {
+                Text(
+                    "${usuario.nombre} ${usuario.apellidos}",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    usuario.gmail,
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = modifier
+                        .padding(start = 6.dp),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+                Text(
+                    usuario.dni,
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = modifier
+                        .padding(start = 6.dp),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+                var extra = "Administación"
+                if (usuario.departamento != null) extra = usuario.departamento.nombre
+                if (usuario.curso != null) extra = usuario.curso
+
+                Text(
+                    text = "${usuario.rol} - $extra",
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = modifier
+                        .padding(start = 6.dp),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
         }
     }
 }
