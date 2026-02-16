@@ -31,8 +31,8 @@ fun LoginScreen(
     state: LoginUiState,
     onAction: (LoginUiAction) -> Unit,
 ) {
-    var dni by rememberSaveable { mutableStateOf(value = "22222222B") }
-    var password by rememberSaveable { mutableStateOf(value = "spiderman") }
+    var dni by rememberSaveable { mutableStateOf(value = "10000000P") }
+    var password by rememberSaveable { mutableStateOf(value = "1234") }
 
     val focusManager = LocalFocusManager.current
 

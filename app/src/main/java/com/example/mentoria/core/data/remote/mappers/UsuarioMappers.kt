@@ -30,7 +30,6 @@ fun UsuarioEntity.toDomain(): Usuario {
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun UsuarioDto.toDomain(): Usuario {
     return Usuario(
         id = id ?: "",

@@ -9,7 +9,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SearchRoute(
-    viewModel: SeachViewModel = koinViewModel(),
+    viewModel: SearchViewModel = koinViewModel(),
     onNavigateToUsuario: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -17,6 +17,7 @@ fun SearchRoute(
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
             is SearchUiEvent.OnSelectUser -> onNavigateToUsuario(event.userId)
+            //SearchUiEvent.OnBack -> {} // TODO: ?
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.mentoria.di
 
+import com.example.mentoria.core.data.remote.UsuarioApiService
 import com.example.mentoria.core.presentation.screens.calendario.CalendarioViewModel
 import com.example.mentoria.core.presentation.screens.home.HomeViewModel
 import com.example.mentoria.core.presentation.screens.horario.HorarioViewModel
@@ -7,17 +8,17 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import androidx.room.Room
 import com.example.mentoria.core.data.local.AppDatabase
-import com.example.mentoria.core.data.local.dataStore // Importa la extensión del paso 1
+import com.example.mentoria.core.data.local.dataStore
 import com.example.mentoria.core.data.repositories.UsuarioRepositoryRemoteImpl
 import com.example.mentoria.core.domain.repositories.UsuarioRepository
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
 import com.example.mentoria.core.presentation.screens.MainViewModel
-import com.example.mentoria.core.presentation.screens.search.SeachViewModel
+import com.example.mentoria.core.presentation.screens.search.SearchViewModel
 import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
+import org.koin.core.module.dsl.viewModel
+import retrofit2.Retrofit
 
 val appModule = module {
     // Data -
@@ -31,13 +32,19 @@ val appModule = module {
             AppDatabase::class.java,
             "mentoria_database"
         )
-            .fallbackToDestructiveMigration() // TODO: Útil en desarrollo para no crashear si cambias esquemas, borrar después si eso...
+            .fallbackToDestructiveMigration()
             .build()
     }
 
     // --- 3. DAOs ---
     single { get<AppDatabase>().usuarioDao() }
-    singleOf(::UsuarioRepositoryRemoteImpl) bind UsuarioRepository::class
+    single<UsuarioApiService> {
+        get<Retrofit>().create(UsuarioApiService::class.java)
+    }
+    single<UsuarioRepository> {
+        UsuarioRepositoryRemoteImpl(get(), get())
+    }
+    // singleOf(::UsuarioRepositoryRemoteImpl) bind UsuarioRepository::class
     //single { SessionManager(androidContext()) }
 
     // Domain
@@ -45,34 +52,11 @@ val appModule = module {
     factoryOf(::LogoutUseCase)
 
     // Presentation
-    viewModelOf(::SeachViewModel)
+    viewModel{
+        SearchViewModel(get())
+    }
     viewModelOf(::CalendarioViewModel)
     viewModelOf(::HorarioViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::MainViewModel)
 }
-/**
-// Networking
-single { provideOkHttpClient(get()) }
-single { provideRetrofit(get()) }
-single { provideAuthApi(get()) }
-}
-
-fun provideOkHttpClient(sessionManager: SessionManager): OkHttpClient {
-return OkHttpClient.Builder()
-.addInterceptor(AuthInterceptor(sessionManager))
-.build()
-}
-
-fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-return Retrofit.Builder()
-.baseUrl("http://10.0.2.2:8080") // Replace with your base URL
-.client(okHttpClient)
-.addConverterFactory(GsonConverterFactory.create())
-.build()
-}
-
-fun provideAuthApi(retrofit: Retrofit): AuthApi {
-return retrofit.create(AuthApi::class.java)
-}
- */
