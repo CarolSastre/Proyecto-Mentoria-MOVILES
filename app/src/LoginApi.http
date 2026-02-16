@@ -1,0 +1,13 @@
+### POST request to example server
+POST http://10.161.63.163:8080/api/acceso/validar
+Content-Type: application/json
+
+{
+  "dni": "22222222B",
+  "password": "spiderman"
+}
+
+
+###
+GET http://10.161.63.163:8080/api/usuarios
+Content-Type: application/json

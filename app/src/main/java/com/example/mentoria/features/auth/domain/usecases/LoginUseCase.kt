@@ -15,6 +15,6 @@ class LoginUseCase(
         }
         val result = authRepository.login(LoginRequest(dni, password))
 
-        return result.usuario?.toDomain()
+        return result.usuario?.toDomain()?: throw Exception("Error al obtener el usuario")
     }
 }

@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SeachViewModel(
+class SearchViewModel(
     private val getAllUsuariosUseCase: GetAllUsuariosUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SearchUiState())
@@ -31,6 +32,7 @@ class SeachViewModel(
             is SearchUiAction.OnExpandedChange -> expandedChange(action.expanded)
             is SearchUiAction.OnQueryChange -> queryChange(action.query)
             is SearchUiAction.OnUsuarioSelected -> usuarioSelected(action.id)
+            //SearchUiAction.OnBackClick -> {} // TODO: ?
         }
     }
 
@@ -42,13 +44,13 @@ class SeachViewModel(
 
     private fun expandedChange(expanded: Boolean) {
         viewModelScope.launch {
-            _uiState.value.copy(expanded = expanded)
+            _uiState.update { it.copy(expanded = expanded) }
         }
     }
 
     private fun queryChange(query: String) {
         viewModelScope.launch {
-            _uiState.value.copy(query = query)
+            _uiState.update { it.copy(query = query) }
         }
     }
 }

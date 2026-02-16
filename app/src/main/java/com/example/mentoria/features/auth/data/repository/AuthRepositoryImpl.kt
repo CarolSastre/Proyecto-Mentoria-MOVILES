@@ -34,7 +34,7 @@ class AuthRepositoryImpl(
 
             println("Login Response Usuario: ${response.usuario}")
 
-            // 5. Mapear Usuario (Ahora sí encuentra toDomain() gracias al import correcto)
+            // 5. Mapear Usuario
             response.usuario?.toDomain()
 
         } catch (e: Exception) {

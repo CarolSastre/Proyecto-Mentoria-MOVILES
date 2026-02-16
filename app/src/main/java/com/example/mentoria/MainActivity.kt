@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
             MentoriaTheme {
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+                /*
                 // Solo pintamos la navegación cuando dejamos de cargar
                 when (state) {
                     StartUiState.Loading -> {
@@ -49,7 +50,8 @@ class MainActivity : ComponentActivity() {
                     StartUiState.NotLogged -> {
                         NavigationRoot(startDestination = LoginKey)
                     }
-                }
+                }*/
+                NavigationRoot(startDestination = HomeKey)
             }
         }
     }

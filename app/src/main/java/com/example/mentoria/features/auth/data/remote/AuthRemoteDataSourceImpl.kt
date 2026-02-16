@@ -9,6 +9,9 @@ class AuthRemoteDataSourceImpl(
 
     override suspend fun login(request: LoginRequest): LoginResponse {
         // Aquí se hace la llamada de red real
-        return api.login(request)
+        val response = api.login(request)
+        println(response.raw().body.string())
+        return response.body() ?: throw Exception("Error al obtener el usuario")
+
     }
 }
