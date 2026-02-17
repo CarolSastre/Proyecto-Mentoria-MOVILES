@@ -1,0 +1,114 @@
+POST http://192.168.0.110:8080/auth/login
+Content-Type: application/json
+Content-Length: 46
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "dni": "10000000P",
+  "password": "1234"
+}
+
+<> 2026-02-17T001229.200.json
+
+###
+
+POST http://10.161.63.163:8080/auth/login
+Content-Type: application/json
+Content-Length: 46
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "dni": "10000000P",
+  "password": "1234"
+}
+
+<> 2026-02-16T203211.200.json
+
+###
+
+POST http://10.161.63.163:8080/login
+Content-Type: application/json
+Content-Length: 46
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "dni": "10000000P",
+  "password": "1234"
+}
+
+###
+
+POST http://10.161.63.163:8080/login
+Content-Type: application/json
+Content-Length: 46
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "dni": "10000000B",
+  "password": "1234"
+}
+
+###
+
+POST http://10.161.63.163:8080/auth/login
+Content-Type: application/json
+Content-Length: 46
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "dni": "10000000B",
+  "password": "1234"
+}
+
+###
+
+GET http://10.161.63.163:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+###
+
+POST http://10.161.63.163:8080/api/acceso/validar
+Content-Type: application/json
+Content-Length: 51
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "dni": "22222222B",
+  "password": "spiderman"
+}
+
+<> 2026-02-16T180436.200.json
+
+###
+
+POST http://10.161.63.163:8080/api/acceso/validar
+Content-Type: application/json
+Content-Length: 51
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "dni": "22222222B",
+  "password": "spiderman"
+}
+
+<> 2026-02-16T180257.200.json
+
+###
+

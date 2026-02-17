@@ -1,0 +1,31 @@
+{
+  "token": "Bearer 881f9f6c-b87d-4199-9b0a-30ac45bc8fe8",
+  "usuario": {
+    "accountNonExpired": true,
+    "accountNonLocked": true,
+    "apellidos": "Docente1",
+    "authorities": [
+      {
+        "authority": "ROLE_PROFESOR"
+      }
+    ],
+    "baja": false,
+    "credentialsNonExpired": true,
+    "curso": null,
+    "departamento": {
+      "nombre": "Informática",
+      "id": "69939b4ddda422ac1834602f"
+    },
+    "dni": "10000000P",
+    "enabled": true,
+    "fechaNacimiento": "1980-01-01",
+    "fotoPerfil": null,
+    "gmail": "profe1@instituto.com",
+    "id": "69939b4ddda422ac18346033",
+    "nfcToken": "NFC_PROFE_1",
+    "nombre": "Profesor1",
+    "password": "$2a$10$kvmchB4YnLGDsElPUUEIKeybZHbSRPVdtXxWoAK84FNIGCjAytdvW",
+    "rol": "PROFESOR",
+    "username": "10000000P"
+  }
+}
