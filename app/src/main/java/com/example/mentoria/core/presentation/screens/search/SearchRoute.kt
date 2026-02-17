@@ -17,7 +17,6 @@ fun SearchRoute(
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
             is SearchUiEvent.OnSelectUser -> onNavigateToUsuario(event.userId)
-            //SearchUiEvent.OnBack -> {} // TODO: ?
         }
     }
 

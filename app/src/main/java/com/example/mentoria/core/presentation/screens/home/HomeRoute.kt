@@ -4,9 +4,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import com.example.mentoria.core.presentation.ObserveAsEvents
+import com.example.mentoria.features.auth.domain.repository.AuthRepository
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.KoinApplication.Companion.init
 
 @Composable
 fun HomeRoute(
@@ -17,7 +21,6 @@ fun HomeRoute(
     viewModel: HomeViewModel = koinViewModel(),
 ){
 
-    // val visible by viewModel.uiState.collectAsStateWithLifecycle()
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 

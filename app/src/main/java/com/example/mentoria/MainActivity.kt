@@ -1,11 +1,9 @@
 package com.example.mentoria
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.mentoria.navigation.NavigationRoot
@@ -28,30 +26,31 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        /*
-        splashScreen.setKeepOnScreenCondition {
-        viewModel.uiState.value is StartUiState.Loading
-        }
-         */
-
         setContent {
             MentoriaTheme {
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
 
                 /*
+                splashScreen.setKeepOnScreenCondition {
+                    state is StartUiState.Loading
+                }
+                 */
+
                 // Solo pintamos la navegación cuando dejamos de cargar
                 when (state) {
                     StartUiState.Loading -> {
                         // Aquí no pintamos nada (se ve el splash) o una pantalla de carga vacía
                     }
+
                     StartUiState.Logged -> {
                         NavigationRoot(startDestination = HomeKey)
                     }
+
                     StartUiState.NotLogged -> {
                         NavigationRoot(startDestination = LoginKey)
                     }
-                }*/
-                NavigationRoot(startDestination = HomeKey)
+                }
+                //NavigationRoot(startDestination = HomeKey)
             }
         }
     }

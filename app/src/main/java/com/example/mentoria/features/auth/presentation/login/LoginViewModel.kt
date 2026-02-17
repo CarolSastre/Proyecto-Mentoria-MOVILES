@@ -45,12 +45,8 @@ class LoginViewModel(
 
             result.onSuccess { usuario ->
                 _uiState.update { it.copy(isLoading = false) }
-                if (usuario != null) {
-                    _eventChannel.send(LoginUiEvent.LoginSuccess)
-                    // TODO: guardar el token?
-                } else {
-                    _uiState.update { it.copy(error = "Dni o contraseña incorrecta") }
-                }
+                _eventChannel.send(LoginUiEvent.LoginSuccess)
+                // TODO: guardar el token?
             }.onFailure { exception ->
                 _uiState.update {
                     it.copy(isLoading = false, error = exception.message ?: "Error desconocido")

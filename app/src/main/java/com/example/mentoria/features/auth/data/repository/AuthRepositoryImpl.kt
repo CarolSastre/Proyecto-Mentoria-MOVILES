@@ -1,19 +1,52 @@
 package com.example.mentoria.features.auth.data.repository
 
+import com.example.mentoria.core.data.remote.UsuarioApiService
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.domain.util.RsaHelper
-import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
 import com.example.mentoria.core.data.remote.mappers.toDomain
+import com.example.mentoria.features.auth.data.local.SessionManager
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 
 class AuthRepositoryImpl(
+    private val sessionManager: SessionManager,
     private val remote: AuthRemoteDataSource,
-    private val localDataSource: AuthLocalDataSource
+    //private val localDataSource: AuthLocalDataSource,
+    private val usuarioApi: UsuarioApiService,
 ) : AuthRepository {
+    // Variable privada mutable
+    private val _currentUser = MutableStateFlow<Usuario?>(
+        null
+        /*
+        Usuario(
+            id = "69935128cd34aa5b7685a3f4",
+            dni = "10000000P",
+            nombre="Profesor1",
+            apellidos="Docente1",
+            nfc = "NFC_PROFE_1",
+            rol = Rol.PROFESOR,
+            fechaNacimiento = LocalDate.parse("1979-12-31"),
+            gmail = "profe1@instituto.com",
+            departamento = Departamento(
+                id = "69935128cd34aa5b7685a3f0",
+                nombre = "Informática"
+            ),
+            baja = false,
+            curso = null,
+        )
+         */
+    )
+
+    // Variable pública inmutable (la que ven los ViewModels)
+    override val currentUser: StateFlow<Usuario?> = _currentUser.asStateFlow()
 
     override suspend fun login(dni: String, passwordRaw: String): Usuario? {
         return try {
@@ -28,15 +61,20 @@ class AuthRepositoryImpl(
             val response = remote.login(request)
 
             // 4. Guardar Token
-            response.token?.let {
-                localDataSource.saveToken(it)
+            response.token?.let { token ->
+                val usuarioId = response.usuario?.id
+                //localDataSource.saveToken(it)
+                sessionManager.saveSession(token, usuarioId)
+
+                response.usuario?.let { usuarioDto ->
+                    _currentUser.value = usuarioDto.toDomain()
+                }
             }
 
             println("Login Response Usuario: ${response.usuario}")
 
             // 5. Mapear Usuario
             response.usuario?.toDomain()
-
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -48,14 +86,38 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun logout() {
-        localDataSource.clearToken() // Ahora funciona porque actualizamos la interfaz en el paso 3
+        sessionManager.clearSession()
+        _currentUser.value = null
     }
 
     override suspend fun isUserLoggedIn(): Boolean { // TODO: si devolvemos un flow este no es necesario
-        return localDataSource.getToken() != null
+        return sessionManager.getToken() != null
     }
 
     override fun getSessionState(): Flow<Boolean> {
-        return localDataSource.getTokenFlow().map { !it.isNullOrBlank() }
+        return sessionManager.getTokenFlow().map { !it.isNullOrBlank() }
+    }
+
+    // Esta es la función que llama el MainViewModel al iniciar
+    override suspend fun fetchCurrentUser() {
+        try {
+            // 1. Recuperamos el ID guardado
+            val userId = sessionManager.userIdFlow.firstOrNull()
+
+            if (userId != null) {
+                // 2. Pedimos los datos frescos a la API
+                usuarioApi.getUsuarioById(userId).collect { usuario ->
+                    // 3. ¡Bingo! Tenemos usuario, actualizamos el estado
+                    _currentUser.update { usuario.toDomain() }
+                }
+            } else {
+                // No hay ID, no estamos logueados realmente
+                logout()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Si falla la red o el token caducó -> Logout
+            logout()
+        }
     }
 }

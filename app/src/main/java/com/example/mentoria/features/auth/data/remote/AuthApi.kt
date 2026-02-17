@@ -8,6 +8,6 @@ import retrofit2.http.POST
 
 interface AuthApi {
     // Asegúrate de que el endpoint sea el correcto en tu backend (ej: "/auth/login")
-    @POST("/api/acceso/validar")
+    @POST("/auth/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 }
