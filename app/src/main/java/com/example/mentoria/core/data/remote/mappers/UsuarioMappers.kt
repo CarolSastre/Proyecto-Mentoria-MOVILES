@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.data.local.entities.UsuarioEntity
+import com.example.mentoria.core.domain.model.Departamento
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.domain.model.Rol
 import java.time.LocalDate

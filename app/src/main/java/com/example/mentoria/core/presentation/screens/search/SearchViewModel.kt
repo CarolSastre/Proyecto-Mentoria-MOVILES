@@ -32,7 +32,6 @@ class SearchViewModel(
             is SearchUiAction.OnExpandedChange -> expandedChange(action.expanded)
             is SearchUiAction.OnQueryChange -> queryChange(action.query)
             is SearchUiAction.OnUsuarioSelected -> usuarioSelected(action.id)
-            //SearchUiAction.OnBackClick -> {} // TODO: ?
         }
     }
 

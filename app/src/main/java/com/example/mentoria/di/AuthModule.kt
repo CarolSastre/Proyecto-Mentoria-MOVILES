@@ -37,7 +37,9 @@ val authModule = module {
     singleOf(::AuthLocalDataSourceDataStoreImpl) { bind<AuthLocalDataSourceDataStoreImpl>() }
 
     // Y para el repositorio
-    singleOf(::AuthRepositoryImpl)  { bind<AuthRepository>() }
+    single<AuthRepository> {
+        AuthRepositoryImpl(get(), get(), get())
+    }
 
     // Domain
     factoryOf(::RegisterUseCase)

@@ -8,13 +8,14 @@ import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 class LoginUseCase(
     private val authRepository: AuthRemoteDataSourceImpl
 ) {
-    suspend operator fun invoke(dni: String, password: String): Usuario? {
+    suspend operator fun invoke(dni: String, password: String): Usuario {
         // Validacion
         if (dni.isBlank() || password.isBlank()) {
             throw IllegalArgumentException("Dni o contraseña en blanco")
         }
-        val result = authRepository.login(LoginRequest(dni, password))
+        val result = authRepository.login(LoginRequest(dni, password)).usuario
+        println("Usuario: $result")
 
-        return result.usuario?.toDomain()?: throw Exception("Error al obtener el usuario")
+        return result?.toDomain() ?: throw Exception("Dni o contraseña incorrecto")
     }
 }

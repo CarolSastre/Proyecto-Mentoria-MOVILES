@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.domain.usecase.GetRegistrosFromUsuarioUseCase
+import com.example.mentoria.features.auth.data.local.SessionManager
+import com.example.mentoria.features.auth.domain.repository.AuthRepository
 import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -23,9 +25,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class HomeViewModel(
     private val logoutUseCase: LogoutUseCase,
-    //TODO: crear el caso de uso correspondiente
+    private val authRepository: AuthRepository
     //private val getRegistrosFromUsuarioUseCase: GetRegistrosFromUsuarioUseCase,
-): ViewModel() {
+) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState = _uiState.asStateFlow()
     private val _evenChannel = Channel<HomeUiEvent>()
@@ -35,39 +37,13 @@ class HomeViewModel(
     private val _usuarios = MutableStateFlow<List<Usuario>>(emptyList<Usuario>())
     val usuarios = _usuarios.asStateFlow()
 
-    /*
-    fun observeQuery() { // persistencia>películas
-        uiState.map{ it.query }
-            .debounce(500.milliseconds)
-            .map{ query -> query.trim() }
-            .distinctUntilChanged()
-            .flatMapLatest { query -> //  (si recoge un flow)
-                getFilteredQuotesUseCase(query)
+    init {
+        viewModelScope.launch {
+            authRepository.currentUser.collect { usuario ->
+                _uiState.update { it.copy(usuario = usuario) }
             }
-            .onEach{
-                quotes ->
-                _uiState.update {
-                    it.copy(quotes = quotes)
-                }
-            }
-            .launchIn(viewModelScope)
+        }
     }
-     */
-
-    /*
-    init{
-        uiState
-            .map { it.usuario }
-            .distinctUntilChanged()
-            .debounce(300L)
-            .flatMapLatest { usuario ->
-                getRegistrosFromUsuarioUseCase(usuario?.id ?: "")
-            }
-            .onEach { registros ->
-                _uiState.update { it.copy(registros = registros) }
-            }
-            .launchIn(viewModelScope)
-    }*/
 
     private fun notifyEvent(event: HomeUiEvent) {
         viewModelScope.launch {
@@ -75,7 +51,7 @@ class HomeViewModel(
         }
     }
 
-    fun onLogOut(){
+    fun onLogOut() {
         viewModelScope.launch {
             logoutUseCase()
         }
@@ -92,6 +68,7 @@ class HomeViewModel(
     fun onCalendario() {
         notifyEvent(HomeUiEvent.OnCalendario)
     }
+
     fun onHorario() {
         notifyEvent(HomeUiEvent.OnHorario)
     }
