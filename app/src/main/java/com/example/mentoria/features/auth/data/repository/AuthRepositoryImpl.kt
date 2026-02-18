@@ -6,6 +6,7 @@ import com.example.mentoria.core.domain.util.RsaHelper
 import com.example.mentoria.core.data.remote.mappers.toDomain
 import com.example.mentoria.features.auth.data.local.SessionManager
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
+import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSourceImpl
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,10 +19,13 @@ import kotlinx.coroutines.flow.update
 
 class AuthRepositoryImpl(
     private val sessionManager: SessionManager,
-    private val remote: AuthRemoteDataSource,
+    private val remote: AuthRemoteDataSourceImpl,
     //private val localDataSource: AuthLocalDataSource,
     private val usuarioApi: UsuarioApiService,
 ) : AuthRepository {
+    init {
+        println("Repo HASH: ${this.hashCode()}")
+    }
     // Variable privada mutable
     private val _currentUser = MutableStateFlow<Usuario?>(
         null
@@ -51,30 +55,34 @@ class AuthRepositoryImpl(
     override suspend fun login(dni: String, passwordRaw: String): Usuario? {
         return try {
             // 1. Encriptar
-            val passwordEncrypted = RsaHelper.encrypt(passwordRaw)
-            if (passwordEncrypted.isEmpty()) return null
+            //val passwordEncrypted = RsaHelper.encrypt(passwordRaw)
+            //if (passwordEncrypted.isEmpty()) return null
 
             // 2. Petición
-            val request = LoginRequest(dni = dni, password = passwordEncrypted)
+            val request = LoginRequest(dni = dni, password = passwordRaw)
 
             // 3. Red
             val response = remote.login(request)
 
             // 4. Guardar Token
             response.token?.let { token ->
-                val usuarioId = response.usuario?.id
+                val usuarioDto = response.usuario
                 //localDataSource.saveToken(it)
-                sessionManager.saveSession(token, usuarioId)
+                usuarioDto?.id?.let { id ->
+                    sessionManager.saveSession(token, id)
+                    sessionManager.setCurrentUser(usuarioDto.toDomain())
+                }
 
-                response.usuario?.let { usuarioDto ->
+                if (usuarioDto != null) {
                     _currentUser.value = usuarioDto.toDomain()
+                    println("AuthRepository: Usuario actualizado en memoria: ${usuarioDto.nombre}") // Log de control
+                } else {
+                    println("AuthRepository: ¡ALERTA! El usuario viene nulo del login")
                 }
             }
 
-            println("Login Response Usuario: ${response.usuario}")
-
             // 5. Mapear Usuario
-            response.usuario?.toDomain()
+            return response.usuario?.toDomain()
         } catch (e: Exception) {
             e.printStackTrace()
             null

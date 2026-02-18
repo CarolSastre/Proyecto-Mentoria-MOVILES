@@ -46,12 +46,5 @@ fun LoginRoute(
         onAction = { action ->
             onAction(action)
         },
-        /*
-        onLoginClick = {
-            dni, password -> onAction(LoginUiAction.OnLoginClick(dni, password))
-        },
-        onCreateAccountClick = {
-            onAction(LoginUiAction.OnRegisterClick)
-        }*/
     )
 }

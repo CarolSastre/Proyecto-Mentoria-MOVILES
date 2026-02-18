@@ -41,6 +41,7 @@ fun NavigationRoot(
 ) {
     val backStack = rememberNavBackStack(startDestination)
     val tokenState = sessionManager.getTokenFlow().collectAsStateWithLifecycle(initialValue = null)
+    val usuario = sessionManager.userFlow.collectAsStateWithLifecycle(initialValue = null)
 
     // Efecto: Si el token desaparece (null), volvemos al Login
     LaunchedEffect(tokenState) {

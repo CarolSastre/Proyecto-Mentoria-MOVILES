@@ -16,20 +16,29 @@ import com.example.mentoria.core.domain.usecase.GetUsuarioUseCase
 import com.example.mentoria.core.presentation.screens.MainViewModel
 import com.example.mentoria.core.presentation.screens.search.SearchViewModel
 import com.example.mentoria.core.presentation.screens.usuariodetails.UsuarioDetailsViewModel
+import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
 import com.example.mentoria.features.auth.data.local.SessionManager
+import com.example.mentoria.features.auth.data.remote.AuthApi
+import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
+import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSourceImpl
+import com.example.mentoria.features.auth.data.repository.AuthRepositoryImpl
+import com.example.mentoria.features.auth.domain.repository.AuthRepository
+import com.example.mentoria.features.auth.domain.usecases.IsUserLoggedInUseCase
+import com.example.mentoria.features.auth.domain.usecases.LoginUseCase
 import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
+import com.example.mentoria.features.auth.domain.usecases.RegisterUseCase
+import com.example.mentoria.features.auth.presentation.login.LoginViewModel
+import com.example.mentoria.features.auth.presentation.register.RegisterViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
+import org.koin.dsl.bind
 import retrofit2.Retrofit
 
 val appModule = module {
-    // Data -
-    // --- 1. DATASTORE ---
-    single { androidContext().dataStore }
-    single { SessionManager(androidContext()) }
-
-    // --- 2. BASE DE DATOS (ROOM) ---
+    // Base de Datos (Room)
     single {
         Room.databaseBuilder(
             androidContext(),
@@ -40,33 +49,50 @@ val appModule = module {
             .build()
     }
 
-    // --- 3. DAOs ---
+    // DAOs
     single { get<AppDatabase>().usuarioDao() }
-    single<UsuarioApiService> {
-        get<Retrofit>().create(UsuarioApiService::class.java)
-    }
-    single<UsuarioRepository> {
-        UsuarioRepositoryRemoteImpl(get(), get())
-    }
-    // singleOf(::UsuarioRepositoryRemoteImpl) bind UsuarioRepository::class
+    // --- Session Manager (SINGLETON) ---
+    // Actúa como AuthLocalDataSource y gestor de sesión
+    single { SessionManager(androidContext()) } bind AuthLocalDataSource::class
 
-    // Domain
+    // --- APIs (Retrofit Creates) ---
+    single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
+    single<UsuarioApiService> { get<Retrofit>().create(UsuarioApiService::class.java) }
+
+    // --- Data Sources ---
+    singleOf(::AuthRemoteDataSourceImpl) { bind<AuthRemoteDataSource>() }
+
+    // --- Repositories (SINGLETONS) ---
+    // AuthRepository: Mantiene el usuario en memoria
+    singleOf(::AuthRepositoryImpl) { bind<AuthRepository>() }
+
+    // UsuarioRepository
+    singleOf(::UsuarioRepositoryRemoteImpl) { bind<UsuarioRepository>() }
+
+    // ==========================================
+    // 3. DOMAIN (USE CASES)
+    // ==========================================
+    factoryOf(::RegisterUseCase)
+    factoryOf(::LoginUseCase)
+    factoryOf(::LogoutUseCase)
+    factoryOf(::IsUserLoggedInUseCase)
     factoryOf(::GetAllUsuariosUseCase)
     factoryOf(::GetUsuarioUseCase)
-    factoryOf(::LogoutUseCase)
 
-    // Presentation
-    viewModel{
-        SearchViewModel(get())
-    }
-    viewModel {
-        (usuarioId: String) ->
-        UsuarioDetailsViewModel(usuarioId, get())
-    }
+
+    // ==========================================
+    // 4. PRESENTATION (VIEW MODELS)
+    // ==========================================
+    viewModelOf(::RegisterViewModel)
+    viewModelOf(::LoginViewModel)
+    viewModelOf(::MainViewModel)
+    viewModelOf(::HomeViewModel)
+    viewModelOf(::SearchViewModel)
     viewModelOf(::CalendarioViewModel)
     viewModelOf(::HorarioViewModel)
-    viewModel{
-        HomeViewModel(get(), get())
+
+    // ViewModel con parámetros
+    viewModel { (usuarioId: String) ->
+        UsuarioDetailsViewModel(usuarioId, get())
     }
-    viewModel { MainViewModel(get()) }
 }

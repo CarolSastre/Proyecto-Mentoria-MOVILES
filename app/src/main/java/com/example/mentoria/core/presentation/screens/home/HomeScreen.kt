@@ -77,7 +77,7 @@ fun HomeScreen(
                         .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    val nombre = state.usuario?.nombre ?: "Usuario Invitado"
+                    val nombre = state.usuario?.nombre
                     Text(text = "Hola, ${nombre}!",
                         style = MaterialTheme.typography.titleLarge
                     )

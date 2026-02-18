@@ -78,6 +78,7 @@ class SessionManager(
     }
 
     suspend fun notifyLoggedOut() {
+        clearToken()
         _events.send(SessionEvent.LoggedOut)
     }
 

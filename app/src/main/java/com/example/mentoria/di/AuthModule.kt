@@ -1,5 +1,6 @@
 package com.example.mentoria.di
 
+import com.example.mentoria.core.data.remote.UsuarioApiService
 import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
 import com.example.mentoria.features.auth.data.local.AuthLocalDataSourceDataStoreImpl
 import com.example.mentoria.features.auth.data.remote.AuthApi
@@ -18,6 +19,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -27,9 +29,8 @@ val authModule = module {
     single { SessionManager(androidContext()) } bind AuthLocalDataSource::class
 
     // 1. Proveer AuthApi usando Retrofit
-    single<AuthApi> {
-        get<Retrofit>().create(AuthApi::class.java)
-    }
+    single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
+    single<UsuarioApiService> { get<Retrofit>().create(UsuarioApiService::class.java) }
 
     // 2. Proveer AuthRemoteDataSource
     singleOf(::AuthRemoteDataSourceImpl) { bind<AuthRemoteDataSource>() }
@@ -47,6 +48,6 @@ val authModule = module {
     factoryOf(::LogoutUseCase)
     factoryOf(::IsUserLoggedInUseCase)
     // Presentation
-    viewModelOf(::RegisterViewModel)
-    viewModelOf(::LoginViewModel)
+    viewModel { RegisterViewModel(get()) }
+    viewModel { LoginViewModel(get()) }
 }
