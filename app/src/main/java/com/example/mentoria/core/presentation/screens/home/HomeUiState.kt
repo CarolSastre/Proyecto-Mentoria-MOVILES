@@ -11,7 +11,8 @@ data class HomeUiState (
     val query: String = "",
     val expanded: Boolean = false,
     val registros: List<RegistroAcceso> = emptyList(),
-    val usuarios: List<Usuario> =listOf( // emptyList()
+    val usuarios: List<Usuario> = emptyList(),
+        /*listOf(
         Usuario(
             id = "69935128cd34aa5b7685a3f4",
             dni = "10000000P",
@@ -28,5 +29,5 @@ data class HomeUiState (
             baja = false,
             curso = null,
         )
-    ),
+    ),*/
 )

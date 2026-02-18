@@ -14,11 +14,12 @@ import org.koin.core.KoinApplication.Companion.init
 
 @Composable
 fun HomeRoute(
+    viewModel: HomeViewModel = koinViewModel(),
     onLoggedOut: () -> Unit,
-    onSearchClick: () -> Unit,
+    //onSearchClick: () -> Unit,
     onCalendarioClick: () -> Unit,
     onHorarioClick: () -> Unit,
-    viewModel: HomeViewModel = koinViewModel(),
+    onNavigateToUsuario: (String) -> Unit,
 ){
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
@@ -26,21 +27,36 @@ fun HomeRoute(
 
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
+            is HomeUiEvent.OnSelectUser -> onNavigateToUsuario(event.userId)
             HomeUiEvent.LoggedOut -> onLoggedOut()
-            HomeUiEvent.OnSearch -> onSearchClick()
             HomeUiEvent.OnCalendario -> onCalendarioClick()
             HomeUiEvent.OnHorario -> onHorarioClick()
             HomeUiEvent.ActivateNFC -> snackbarHostState.showSnackbar("Función aún no implementada")
         }
     }
 
-    HomeScreen ( // TODO: poner mejor los métodos en un action
+    fun onAction(action: HomeUiAction) {
+        when(action) {
+            is HomeUiAction.OnUsuarioSelected -> onNavigateToUsuario(action.id)
+            else -> viewModel.onAction(action)
+        }
+    }
+
+    HomeScreen (
         state = uiState.value,
         snackBar = snackbarHostState,
+        onQueryChange = { newQuery ->
+            onAction(HomeUiAction.OnQueryChange(newQuery))
+        },
+        onAction = {
+            action -> onAction(action)
+        }
+        /*
         onLogOut = viewModel::onLogOut,
         onNFCClick = viewModel::onActivateNFC,
         onSearchClick = viewModel::onSearch,
         onCalendarioClick = viewModel::onCalendario,
         onHorarioClick = viewModel::onHorario,
+         */
     )
 }

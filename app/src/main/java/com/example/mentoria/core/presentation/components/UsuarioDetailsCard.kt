@@ -104,31 +104,7 @@ fun UsuarioDetailsCard(
                         style = MaterialTheme.typography.labelMedium,
                     )
                 }
-                IconButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHigh),
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.StarOutline,
-                        contentDescription = "Favorite",
-                        tint = MaterialTheme.colorScheme.outline,
-                    )
-                }
             }
-
-            Text(
-                text = "Subject",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
-            )
-            Text(
-                text = "Body",
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
         }
     }
 }
@@ -152,7 +128,6 @@ fun SelectedProfileImage(modifier: Modifier = Modifier) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun UsuarioDetailsCardPreview() {

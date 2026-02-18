@@ -9,6 +9,7 @@ class AuthRemoteDataSourceImpl(
 
     override suspend fun login(request: LoginRequest): LoginResponse {
         val response = api.login(request)
+        println("Response: $response")
         return response.body() ?: throw Exception("Error al obtener el usuario")
     }
 }

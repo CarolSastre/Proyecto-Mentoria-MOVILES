@@ -8,7 +8,6 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import androidx.room.Room
 import com.example.mentoria.core.data.local.AppDatabase
-import com.example.mentoria.core.data.local.dataStore
 import com.example.mentoria.core.data.repositories.UsuarioRepositoryRemoteImpl
 import com.example.mentoria.core.domain.repositories.UsuarioRepository
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
@@ -79,7 +78,6 @@ val appModule = module {
     factoryOf(::GetAllUsuariosUseCase)
     factoryOf(::GetUsuarioUseCase)
 
-
     // ==========================================
     // 4. PRESENTATION (VIEW MODELS)
     // ==========================================
@@ -93,6 +91,6 @@ val appModule = module {
 
     // ViewModel con parámetros
     viewModel { (usuarioId: String) ->
-        UsuarioDetailsViewModel(usuarioId, get())
+        UsuarioDetailsViewModel(usuarioId, get(), get())
     }
 }

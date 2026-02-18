@@ -6,28 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class FakeUsuariosApiService : UsuarioApiService {
-    override fun getAllUsuarios(): Flow<List<UsuarioDto>> {
-        return flowOf(
-            listOf(
-                UsuarioDto(
-                    id = "1",
-                    dni = "12345678A",
-                    nombre = "Carolina",
-                    apellidos = "Sastre Garrido",
-                    rol = Rol.ADMIN.toString(),
-                    nfc = "",
-                    fechaNacimiento = "2001-01-01",
-                    gmail = "carolsaga02@gmail.com",
-                    departamento = null,
-                    baja = false,
-                    curso = null
-                )
-            )
-        )
-    }
-
-    override fun getUsuarioById(id: String): Flow<UsuarioDto> {
-        return flowOf(
+    override suspend fun getAllUsuarios(): List<UsuarioDto> {
+        return listOf(
             UsuarioDto(
                 id = "1",
                 dni = "12345678A",
@@ -41,6 +21,23 @@ class FakeUsuariosApiService : UsuarioApiService {
                 baja = false,
                 curso = null
             )
+        )
+
+    }
+
+    override suspend fun getUsuarioById(id: String): UsuarioDto {
+        return UsuarioDto(
+            id = "1",
+            dni = "12345678A",
+            nombre = "Carolina",
+            apellidos = "Sastre Garrido",
+            rol = Rol.ADMIN.toString(),
+            nfc = "",
+            fechaNacimiento = "2001-01-01",
+            gmail = "carolsaga02@gmail.com",
+            departamento = null,
+            baja = false,
+            curso = null
         )
     }
 }

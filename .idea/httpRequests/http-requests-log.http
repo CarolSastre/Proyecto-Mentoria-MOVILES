@@ -1,3 +1,107 @@
+GET http://192.168.0.110:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 524
+
+{
+  "header": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMTAwMDAwMDBQIiwiZXhwIjoxNzcxNDIyOTc0LCJpYXQiOjE3NzE0MTkzNzQsInNjb3BlIjoiUk9MRV9QUk9GRVNPUiBGQUNUT1JfUEFTU1dPUkQifQ.hp_hL3byR-7YnRJauCPLTIBtjpyVlAnMSxXndrrq6Qz94IbSJijj1Qiube6pBjwQMyz09P9sDK_DoSQK-KAZECM1-7ZiZAabvhAbCxa4uIM-tz6mXRBGIQPw_Bf_c-aa_CSl1BKfQ183rlSQXsrh5CfF0s1e2O1x0d_O4mOjjI1bchO3ygCeJvfY0R2zrNTcqMPewSLu8AVJdYhrNugRgQXmD10hkjZJ7t4y7FYxz2Ey7sRdrbuiMA2svM0qefrAfXgZxPFRl4T0UUVR2CIlrDv4WdiuzarfccQOCDJsd91RAMFHJ8ADs9rqqEFJ3WJ8InChU9FR_QHXurZ3DsatZg"
+}
+
+###
+
+GET http://192.168.0.110:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 532
+
+{
+  "authentication": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMTAwMDAwMDBQIiwiZXhwIjoxNzcxNDIyOTc0LCJpYXQiOjE3NzE0MTkzNzQsInNjb3BlIjoiUk9MRV9QUk9GRVNPUiBGQUNUT1JfUEFTU1dPUkQifQ.hp_hL3byR-7YnRJauCPLTIBtjpyVlAnMSxXndrrq6Qz94IbSJijj1Qiube6pBjwQMyz09P9sDK_DoSQK-KAZECM1-7ZiZAabvhAbCxa4uIM-tz6mXRBGIQPw_Bf_c-aa_CSl1BKfQ183rlSQXsrh5CfF0s1e2O1x0d_O4mOjjI1bchO3ygCeJvfY0R2zrNTcqMPewSLu8AVJdYhrNugRgQXmD10hkjZJ7t4y7FYxz2Ey7sRdrbuiMA2svM0qefrAfXgZxPFRl4T0UUVR2CIlrDv4WdiuzarfccQOCDJsd91RAMFHJ8ADs9rqqEFJ3WJ8InChU9FR_QHXurZ3DsatZg"
+}
+
+###
+
+GET http://192.168.0.110:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 532
+
+{
+  "authentication": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMTAwMDAwMDBQIiwiZXhwIjoxNzcxNDIyOTc0LCJpYXQiOjE3NzE0MTkzNzQsInNjb3BlIjoiUk9MRV9QUk9GRVNPUiBGQUNUT1JfUEFTU1dPUkQifQ.hp_hL3byR-7YnRJauCPLTIBtjpyVlAnMSxXndrrq6Qz94IbSJijj1Qiube6pBjwQMyz09P9sDK_DoSQK-KAZECM1-7ZiZAabvhAbCxa4uIM-tz6mXRBGIQPw_Bf_c-aa_CSl1BKfQ183rlSQXsrh5CfF0s1e2O1x0d_O4mOjjI1bchO3ygCeJvfY0R2zrNTcqMPewSLu8AVJdYhrNugRgQXmD10hkjZJ7t4y7FYxz2Ey7sRdrbuiMA2svM0qefrAfXgZxPFRl4T0UUVR2CIlrDv4WdiuzarfccQOCDJsd91RAMFHJ8ADs9rqqEFJ3WJ8InChU9FR_QHXurZ3DsatZg"
+}
+
+###
+
+GET http://192.168.0.110:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 532
+
+{
+  "authentication": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMTAwMDAwMDBQIiwiZXhwIjoxNzcxNDIyOTc0LCJpYXQiOjE3NzE0MTkzNzQsInNjb3BlIjoiUk9MRV9QUk9GRVNPUiBGQUNUT1JfUEFTU1dPUkQifQ.hp_hL3byR-7YnRJauCPLTIBtjpyVlAnMSxXndrrq6Qz94IbSJijj1Qiube6pBjwQMyz09P9sDK_DoSQK-KAZECM1-7ZiZAabvhAbCxa4uIM-tz6mXRBGIQPw_Bf_c-aa_CSl1BKfQ183rlSQXsrh5CfF0s1e2O1x0d_O4mOjjI1bchO3ygCeJvfY0R2zrNTcqMPewSLu8AVJdYhrNugRgQXmD10hkjZJ7t4y7FYxz2Ey7sRdrbuiMA2svM0qefrAfXgZxPFRl4T0UUVR2CIlrDv4WdiuzarfccQOCDJsd91RAMFHJ8ADs9rqqEFJ3WJ8InChU9FR_QHXurZ3DsatZg"
+}
+
+###
+
+GET http://192.168.0.110:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 524
+
+{
+  "header": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMTAwMDAwMDBQIiwiZXhwIjoxNzcxNDIyOTc0LCJpYXQiOjE3NzE0MTkzNzQsInNjb3BlIjoiUk9MRV9QUk9GRVNPUiBGQUNUT1JfUEFTU1dPUkQifQ.hp_hL3byR-7YnRJauCPLTIBtjpyVlAnMSxXndrrq6Qz94IbSJijj1Qiube6pBjwQMyz09P9sDK_DoSQK-KAZECM1-7ZiZAabvhAbCxa4uIM-tz6mXRBGIQPw_Bf_c-aa_CSl1BKfQ183rlSQXsrh5CfF0s1e2O1x0d_O4mOjjI1bchO3ygCeJvfY0R2zrNTcqMPewSLu8AVJdYhrNugRgQXmD10hkjZJ7t4y7FYxz2Ey7sRdrbuiMA2svM0qefrAfXgZxPFRl4T0UUVR2CIlrDv4WdiuzarfccQOCDJsd91RAMFHJ8ADs9rqqEFJ3WJ8InChU9FR_QHXurZ3DsatZg"
+}
+
+###
+
+GET http://192.168.0.110:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 524
+
+{
+  "header": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMTAwMDAwMDBQIiwiZXhwIjoxNzcxNDIyOTc0LCJpYXQiOjE3NzE0MTkzNzQsInNjb3BlIjoiUk9MRV9QUk9GRVNPUiBGQUNUT1JfUEFTU1dPUkQifQ.hp_hL3byR-7YnRJauCPLTIBtjpyVlAnMSxXndrrq6Qz94IbSJijj1Qiube6pBjwQMyz09P9sDK_DoSQK-KAZECM1-7ZiZAabvhAbCxa4uIM-tz6mXRBGIQPw_Bf_c-aa_CSl1BKfQ183rlSQXsrh5CfF0s1e2O1x0d_O4mOjjI1bchO3ygCeJvfY0R2zrNTcqMPewSLu8AVJdYhrNugRgQXmD10hkjZJ7t4y7FYxz2Ey7sRdrbuiMA2svM0qefrAfXgZxPFRl4T0UUVR2CIlrDv4WdiuzarfccQOCDJsd91RAMFHJ8ADs9rqqEFJ3WJ8InChU9FR_QHXurZ3DsatZg"
+}
+
+###
+
+GET http://192.168.0.110:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 531
+
+{
+  "authorization": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMTAwMDAwMDBQIiwiZXhwIjoxNzcxNDIyOTc0LCJpYXQiOjE3NzE0MTkzNzQsInNjb3BlIjoiUk9MRV9QUk9GRVNPUiBGQUNUT1JfUEFTU1dPUkQifQ.hp_hL3byR-7YnRJauCPLTIBtjpyVlAnMSxXndrrq6Qz94IbSJijj1Qiube6pBjwQMyz09P9sDK_DoSQK-KAZECM1-7ZiZAabvhAbCxa4uIM-tz6mXRBGIQPw_Bf_c-aa_CSl1BKfQ183rlSQXsrh5CfF0s1e2O1x0d_O4mOjjI1bchO3ygCeJvfY0R2zrNTcqMPewSLu8AVJdYhrNugRgQXmD10hkjZJ7t4y7FYxz2Ey7sRdrbuiMA2svM0qefrAfXgZxPFRl4T0UUVR2CIlrDv4WdiuzarfccQOCDJsd91RAMFHJ8ADs9rqqEFJ3WJ8InChU9FR_QHXurZ3DsatZg"
+}
+
+###
+
+GET http://192.168.0.110:8080/api/usuarios
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/Android Studio Panda 1 | 2025.3.1 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 531
+
+{
+  "authorization": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMTAwMDAwMDBQIiwiZXhwIjoxNzcxNDIyOTc0LCJpYXQiOjE3NzE0MTkzNzQsInNjb3BlIjoiUk9MRV9QUk9GRVNPUiBGQUNUT1JfUEFTU1dPUkQifQ.hp_hL3byR-7YnRJauCPLTIBtjpyVlAnMSxXndrrq6Qz94IbSJijj1Qiube6pBjwQMyz09P9sDK_DoSQK-KAZECM1-7ZiZAabvhAbCxa4uIM-tz6mXRBGIQPw_Bf_c-aa_CSl1BKfQ183rlSQXsrh5CfF0s1e2O1x0d_O4mOjjI1bchO3ygCeJvfY0R2zrNTcqMPewSLu8AVJdYhrNugRgQXmD10hkjZJ7t4y7FYxz2Ey7sRdrbuiMA2svM0qefrAfXgZxPFRl4T0UUVR2CIlrDv4WdiuzarfccQOCDJsd91RAMFHJ8ADs9rqqEFJ3WJ8InChU9FR_QHXurZ3DsatZg"
+}
+
+###
+
 POST http://192.168.0.110:8080/auth/login
 Content-Type: application/json
 Content-Length: 46

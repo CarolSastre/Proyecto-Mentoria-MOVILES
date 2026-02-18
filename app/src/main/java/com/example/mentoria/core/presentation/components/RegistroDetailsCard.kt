@@ -46,12 +46,13 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RegistroDetailsCard(
+    modifier: Modifier = Modifier,
     registro: RegistroAcceso,
     navigateToDetail: (String) -> Unit,
     toggleSelection: (String) -> Unit,
-    onDeleteRegistro: (String) -> Unit,
-    modifier: Modifier = Modifier,
+    onDeleteRegistro: (String) -> Unit = {},
     isSelected: Boolean = false,
+    modificable: Boolean = false, // los alumnos no pueden modificar los registros
 ) {
     Card(
         modifier = modifier
@@ -106,18 +107,20 @@ fun RegistroDetailsCard(
                         style = MaterialTheme.typography.labelMedium,
                     )
                 }
-                IconButton(
-                    onClick = { onDeleteRegistro(registro.id) },
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .size(35.dp)
-                        .background(Color.Red),
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Delete,
-                        contentDescription = "Delete",
-                        tint = MaterialTheme.colorScheme.surfaceVariant,
-                    )
+                if (modificable) {
+                    IconButton(
+                        onClick = { onDeleteRegistro(registro.id) },
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(35.dp)
+                            .background(Color.Red),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = "Delete",
+                            tint = MaterialTheme.colorScheme.surfaceVariant,
+                        )
+                    }
                 }
             }
             Text(
@@ -165,8 +168,8 @@ fun RegistroAccesoPreview() {
             baja = false,
             curso = null,
             departamento = Departamento(
-                id="1",
-                nombre="Ciencias"
+                id = "1",
+                nombre = "Ciencias"
             ),
         )
     )
