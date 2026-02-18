@@ -15,8 +15,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.runBlocking
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+// Se cambia el nombre para forzar la creación de un nuevo almacén de datos y limpiar datos corruptos.
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings_v2")
 
 class SessionManager(
     context: Context
@@ -26,18 +28,37 @@ class SessionManager(
     val events = _events.receiveAsFlow()
     private val dataStore = context.dataStore
 
+    // Caché en memoria para el token.
+    @Volatile
+    private var inMemoryToken: String?
+
     private val _user = MutableStateFlow<Usuario?>(null)
     val userFlow: StateFlow<Usuario?> = _user.asStateFlow()
+
+    init {
+        // Inicializa el token en memoria desde DataStore.
+        // runBlocking aquí es aceptable porque se ejecuta una sola vez durante la inyección
+        // de dependencias, antes de que se realicen peticiones de red.
+        inMemoryToken = runBlocking { getTokenFlow().firstOrNull() }
+    }
 
     companion object {
         private val TOKEN_KEY = stringPreferencesKey("jwt_token")
         private val USER_ID_KEY = stringPreferencesKey("user_id")
     }
 
+    /**
+     * Devuelve el token desde la caché en memoria. Es síncrono y seguro para llamar
+     * desde el AuthInterceptor.
+     */
+    fun getInMemoryToken(): String? = inMemoryToken
+
     override suspend fun saveToken(token: String) {
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = token
         }
+        // Actualiza la caché en memoria.
+        inMemoryToken = token
     }
 
     fun setCurrentUser(user: Usuario?) {
@@ -50,6 +71,8 @@ class SessionManager(
             preferences[TOKEN_KEY] = token
             preferences[USER_ID_KEY] = userId ?: ""
         }
+        // Actualiza la caché en memoria.
+        inMemoryToken = token
     }
 
     suspend fun clearSession() {
@@ -57,6 +80,8 @@ class SessionManager(
             preferences.remove(TOKEN_KEY)
             preferences.remove(USER_ID_KEY)
         }
+        // Actualiza la caché en memoria.
+        inMemoryToken = null
     }
 
     override fun getTokenFlow(): Flow<String?> {
@@ -65,7 +90,6 @@ class SessionManager(
         }
     }
 
-    // 2. Para el Interceptor (Síncrono/Suspend)
     override suspend fun getToken(): String? {
         return dataStore.data.map { it[TOKEN_KEY] }.firstOrNull()
     }
@@ -74,6 +98,8 @@ class SessionManager(
         dataStore.edit { preferences ->
             preferences.remove(TOKEN_KEY)
         }
+        // Actualiza la caché en memoria.
+        inMemoryToken = null
         setCurrentUser(null)
     }
 
@@ -82,7 +108,6 @@ class SessionManager(
         _events.send(SessionEvent.LoggedOut)
     }
 
-    // Mejor expongamos el Flow del ID
     val userIdFlow: Flow<String?> = dataStore.data.map { preferences ->
         preferences[USER_ID_KEY]
     }

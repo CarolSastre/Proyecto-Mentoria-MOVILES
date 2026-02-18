@@ -1,21 +1,19 @@
 package com.example.mentoria.features.auth.data.remote
 
-import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
-import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
 import com.example.mentoria.features.auth.data.local.SessionManager
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 
 class AuthInterceptor(
-    private val local: AuthLocalDataSource,
+    private val sesion: SessionManager,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = runBlocking {
-            local.getToken()
-        }
+        val token = sesion.getInMemoryToken()
+        // Imprimimos el token para depuración
+        println("AuthInterceptor: Intentando usar el token: $token")
+
         val request = chain.request().newBuilder()
             .apply {
                 token?.let{
@@ -26,8 +24,9 @@ class AuthInterceptor(
         val response = chain.proceed(request)
 
         if (response.code == 401) {
+            println("AuthInterceptor: Token rechazado por el servidor (401)")
             runBlocking {
-                local.clearToken()
+                sesion.clearToken()
             }
         }
 

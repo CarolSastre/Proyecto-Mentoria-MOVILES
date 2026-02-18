@@ -122,9 +122,10 @@ fun NavigationRoot(
     CompositionLocalProvider(LocalOnNavigationBack provides { backStack.removeLastOrNull() }) {
         NavDisplay(
             backStack = backStack,
-            entryProvider = { route ->
-                NavEntry(route) {
-                    when (route) {
+            onBack = { if (backStack.size > 1) backStack.removeLastOrNull() },
+            entryProvider = { key ->
+                NavEntry(key) {
+                    when (key) {
                         is LoginKey ->
                             LoginRoute(
                                 onLoginSuccess = {
@@ -144,9 +145,10 @@ fun NavigationRoot(
 
                         is HomeKey ->
                             HomeRoute(
+                                /*
                                 onSearchClick = {
                                     backStack.add(SearchKey)
-                                },
+                                },*/
                                 onLoggedOut = {
                                     backStack.clear()
                                     backStack.add(LoginKey)
@@ -156,6 +158,9 @@ fun NavigationRoot(
                                 },
                                 onHorarioClick = {
                                     backStack.add(HorarioKey)
+                                },
+                                onNavigateToUsuario = { usuarioId ->
+                                    backStack.add(UsuarioDetailsKey(usuarioId))
                                 },
                             )
 
@@ -168,7 +173,7 @@ fun NavigationRoot(
 
                         is UsuarioDetailsKey ->
                             UsuarioDetailsRoute(
-                                usuarioId = route.id,
+                                usuarioId = key.id,
                             )
 
                         is CalendarKey ->
@@ -180,7 +185,7 @@ fun NavigationRoot(
                                 horarios = horarios
                             )
 
-                        else -> error("Ruta no reconocida: $route")
+                        else -> error("Ruta no reconocida: $key")
                     }
                 }
             }

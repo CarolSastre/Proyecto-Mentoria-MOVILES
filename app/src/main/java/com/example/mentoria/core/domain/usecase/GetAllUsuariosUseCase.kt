@@ -1,9 +1,10 @@
 package com.example.mentoria.core.domain.usecase
 
+import com.example.mentoria.core.data.repositories.UsuarioRepositoryRemoteImpl
 import com.example.mentoria.core.domain.repositories.UsuarioRepository
 
 class GetAllUsuariosUseCase(
-    private val repository: UsuarioRepository
+    private val repository: UsuarioRepository //UsuarioRepositoryRemoteImpl
 ) {
     operator fun invoke() = repository.getAllUsuarios()
 }

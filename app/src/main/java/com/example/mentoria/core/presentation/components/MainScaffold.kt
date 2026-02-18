@@ -36,8 +36,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import com.example.mentoria.R
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
+import com.example.mentoria.core.presentation.screens.home.HomeUiAction
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -53,21 +58,26 @@ import java.time.LocalDate
 @Composable
 fun MainScaffold(
     modifier: Modifier = Modifier,
+    usuario: Usuario?,
     title: String = "",
-    isNFCButton: Boolean = false,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
-    onNFCClick: () -> Unit,
+    onAction: (HomeUiAction) -> Unit = {},
     onSearchClick: () -> Unit,
+    /*
+    onNFCClick: () -> Unit,
     onCalendarioClick: () -> Unit,
     onHorarioClick: () -> Unit,
     onLogOut: () -> Unit,
-    //
-    usuario: Usuario?,
+     */
     content: @Composable (PaddingValues) -> Unit
 ) {
+    var toggleSearchBar by rememberSaveable { mutableStateOf(false) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+    val onExpandedChange: (Boolean) -> Unit = {
+        onAction(HomeUiAction.OnSearchClick(it))
+    }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -124,7 +134,7 @@ fun MainScaffold(
                         onClick = {
                             scope.launch {
                                 drawerState.close()
-                                onHorarioClick()
+                                onAction(HomeUiAction.OnHorarioClick)
                             }
                         }
                     )
@@ -147,8 +157,8 @@ fun MainScaffold(
                         onClick = {
                             scope.launch {
                                 drawerState.close()
+                                onAction(HomeUiAction.OnCalendarioClick)
                             }
-                            onCalendarioClick()
                         }
                     )
                     HorizontalDivider()
@@ -171,7 +181,7 @@ fun MainScaffold(
                         onClick = {
                             scope.launch {
                                 drawerState.close()
-                                onLogOut()
+                                onAction(HomeUiAction.OnLogOutClick)
                             }
                         }
                     )
@@ -187,21 +197,21 @@ fun MainScaffold(
                 )
             },
             floatingActionButton = {
-                if (isNFCButton) {
-                    FloatingActionButton(
-                        onClick = { onNFCClick() },
-                        modifier = modifier
-                            .padding(15.dp)
-                            .size(70.dp),
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Nfc,
-                            contentDescription = "NFC",
-                            modifier = modifier.size(35.dp),
-                        )
-                    }
+                FloatingActionButton(
+                    onClick = {
+                        onAction(HomeUiAction.ActivateNFC)
+                    },
+                    modifier = modifier
+                        .padding(15.dp)
+                        .size(70.dp),
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Nfc,
+                        contentDescription = "NFC",
+                        modifier = modifier.size(35.dp),
+                    )
                 }
             },
             topBar = {
@@ -239,7 +249,10 @@ fun MainScaffold(
                     },
                     actions = {
                         IconButton(
-                            onClick = { onSearchClick() }
+                            onClick = {
+                                //onExpandedChange(true)
+                                onSearchClick()
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Search,
@@ -263,13 +276,7 @@ fun MainScaffold(
 fun MainScaffoldPreview() {
     MainScaffold(
         title = "prueba",
-        isNFCButton = true,
-        onNFCClick = {},
         onSearchClick = {},
-        onLogOut = {},
-        onCalendarioClick = {},
-        onHorarioClick = {},
-        //
         usuario = Usuario(
             id = "1",
             dni = "12345678A",

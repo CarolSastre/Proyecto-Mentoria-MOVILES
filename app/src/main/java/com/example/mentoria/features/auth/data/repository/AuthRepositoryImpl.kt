@@ -27,27 +27,7 @@ class AuthRepositoryImpl(
         println("Repo HASH: ${this.hashCode()}")
     }
     // Variable privada mutable
-    private val _currentUser = MutableStateFlow<Usuario?>(
-        null
-        /*
-        Usuario(
-            id = "69935128cd34aa5b7685a3f4",
-            dni = "10000000P",
-            nombre="Profesor1",
-            apellidos="Docente1",
-            nfc = "NFC_PROFE_1",
-            rol = Rol.PROFESOR,
-            fechaNacimiento = LocalDate.parse("1979-12-31"),
-            gmail = "profe1@instituto.com",
-            departamento = Departamento(
-                id = "69935128cd34aa5b7685a3f0",
-                nombre = "Informática"
-            ),
-            baja = false,
-            curso = null,
-        )
-         */
-    )
+    private val _currentUser = MutableStateFlow<Usuario?>(null)
 
     // Variable pública inmutable (la que ven los ViewModels)
     override val currentUser: StateFlow<Usuario?> = _currentUser.asStateFlow()
@@ -66,10 +46,11 @@ class AuthRepositoryImpl(
 
             // 4. Guardar Token
             response.token?.let { token ->
+                val cleanedToken = token.removePrefix("Bearer ").trim()
                 val usuarioDto = response.usuario
                 //localDataSource.saveToken(it)
                 usuarioDto?.id?.let { id ->
-                    sessionManager.saveSession(token, id)
+                    sessionManager.saveSession(cleanedToken, id)
                     sessionManager.setCurrentUser(usuarioDto.toDomain())
                 }
 
@@ -114,9 +95,8 @@ class AuthRepositoryImpl(
 
             if (userId != null) {
                 // 2. Pedimos los datos frescos a la API
-                usuarioApi.getUsuarioById(userId).collect { usuario ->
-                    // 3. ¡Bingo! Tenemos usuario, actualizamos el estado
-                    _currentUser.update { usuario.toDomain() }
+                usuarioApi.getUsuarioById(userId).let {
+                    _currentUser.value = it.toDomain()
                 }
             } else {
                 // No hay ID, no estamos logueados realmente
