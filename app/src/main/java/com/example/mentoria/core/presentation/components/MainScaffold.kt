@@ -1,3 +1,4 @@
+
 package com.example.mentoria.core.presentation.components
 
 import android.content.res.Configuration
@@ -96,11 +97,11 @@ fun MainScaffold(
                     HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
 
                     val drawerItemColors = NavigationDrawerItemDefaults.colors(
-                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                        selectedIconColor = MaterialTheme.colorScheme.primary,
-                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                        selectedIconColor = MaterialTheme.colorScheme.secondary,
+                        selectedTextColor = MaterialTheme.colorScheme.primaryContainer,
                         unselectedContainerColor = Color.Transparent,
-                        unselectedIconColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                        unselectedIconColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f),
                         unselectedTextColor = MaterialTheme.colorScheme.onSurface
                     )
 
@@ -276,7 +277,7 @@ fun MainScaffold(
                         },
                         colors = drawerItemColors,
                     )
-                    HorizontalDivider()
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
                     NavigationDrawerItem(
                         label = {
                             Text(
@@ -320,8 +321,8 @@ fun MainScaffold(
                     modifier = modifier
                         .padding(15.dp)
                         .size(70.dp),
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary,
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Nfc,
@@ -352,7 +353,7 @@ fun MainScaffold(
                             ProfileImage(
                                 drawableResource = R.drawable.prueba_background,
                                 description = "Perfil de ${usuario?.nombre} ${usuario?.apellidos}",
-                                modifier = modifier
+                                modifier = Modifier
                                     .padding(start = 8.dp)
                                     .fillMaxSize()
                             )
@@ -362,7 +363,8 @@ fun MainScaffold(
                         Text(
                             text = title,
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     },
                     actions = {
@@ -374,7 +376,8 @@ fun MainScaffold(
                             ) {
                                 Icon(
                                     imageVector = Icons.Filled.Search,
-                                    contentDescription = "Search"
+                                    contentDescription = "Search",
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer
                                 )
                             }
                         } else {
@@ -385,7 +388,8 @@ fun MainScaffold(
                             ) {
                                 Icon(
                                     imageVector = Icons.Filled.ArrowBackIosNew,
-                                    contentDescription = "ArrowBack"
+                                    contentDescription = "ArrowBack",
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer
                                 )
                             }
                         }

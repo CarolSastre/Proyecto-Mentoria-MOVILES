@@ -1,7 +1,9 @@
+
 package com.example.mentoria.core.presentation.screens.calendario
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -82,7 +86,7 @@ fun CalendarioScreen(
     )) }
 
     Scaffold(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize(),
         topBar = {
             MainTopAppBar(
@@ -92,19 +96,19 @@ fun CalendarioScreen(
         }
     ) { innerPadding ->
         Column(
-            modifier = modifier
+            modifier = Modifier
+                .padding(innerPadding)
                 .fillMaxSize(),
         ) {
             CalendarioMensual(
-                modifier = modifier
-                    .padding(innerPadding),
+                modifier = Modifier,
                 onDateSelected = {
                     daySelected.value = it
                 }
             )
             Column (
-                modifier = modifier
-                    .fillMaxSize()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 Text(
                     text = "Registros del día ${daySelected.value}",
@@ -119,14 +123,13 @@ fun CalendarioScreen(
                         items = registros.value,
                         key = { it.id }
                     ) { registro ->
-                        // TODO: esto debería funcionar sin el if
                         if (registro.fechaHora.toLocalDate() == daySelected.value)
-                        RegistroDetailsCard(
-                            registro = registro,
-                            navigateToDetail = {},
-                            toggleSelection = {},
-                            onDeleteRegistro = {}
-                        )
+                            RegistroDetailsCard(
+                                registro = registro,
+                                navigateToDetail = {},
+                                toggleSelection = {},
+                                onDeleteRegistro = {}
+                            )
                     }
                 }
             }

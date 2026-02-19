@@ -1,3 +1,4 @@
+
 package com.example.mentoria.core.presentation.screens.horario
 
 import androidx.compose.foundation.background
@@ -29,16 +30,15 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 
-// Constantes de diseño para la vista semanal
-private val WEEK_HOUR_HEIGHT = 64.dp // Un poco más compacta que la vista diaria
-private val SIDEBAR_WIDTH = 40.dp    // Ancho de la columna de horas
+private val WEEK_HOUR_HEIGHT = 64.dp
+private val SIDEBAR_WIDTH = 40.dp
 private const val WEEK_START_HOUR = 7
 private const val WEEK_END_HOUR = 21
 
 @Composable
 fun HorarioScreen(
     modifier: Modifier = Modifier,
-    usuario: Usuario,
+    usuario: Usuario?,
     horarios: List<Horario>,
 ) {
     val diasSemana = listOf("Lunes", "Martes", "Miércoles", "Jueves", "Viernes")
@@ -48,7 +48,7 @@ fun HorarioScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             MainTopAppBar(
-                title = "Horario ${usuario.curso}",
+                title = "Horario ${usuario?.curso}",
                 onBack = LocalOnNavigationBack.current,
             )
         }
@@ -63,13 +63,13 @@ fun HorarioScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = SIDEBAR_WIDTH) // Dejamos hueco para alinear con la parrilla
+                    .padding(start = SIDEBAR_WIDTH)
                     .height(40.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 diasSemana.forEach { dia ->
                     Text(
-                        text = dia.take(3), // Mostramos solo LUN, MAR, MIE...
+                        text = dia.take(3),
                         modifier = Modifier.weight(1f),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.labelMedium,
@@ -92,7 +92,7 @@ fun HorarioScreen(
                 val columnWidth = (screenWidth - SIDEBAR_WIDTH) / 5
 
                 // A. Columna de Horas (Izquierda)
-                HoursSidebarWeekly(height = maxHeight) // Pasamos maxHeight aunque es scrollable para referencia
+                HoursSidebarWeekly(height = maxHeight)
 
                 // B. Parrilla de fondo (Líneas divisorias)
                 GridBackground(
@@ -197,7 +197,7 @@ fun WeeklyCourseCard(
 
     // 3. Renderizado de la Tarjeta
     Surface(
-        color = MaterialTheme.colorScheme.primaryContainer,
+        color = MaterialTheme.colorScheme.secondary,
         shape = RoundedCornerShape(6.dp),
         modifier = Modifier
             .width(columnWidth) // Ocupa exactamente el ancho de la columna
@@ -220,7 +220,7 @@ fun WeeklyCourseCard(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 lineHeight = 10.sp,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
+                color = MaterialTheme.colorScheme.onSecondary
             )
             // En vista semanal a veces es mejor ocultar la hora exacta si no cabe
             if (heightDp > 40) { // Solo mostramos hora si el bloque es grande
@@ -229,7 +229,7 @@ fun WeeklyCourseCard(
                     style = MaterialTheme.typography.labelSmall,
                     fontSize = 8.sp,
                     maxLines = 1,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                    color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.7f)
                 )
             }
         }

@@ -17,11 +17,11 @@ fun ProfileImage(
     modifier: Modifier = Modifier
 ) {
     Image(
-        modifier = modifier
+        modifier = Modifier
             .size(40.dp)
             .clip(CircleShape),
         painter = painterResource(id = drawableResource),
         contentDescription = description,
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.FillWidth
     )
 }

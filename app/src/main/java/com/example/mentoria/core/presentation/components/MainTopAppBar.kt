@@ -58,7 +58,7 @@ fun MainTopAppBar(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
         navigationIcon = {
             IconButton(
@@ -68,7 +68,8 @@ fun MainTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBackIosNew,
-                    contentDescription = "Back"
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
         },

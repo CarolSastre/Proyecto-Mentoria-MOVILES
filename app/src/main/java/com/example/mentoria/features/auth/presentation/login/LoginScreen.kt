@@ -120,7 +120,6 @@ fun LoginScreen(
                 Text(
                     text = "Crear cuenta",
                     fontSize = 20.sp,
-                    //color = Color.White
                 )
             }
         }

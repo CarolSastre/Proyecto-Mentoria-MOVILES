@@ -24,13 +24,8 @@ class AuthRepositoryImpl(
     //private val localDataSource: AuthLocalDataSource,
     private val usuarioApi: UsuarioApiService,
 ) : AuthRepository {
-    init {
-        println("Repo HASH: ${this.hashCode()}")
-    }
-    // Variable privada mutable
-    private val _currentUser = MutableStateFlow<Usuario?>(null)
 
-    // Variable pública inmutable (la que ven los ViewModels)
+    private val _currentUser = MutableStateFlow<Usuario?>(null)
     override val currentUser: StateFlow<Usuario?> = _currentUser.asStateFlow()
 
     override suspend fun login(dni: String, passwordRaw: String): Usuario? {
