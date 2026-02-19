@@ -57,7 +57,7 @@ fun MainTopAppBar(
     CenterAlignedTopAppBar(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
         navigationIcon = {

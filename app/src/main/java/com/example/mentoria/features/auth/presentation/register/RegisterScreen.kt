@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.features.auth.presentation.components.PasswordOutTextField
 import com.example.mentoria.features.auth.presentation.components.TextOutOfTextField
 import com.example.mentoria.navigation.LocalOnNavigationBack
@@ -34,7 +35,7 @@ import com.example.mentoria.navigation.LocalOnNavigationBack
 fun RegisterScreen(
     state: RegisterUiState,
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
-    onRegisterClick: (String, String, String, String, String, String) -> Unit,
+    onRegisterClick: (RegisterUiAction) -> Unit,
     onBack: () -> Unit = LocalOnNavigationBack.current,
 ) {
     var dni by remember { mutableStateOf("") }
@@ -44,6 +45,7 @@ fun RegisterScreen(
     var apellidos by remember { mutableStateOf("") }
     var gmail by remember { mutableStateOf("") }
     var fechaNacimiento by remember { mutableStateOf("") }
+    var curso by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
     Scaffold(
@@ -90,6 +92,14 @@ fun RegisterScreen(
                 onClearButton = { apellidos = "" }
             )
 
+            TextOutOfTextField( // curso
+                text = curso,
+                title = "Curso",
+                placeholder = "7DMT",
+                onValueChange = { curso = it },
+                onClearButton = { curso = "" }
+            )
+
             TextOutOfTextField( // gmail
                 text = gmail,
                 title = "Correo electrónico",
@@ -122,11 +132,28 @@ fun RegisterScreen(
                 onClearButton = { fechaNacimiento = "" }
             )
 
-            Button( // TODO: mandar más info
+            Button(
                 onClick = {
-                    // TODO: esto debería verificarse en el usecase, el error saldrá al gracias a state.error de después
-                    if (password != password2) state.copy(error = "Las contraseñas no coinciden")
-                    else onRegisterClick(dni, password, nombre, apellidos, fechaNacimiento, gmail)
+
+                    val usuarioDto = UsuarioDto(
+                        dni = dni,
+                        nombre = nombre,
+                        apellidos = apellidos,
+                        password = password,
+                        fechaNacimiento = fechaNacimiento.ifBlank { null },
+                        gmail = gmail,
+                        rol = "ALUMNO",
+                        baja = false,
+                        curso = curso.ifBlank { null },
+                        departamento = null,
+                        fotoPerfil = null
+                    )
+                    onRegisterClick(
+                        RegisterUiAction.OnRegisterClick(
+                            usuarioDto = usuarioDto,
+                            passwordConfirmation = password2
+                        )
+                    )
                 },
                 enabled = !state.isLoading,
                 modifier = Modifier.fillMaxWidth(),
@@ -157,7 +184,7 @@ fun RegisterScreen(
 fun RegisterScreenPreview() {
     RegisterScreen(
         state = RegisterUiState(),
-        onRegisterClick = { _, _, _, _, _, _ -> },
+        onRegisterClick = { _ -> },
         onBack = {}
     )
 }

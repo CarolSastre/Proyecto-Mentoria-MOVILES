@@ -143,7 +143,8 @@ fun UsuarioDetailsCardPreview() {
             gmail = "carolina@gmail.com",
             baja = false,
             curso = "7DMT",
-            departamento = null
+            departamento = null,
+            password = ""
         ), Usuario(
             id = "2",
             dni = "12345678A",
@@ -159,6 +160,7 @@ fun UsuarioDetailsCardPreview() {
                 id="1",
                 nombre="Ciencias"
             ),
+            password = ""
         )
     )
     UsuarioDetailsCard(

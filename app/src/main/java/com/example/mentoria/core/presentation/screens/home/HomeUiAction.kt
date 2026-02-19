@@ -1,7 +1,5 @@
 package com.example.mentoria.core.presentation.screens.home
 
-import com.example.mentoria.core.presentation.screens.search.SearchUiAction
-
 sealed interface HomeUiAction {
     object OnCalendarioClick : HomeUiAction
     object OnHorarioClick : HomeUiAction

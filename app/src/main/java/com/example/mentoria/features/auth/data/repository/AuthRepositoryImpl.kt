@@ -1,6 +1,7 @@
 package com.example.mentoria.features.auth.data.repository
 
 import com.example.mentoria.core.data.remote.UsuarioApiService
+import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.domain.util.RsaHelper
 import com.example.mentoria.core.data.remote.mappers.toDomain
@@ -46,11 +47,10 @@ class AuthRepositoryImpl(
 
             // 4. Guardar Token
             response.token?.let { token ->
-                val cleanedToken = token.removePrefix("Bearer ").trim()
                 val usuarioDto = response.usuario
                 //localDataSource.saveToken(it)
                 usuarioDto?.id?.let { id ->
-                    sessionManager.saveSession(cleanedToken, id)
+                    sessionManager.saveSession(token, id)
                     sessionManager.setCurrentUser(usuarioDto.toDomain())
                 }
 
@@ -70,17 +70,19 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun register(dni: String, password: String): Usuario {
-        TODO("Not yet implemented")
+    override suspend fun register(
+        usuarioDto: UsuarioDto
+    ): Unit {
+        return try {
+            val response = remote.register(usuarioDto)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override suspend fun logout() {
         sessionManager.clearSession()
         _currentUser.value = null
-    }
-
-    override suspend fun isUserLoggedIn(): Boolean { // TODO: si devolvemos un flow este no es necesario
-        return sessionManager.getToken() != null
     }
 
     override fun getSessionState(): Flow<Boolean> {

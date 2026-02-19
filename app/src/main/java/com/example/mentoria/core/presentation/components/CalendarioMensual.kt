@@ -1,7 +1,5 @@
 package com.example.mentoria.core.presentation.components
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -27,7 +25,6 @@ import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarioMensual(
     modifier: Modifier = Modifier,
@@ -41,27 +38,27 @@ fun CalendarioMensual(
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        shape = RoundedCornerShape(24.dp), // Esquinas un poco más redondeadas para un look moderno
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp), // Flat design se ve mejor en este esquema
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
 
-            // 1. Cabecera (Mes y Flechas)
             HeaderCalendario(
                 currentMonth = currentMonth,
                 onPreviousMonth = { currentMonth = currentMonth.minusMonths(1) },
                 onNextMonth = { currentMonth = currentMonth.plusMonths(1) }
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-            // 2. Días de la semana (L M X J V S D)
             DiasSemanaHeader()
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // 3. La Cuadrícula de días
             DiasGrid(
                 currentMonth = currentMonth,
                 selectedDate = selectedDate,
@@ -74,7 +71,6 @@ fun CalendarioMensual(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HeaderCalendario(
     currentMonth: YearMonth,
@@ -86,24 +82,27 @@ fun HeaderCalendario(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // Usamos el color primario (dorado) para los controles
         IconButton(onClick = onPreviousMonth) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Mes anterior"
+                contentDescription = "Mes anterior",
+                tint = MaterialTheme.colorScheme.primary
             )
         }
 
-        // Texto del mes (ej: "Febrero 2024")
         Text(
             text = "${currentMonth.month.getDisplayName(TextStyle.FULL, Locale.forLanguageTag("es")).replaceFirstChar { it.uppercase() }} ${currentMonth.year}",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            style = MaterialTheme.typography.titleLarge, // Un poco más grande para elegancia
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.ExtraBold
         )
 
         IconButton(onClick = onNextMonth) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = "Mes siguiente"
+                contentDescription = "Mes siguiente",
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -118,15 +117,15 @@ fun DiasSemanaHeader() {
                 text = dia,
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontWeight = FontWeight.Medium
+                style = MaterialTheme.typography.labelLarge,
+                // Usamos el color de esquema outline para un contraste suave
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                fontWeight = FontWeight.Bold
             )
         }
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DiasGrid(
     currentMonth: YearMonth,
@@ -134,21 +133,19 @@ fun DiasGrid(
     onDateSelected: (LocalDate) -> Unit
 ) {
     val daysInMonth = currentMonth.lengthOfMonth()
-    val firstDayOfMonth = currentMonth.atDay(1).dayOfWeek.value // 1 = Lunes, 7 = Domingo
-    val startOffset = firstDayOfMonth - 1 // Cuántos espacios vacíos dejar al principio
+    val firstDayOfMonth = currentMonth.atDay(1).dayOfWeek.value
+    val startOffset = firstDayOfMonth - 1
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(7),
-        modifier = Modifier.height(280.dp), // Altura fija para evitar conflictos de scroll
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = Modifier.height(260.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        // 1. Espacios vacíos antes del primer día del mes
         items(startOffset) {
-            Box(modifier = Modifier.size(40.dp)) // Celda vacía
+            Box(modifier = Modifier.aspectRatio(1f))
         }
 
-        // 2. Días del mes
         items(daysInMonth) { index ->
             val day = index + 1
             val date = currentMonth.atDay(day)
@@ -172,35 +169,37 @@ fun DayCell(
     isToday: Boolean,
     onClick: () -> Unit
 ) {
+    val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
+    val contentColor = when {
+        isSelected -> MaterialTheme.colorScheme.onPrimary
+        isToday -> MaterialTheme.colorScheme.primary
+        else -> MaterialTheme.colorScheme.onSurface
+    }
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .aspectRatio(1f)
-            .clip(RoundedCornerShape(8.dp))
-            .background(
-                if (isSelected) MaterialTheme.colorScheme.primary
-                else Color.Transparent
-            )
+            .clip(RoundedCornerShape(12.dp)) // Esquinas más suaves
+            .background(backgroundColor)
             .border(
                 width = if (isToday && !isSelected) 1.dp else 0.dp,
                 color = if (isToday && !isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(12.dp)
             )
-            .clickable { // TODO: debería devolver la fecha para recoger los registros
-                onClick()
-            }
+            .clickable { onClick() }
     ) {
         Text(
             text = day.toString(),
-            color = if (isSelected) MaterialTheme.colorScheme.onPrimary
-            else MaterialTheme.colorScheme.onSurface,
-            fontWeight = if (isSelected || isToday) FontWeight.Bold else FontWeight.Normal
+            color = contentColor,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = if (isSelected || isToday) FontWeight.ExtraBold else FontWeight.Normal
         )
     }
 }
 
 // --- PREVIEW ---
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Preview(showBackground = true)
 @Composable
 fun CalendarioPreview() {

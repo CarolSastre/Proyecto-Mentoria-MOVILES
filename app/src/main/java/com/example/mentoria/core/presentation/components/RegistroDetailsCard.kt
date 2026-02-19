@@ -42,7 +42,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RegistroDetailsCard(
@@ -139,7 +139,7 @@ fun RegistroDetailsCard(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Preview
 @Composable
 fun RegistroAccesoPreview() {
@@ -155,7 +155,9 @@ fun RegistroAccesoPreview() {
             gmail = "carolina@gmail.com",
             baja = false,
             curso = "7DMT",
-            departamento = null
+            departamento = null,
+            fotoPerfilUrl = null,
+            password = ""
         ), Usuario(
             id = "2",
             dni = "12345678A",
@@ -171,6 +173,8 @@ fun RegistroAccesoPreview() {
                 id = "1",
                 nombre = "Ciencias"
             ),
+            fotoPerfilUrl = null,
+            password = ""
         )
     )
 

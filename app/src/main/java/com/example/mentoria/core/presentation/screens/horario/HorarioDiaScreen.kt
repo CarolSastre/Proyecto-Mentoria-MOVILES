@@ -25,7 +25,7 @@ val HOUR_HEIGHT = 80.dp // Altura visual de 1 hora en la pantalla
 val START_HOUR = 7 // El calendario empieza a las 7:00
 val END_HOUR = 21 // El calendario termina a las 21:00
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun HorarioDiaScreen(
     horarios: List<Horario>,
@@ -71,7 +71,7 @@ fun HorarioDiaScreen(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun HoursSidebar() {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -103,7 +103,7 @@ fun HoursSidebar() {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun CourseCard(horario: Horario) {
     // Cálculos de posición y tamaño
@@ -151,13 +151,13 @@ fun CourseCard(horario: Horario) {
 }
 
 // Función auxiliar para formatear hora
-@RequiresApi(Build.VERSION_CODES.O)
+
 fun formatoHora(time: LocalTime): String {
     return time.format(DateTimeFormatter.ofPattern("HH:mm"))
 }
 
 // --- PREVIEW ---
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HorarioPreview() {

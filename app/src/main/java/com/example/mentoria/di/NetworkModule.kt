@@ -19,6 +19,8 @@ val networkModule = module {
             ignoreUnknownKeys = true
             explicitNulls = false
             isLenient = true
+
+            encodeDefaults = false
         }
     }
 
@@ -37,7 +39,7 @@ val networkModule = module {
         // IMPORTANTE:
         // Usa "http://10.0.2.2:8080/" si usas el Emulador de Android.
         // Usa "http://TU_IP_LOCAL:8080/" si usas un móvil físico. // 10.161.63.163 // 192.168.0.110
-        val baseUrl = "http://10.161.63.163:8080/"
+        val baseUrl = "http://192.168.0.110:8080/"
         val contentType = "application/json".toMediaType()
 
         Retrofit.Builder()

@@ -27,7 +27,7 @@ import com.example.mentoria.core.presentation.components.RegistroDetailsCard
 import com.example.mentoria.navigation.LocalOnNavigationBack
 import java.time.LocalDate
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun CalendarioScreen(
     modifier: Modifier = Modifier,
@@ -48,7 +48,9 @@ fun CalendarioScreen(
         gmail = "carolina@gmail.com",
         baja = false,
         curso = "7DMT",
-        departamento = null
+        departamento = null,
+        fotoPerfilUrl = null,
+        password = ""
     )
 
     val registros = rememberSaveable { mutableStateOf<List<RegistroAcceso>>(listOf(
@@ -132,7 +134,7 @@ fun CalendarioScreen(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Preview(showBackground = true)
 @Composable
 fun CalendarioPreview() {

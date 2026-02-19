@@ -45,13 +45,6 @@ fun HomeScreen(
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     onQueryChange: (String) -> Unit,
     onAction: (HomeUiAction) -> Unit = {},
-    /*
-    onNFCClick: () -> Unit = {},
-    onSearchClick: () -> Unit,
-    onCalendarioClick: () -> Unit,
-    onHorarioClick: () -> Unit,
-    onLogOut: () -> Unit,
-     */
 ) {
     val searchResults = remember { state.usuarios.toMutableList() }
     var toggleSearchBar by rememberSaveable { mutableStateOf(false) }
@@ -80,23 +73,8 @@ fun HomeScreen(
         title = "Inicio",
         snackBar = snackBar,
         onAction = onAction,
-        onSearchClick = { toggleSearchBar = !toggleSearchBar }
-        /*
-        onNFCClick = {
-            onAction(HomeUiAction.ActivateNFC)
-        },
-        onSearchClick = {
-            onAction(HomeUiAction.OnUsuarioSelected(it))
-        },
-        onCalendarioClick = {
-            onAction(HomeUiAction.OnCalendarioClick)
-        },
-        onHorarioClick = {
-            onAction(HomeUiAction.OnHorarioClick)
-        },
-        onLogOut = {
-            onAction(HomeUiAction.OnLogOutClick)
-        },*/
+        onSearchClick = { toggleSearchBar = !toggleSearchBar },
+        toggle = toggleSearchBar
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -118,16 +96,6 @@ fun HomeScreen(
                                 it.apellidos.startsWith(prefix = state.query, ignoreCase = true)
                     }
                     LazyColumn {
-                        /*
-                        items(items = searchResults, key = { it.id }) { usuario ->
-                            UsuarioDetailsCard(
-                                usuario = usuario,
-                                navigateToDetail = {
-                                    onAction(HomeUiAction.OnUsuarioSelected(usuario.id))
-                                },
-                                toggleSelection = {},
-                            )
-                        }*/
                         if (state.usuarios.isNotEmpty()) items(
                             items = searchResults,
                             key = { it.id }
@@ -178,26 +146,6 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        /*
-                            if (state.usuarios.isNotEmpty()) items(
-                                items = state.usuarios,
-                                key = { it.id }
-                            ) { usuarioLista ->
-                                UsuarioDetailsCard(
-                                    usuario = usuarioLista,
-                                    navigateToDetail = {
-                                        onAction(HomeUiAction.OnUsuarioSelected(usuarioLista.id))
-                                    },
-                                    toggleSelection = {},
-                                )
-                            } else item {
-                                Text(
-                                    text = "No hay usuarios",
-                                    modifier = Modifier.padding(16.dp),
-                                )
-                            }
-                            */
-
                         if (state.registros.isNotEmpty()) items(
                             items = state.registros,
                             key = { it.id }
@@ -208,7 +156,7 @@ fun HomeScreen(
                                     navigateToDetail = {},
                                     toggleSelection = {},
                                     onDeleteRegistro = {},
-                                    modificable = state.usuario?.rol != Rol.ALUMNO
+                                    modificable = state.usuario.rol != Rol.ALUMNO
                                 )
                         } else item {
                             Text(
@@ -238,7 +186,9 @@ fun HomeScreenPreview() {
             gmail = "carolina@gmail.com",
             baja = false,
             curso = "7DMT",
-            departamento = null
+            departamento = null,
+            fotoPerfilUrl = null,
+            password = ""
         ), Usuario(
             id = "2",
             dni = "12345678B",
@@ -254,6 +204,8 @@ fun HomeScreenPreview() {
                 id = "1",
                 nombre = "Ciencias"
             ),
+            fotoPerfilUrl = null,
+            password = ""
         )
     )
 

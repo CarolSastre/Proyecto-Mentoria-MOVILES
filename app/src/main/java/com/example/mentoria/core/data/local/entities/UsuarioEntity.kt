@@ -12,6 +12,7 @@ data class UsuarioEntity(
     val dni: String,
     val nombre: String,
     val apellidos: String,
+    val password: String,
     val nfc: String,
     val rol: Rol,
     val fechaNacimiento: LocalDate?,
