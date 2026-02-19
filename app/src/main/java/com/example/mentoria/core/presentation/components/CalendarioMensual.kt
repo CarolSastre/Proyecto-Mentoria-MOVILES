@@ -1,3 +1,4 @@
+
 package com.example.mentoria.core.presentation.components
 
 import androidx.compose.foundation.background
@@ -87,7 +88,7 @@ fun HeaderCalendario(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Mes anterior",
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
 
@@ -102,7 +103,7 @@ fun HeaderCalendario(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = "Mes siguiente",
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
     }
@@ -119,7 +120,7 @@ fun DiasSemanaHeader() {
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.labelLarge,
                 // Usamos el color de esquema outline para un contraste suave
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f),
                 fontWeight = FontWeight.Bold
             )
         }
@@ -169,10 +170,10 @@ fun DayCell(
     isToday: Boolean,
     onClick: () -> Unit
 ) {
-    val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
+    val backgroundColor = if (isSelected) MaterialTheme.colorScheme.secondary else Color.Transparent
     val contentColor = when {
         isSelected -> MaterialTheme.colorScheme.onPrimary
-        isToday -> MaterialTheme.colorScheme.primary
+        isToday -> MaterialTheme.colorScheme.secondary
         else -> MaterialTheme.colorScheme.onSurface
     }
 
@@ -184,7 +185,7 @@ fun DayCell(
             .background(backgroundColor)
             .border(
                 width = if (isToday && !isSelected) 1.dp else 0.dp,
-                color = if (isToday && !isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                color = if (isToday && !isSelected) MaterialTheme.colorScheme.secondary else Color.Transparent,
                 shape = RoundedCornerShape(12.dp)
             )
             .clickable { onClick() }

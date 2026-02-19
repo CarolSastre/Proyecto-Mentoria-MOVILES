@@ -12,13 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    /*
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80*/
-    primary = MikadoYellow,
-    onPrimary = RichBlack,
-    primaryContainer = RoyalBlue,
+    primary = LighterBlue,
+    onPrimary = Color.White,
+    primaryContainer = OxfordBlue,
     onPrimaryContainer = Color.White,
     secondary = GoldenGoldenrod,
     onSecondary = RichBlack,
@@ -26,19 +22,15 @@ private val DarkColorScheme = darkColorScheme(
     onBackground = Color.White,
     surface = DarkSurface,
     onSurface = Color.White,
-    outline = RoyalBlue
+    outline = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
-    /*
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40*/
-    primary = GoldenGoldenrod,       // Un dorado un poco más sobrio para botones
+    primary = GoldenGoldenrod,
     onPrimary = Color.White,
-    primaryContainer = MikadoYellow, // Dorado brillante para destacar
+    primaryContainer = MikadoYellow,
     onPrimaryContainer = RichBlack,
-    secondary = OxfordBlue,          // El azul oscuro ahora es un acento serio
+    secondary = LighterBlue,
     onSecondary = Color.White,
     background = LightBackground,
     onBackground = DeepBlueText,
@@ -51,7 +43,7 @@ private val LightColorScheme = lightColorScheme(
 fun MentoriaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

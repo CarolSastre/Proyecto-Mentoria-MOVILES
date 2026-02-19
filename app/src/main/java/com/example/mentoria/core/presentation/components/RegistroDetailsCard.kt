@@ -198,6 +198,7 @@ fun RegistroAccesoPreview() {
         registro = lista[0],
         navigateToDetail = {},
         toggleSelection = {},
-        onDeleteRegistro = {}
+        onDeleteRegistro = {},
+        modificable = true
     )
 }
