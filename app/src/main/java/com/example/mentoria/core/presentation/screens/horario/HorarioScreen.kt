@@ -273,7 +273,9 @@ fun HorarioSemanalPreview() {
                 gmail = "carolina@gmail.com",
                 baja = false,
                 curso = "7DMT",
-                departamento = null
+                departamento = null,
+                fotoPerfilUrl = null,
+                password = ""
             ),
             horarios = sampleData
         )

@@ -16,7 +16,6 @@ import org.koin.core.KoinApplication.Companion.init
 fun HomeRoute(
     viewModel: HomeViewModel = koinViewModel(),
     onLoggedOut: () -> Unit,
-    //onSearchClick: () -> Unit,
     onCalendarioClick: () -> Unit,
     onHorarioClick: () -> Unit,
     onNavigateToUsuario: (String) -> Unit,
@@ -51,12 +50,5 @@ fun HomeRoute(
         onAction = {
             action -> onAction(action)
         }
-        /*
-        onLogOut = viewModel::onLogOut,
-        onNFCClick = viewModel::onActivateNFC,
-        onSearchClick = viewModel::onSearch,
-        onCalendarioClick = viewModel::onCalendario,
-        onHorarioClick = viewModel::onHorario,
-         */
     )
 }

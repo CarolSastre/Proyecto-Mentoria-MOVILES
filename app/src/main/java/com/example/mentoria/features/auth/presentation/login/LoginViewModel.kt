@@ -46,7 +46,6 @@ class LoginViewModel(
             result.onSuccess { usuario ->
                 _uiState.update { it.copy(isLoading = false) }
                 _eventChannel.send(LoginUiEvent.LoginSuccess)
-                // TODO: guardar el token?
             }.onFailure { exception ->
                 _uiState.update {
                     it.copy(isLoading = false, error = exception.message ?: "Error desconocido")

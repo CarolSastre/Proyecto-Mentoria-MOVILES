@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Nfc
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Search
@@ -28,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -43,6 +48,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -63,25 +69,21 @@ fun MainScaffold(
     snackBar: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (HomeUiAction) -> Unit = {},
     onSearchClick: () -> Unit,
-    /*
-    onNFCClick: () -> Unit,
-    onCalendarioClick: () -> Unit,
-    onHorarioClick: () -> Unit,
-    onLogOut: () -> Unit,
-     */
+    toggle: Boolean,
     content: @Composable (PaddingValues) -> Unit
 ) {
-    var toggleSearchBar by rememberSaveable { mutableStateOf(false) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val onExpandedChange: (Boolean) -> Unit = {
-        onAction(HomeUiAction.OnSearchClick(it))
-    }
 
     ModalNavigationDrawer(
         drawerContent = {
-            ModalDrawerSheet {
+            ModalDrawerSheet(
+                // OxfordBlue para el fondo del menú lateral
+                drawerContainerColor = MaterialTheme.colorScheme.surface,
+                drawerContentColor = MaterialTheme.colorScheme.onSurface,
+                drawerShape = RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp)
+            ) {
                 Column(
                     modifier = modifier
                         .padding(horizontal = 16.dp)
@@ -91,11 +93,21 @@ fun MainScaffold(
                     UsuarioDetails(
                         usuario = usuario
                     )
-                    HorizontalDivider()
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
+
+                    val drawerItemColors = NavigationDrawerItemDefaults.colors(
+                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedContainerColor = Color.Transparent,
+                        unselectedIconColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface
+                    )
+
                     NavigationDrawerItem(
                         label = {
                             Text(
-                                text = "Registros",
+                                text = "Asistencias",
                                 style = MaterialTheme.typography.headlineSmall
                             )
                         },
@@ -113,8 +125,109 @@ fun MainScaffold(
                                 drawerState.close()
                                 /*TODO*/
                             }
-                        }
+                        },
+                        colors = drawerItemColors,
                     )
+                    if (usuario?.rol != Rol.ALUMNO) {
+                        NavigationDrawerItem(
+                            label = {
+                                Text(
+                                    text = "Lista de alumnos",
+                                    style = MaterialTheme.typography.headlineSmall
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Filled.FormatListNumbered,
+                                    contentDescription = "List"
+                                )
+                            },
+                            modifier = modifier
+                                .padding(horizontal = 8.dp),
+                            selected = false,
+                            onClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                    /*TODO*/
+                                }
+                            },
+                            colors = drawerItemColors,
+                        )
+                        NavigationDrawerItem(
+                            label = {
+                                Text(
+                                    text = "Crear alumno",
+                                    style = MaterialTheme.typography.headlineSmall
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Filled.People,
+                                    contentDescription = "Student"
+                                )
+                            },
+                            modifier = modifier
+                                .padding(horizontal = 8.dp),
+                            selected = false,
+                            onClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                    /*TODO*/
+                                }
+                            },
+                            colors = drawerItemColors,
+                        )
+                    }
+                    if (usuario?.rol == Rol.ADMIN) {
+                        NavigationDrawerItem(
+                            label = {
+                                Text(
+                                    text = "Lista de profesores",
+                                    style = MaterialTheme.typography.headlineSmall
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Filled.FormatListNumbered,
+                                    contentDescription = "List"
+                                )
+                            },
+                            modifier = modifier
+                                .padding(horizontal = 8.dp),
+                            selected = false,
+                            onClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                    /*TODO*/
+                                }
+                            },
+                            colors = drawerItemColors,
+                        )
+                        NavigationDrawerItem(
+                            label = {
+                                Text(
+                                    text = "Crear alumno",
+                                    style = MaterialTheme.typography.headlineSmall
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Filled.People,
+                                    contentDescription = "Teacher"
+                                )
+                            },
+                            modifier = modifier
+                                .padding(horizontal = 8.dp),
+                            selected = false,
+                            onClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                    /*TODO*/
+                                }
+                            },
+                            colors = drawerItemColors,
+                        )
+                    }
                     NavigationDrawerItem(
                         label = {
                             Text(
@@ -136,7 +249,8 @@ fun MainScaffold(
                                 drawerState.close()
                                 onAction(HomeUiAction.OnHorarioClick)
                             }
-                        }
+                        },
+                        colors = drawerItemColors,
                     )
                     NavigationDrawerItem(
                         label = {
@@ -159,7 +273,8 @@ fun MainScaffold(
                                 drawerState.close()
                                 onAction(HomeUiAction.OnCalendarioClick)
                             }
-                        }
+                        },
+                        colors = drawerItemColors,
                     )
                     HorizontalDivider()
                     NavigationDrawerItem(
@@ -183,7 +298,8 @@ fun MainScaffold(
                                 drawerState.close()
                                 onAction(HomeUiAction.OnLogOutClick)
                             }
-                        }
+                        },
+                        colors = drawerItemColors,
                     )
                 }
             }
@@ -204,8 +320,8 @@ fun MainScaffold(
                     modifier = modifier
                         .padding(15.dp)
                         .size(70.dp),
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Nfc,
@@ -218,8 +334,10 @@ fun MainScaffold(
                 CenterAlignedTopAppBar(
                     modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.primary,
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        titleContentColor = MaterialTheme.colorScheme.onBackground,
+                        navigationIconContentColor = MaterialTheme.colorScheme.background,
+                        actionIconContentColor = MaterialTheme.colorScheme.background
                     ),
                     navigationIcon = {
                         IconButton(
@@ -248,16 +366,28 @@ fun MainScaffold(
                         )
                     },
                     actions = {
-                        IconButton(
-                            onClick = {
-                                //onExpandedChange(true)
-                                onSearchClick()
+                        if (!toggle) {
+                            IconButton(
+                                onClick = {
+                                    onSearchClick()
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Search,
+                                    contentDescription = "Search"
+                                )
                             }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.Search,
-                                contentDescription = "Search"
-                            )
+                        } else {
+                            IconButton(
+                                onClick = {
+                                    onSearchClick()
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.ArrowBackIosNew,
+                                    contentDescription = "ArrowBack"
+                                )
+                            }
                         }
                     },
                     scrollBehavior = scrollBehavior,
@@ -269,8 +399,9 @@ fun MainScaffold(
 }
 
 @Preview(
-    showSystemUi = false, showBackground = false,
-    uiMode = Configuration.UI_MODE_TYPE_NORMAL
+    //uiMode = Configuration.UI_MODE_TYPE_NORMAL
+    showSystemUi = true,
+    showBackground = true
 )
 @Composable
 fun MainScaffoldPreview() {
@@ -288,7 +419,11 @@ fun MainScaffoldPreview() {
             gmail = "carolina@gmail.com",
             baja = false,
             curso = "7DMT",
-            departamento = null
-        )
+            departamento = null,
+            fotoPerfilUrl = null,
+            password = ""
+        ),
+        toggle = false,
+        onAction = {}
     ) { }
 }

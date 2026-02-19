@@ -28,7 +28,7 @@ fun ProfileHeader(usuario: Usuario?) {
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .background(MaterialTheme.colorScheme.onSurfaceVariant)
         ) {
             if (usuario?.fotoPerfilUrl != null) {
                 ProfileImage(

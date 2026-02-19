@@ -95,7 +95,7 @@ fun UsuarioDetailsBar(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Preview
 @Composable
 fun UsuariosDetailsPreview() {
@@ -111,7 +111,9 @@ fun UsuariosDetailsPreview() {
             gmail = "carolina@gmail.com",
             baja = false,
             curso = "7DMT",
-            departamento = null
+            departamento = null,
+            fotoPerfilUrl = null,
+            password = ""
         ), Usuario(
             id = "2",
             dni = "12345678A",
@@ -127,6 +129,8 @@ fun UsuariosDetailsPreview() {
                 id="1",
                 nombre="Ciencias"
             ),
+            fotoPerfilUrl = null,
+            password = ""
         )
     )
     UsuarioDetailsBar(

@@ -13,7 +13,6 @@ import com.example.mentoria.core.domain.repositories.UsuarioRepository
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
 import com.example.mentoria.core.domain.usecase.GetUsuarioUseCase
 import com.example.mentoria.core.presentation.screens.MainViewModel
-import com.example.mentoria.core.presentation.screens.search.SearchViewModel
 import com.example.mentoria.core.presentation.screens.usuariodetails.UsuarioDetailsViewModel
 import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
 import com.example.mentoria.features.auth.data.local.SessionManager
@@ -85,7 +84,6 @@ val appModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::MainViewModel)
     viewModelOf(::HomeViewModel)
-    viewModelOf(::SearchViewModel)
     viewModelOf(::CalendarioViewModel)
     viewModelOf(::HorarioViewModel)
 

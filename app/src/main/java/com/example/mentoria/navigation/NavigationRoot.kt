@@ -16,11 +16,9 @@ import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
-import com.example.mentoria.core.presentation.screens.search.SearchScreen
 import com.example.mentoria.core.presentation.screens.calendario.CalendarioRoute
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 import com.example.mentoria.core.presentation.screens.horario.HorarioRoute
-import com.example.mentoria.core.presentation.screens.search.SearchRoute
 import com.example.mentoria.core.presentation.screens.usuariodetails.UsuarioDetailsRoute
 import com.example.mentoria.features.auth.data.local.SessionEvent
 import com.example.mentoria.features.auth.data.local.SessionManager
@@ -64,7 +62,9 @@ fun NavigationRoot(
             gmail = "carolina@gmail.com",
             baja = false,
             curso = "7DMT",
-            departamento = null
+            departamento = null,
+            fotoPerfilUrl = null,
+            password = ""
         ), Usuario(
             id = "2",
             dni = "12345678A",
@@ -80,6 +80,8 @@ fun NavigationRoot(
                 id = "1",
                 nombre = "Ciencias"
             ),
+            fotoPerfilUrl = null,
+            password = ""
         )
     )
 
@@ -139,16 +141,12 @@ fun NavigationRoot(
                         is RegisterKey ->
                             RegisterRoute(
                                 onRegisterSuccess = {
-                                    backStack.add(HomeKey)
+                                    backStack.removeLastOrNull() // vuelve a la pantalla de Login
                                 },
                             )
 
                         is HomeKey ->
                             HomeRoute(
-                                /*
-                                onSearchClick = {
-                                    backStack.add(SearchKey)
-                                },*/
                                 onLoggedOut = {
                                     backStack.clear()
                                     backStack.add(LoginKey)
@@ -162,13 +160,6 @@ fun NavigationRoot(
                                 onNavigateToUsuario = { usuarioId ->
                                     backStack.add(UsuarioDetailsKey(usuarioId))
                                 },
-                            )
-
-                        is SearchKey ->
-                            SearchRoute(
-                                onNavigateToUsuario = { usuarioId ->
-                                    backStack.add(UsuarioDetailsKey(usuarioId))
-                                }
                             )
 
                         is UsuarioDetailsKey ->
