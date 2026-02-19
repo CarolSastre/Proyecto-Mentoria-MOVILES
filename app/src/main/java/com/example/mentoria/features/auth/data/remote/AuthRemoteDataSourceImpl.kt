@@ -10,12 +10,11 @@ class AuthRemoteDataSourceImpl(
 ) : AuthRemoteDataSource {
 
     override suspend fun login(request: LoginRequest): LoginResponse {
-        val response = api.login(request)
-        println("Response: $response")
-        return response.body() ?: throw Exception("Error al obtener el usuario")
+        return api.login(request).body() ?: throw Exception("Error al obtener el usuario")
     }
 
     override suspend fun register(usuarioDto: UsuarioDto): Unit {
-        return api.register(usuarioDto).body() ?: throw Exception("Error al registrar")
+        val response = api.register(usuarioDto)
+        return response.body() ?: throw Exception("Error al registrar")
     }
 }

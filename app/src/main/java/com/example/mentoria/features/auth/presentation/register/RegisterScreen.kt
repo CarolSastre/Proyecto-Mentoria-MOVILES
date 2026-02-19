@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -47,6 +49,7 @@ fun RegisterScreen(
     var fechaNacimiento by remember { mutableStateOf("") }
     var curso by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+    val scrollState = rememberScrollState()
 
     Scaffold(
         snackbarHost = {
@@ -59,7 +62,8 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = 32.dp),
+                .padding(horizontal = 32.dp)
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
