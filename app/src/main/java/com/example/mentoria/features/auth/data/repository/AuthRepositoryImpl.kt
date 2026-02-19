@@ -70,6 +70,7 @@ class AuthRepositoryImpl(
     ): Unit {
         return try {
             val response = remote.register(usuarioDto)
+            println("Respuesta: $response")
         } catch (e: Exception) {
             e.printStackTrace()
         }

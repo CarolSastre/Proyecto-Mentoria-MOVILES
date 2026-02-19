@@ -4,6 +4,7 @@ import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 import com.example.mentoria.features.auth.data.remote.dto.LoginResponse
+import com.example.mentoria.features.auth.data.remote.dto.RegisterResponse
 
 class AuthRemoteDataSourceImpl(
     private val api: AuthApi // Retrofit se inyecta aquí
@@ -13,8 +14,8 @@ class AuthRemoteDataSourceImpl(
         return api.login(request).body() ?: throw Exception("Error al obtener el usuario")
     }
 
-    override suspend fun register(usuarioDto: UsuarioDto): Unit {
+    override suspend fun register(usuarioDto: UsuarioDto): RegisterResponse {
         val response = api.register(usuarioDto)
-        return response.body() ?: throw Exception("Error al registrar")
+        return response.body() ?: throw Exception("Error al registrar el usuario")
     }
 }
