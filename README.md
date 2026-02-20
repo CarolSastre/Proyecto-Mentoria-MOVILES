@@ -5,7 +5,7 @@ Mentoría APP es una aplicación nativa para Android diseñada para la gestión 
 ## Características Principales
 
 * **Autenticación Segura:** Sistema de Login y Registro gestionado mediante JWT.
-* **Gestión de Sesiones (DataStore):** Mantenimiento persistente de la sesión del usuario (Token e ID) para evitar re-logins innecesarios.
+* **Gestión de Sesiones (DataStore):** Mantenimiento persistente de la sesión del usuario (Token e ID).
 * **Perfiles de Usuario:** Visualización y gestión de datos de los usuarios (Estudiantes, Mentores, Administradores).
 * **Calendario y Horarios:** Consulta de horarios de mentoría y calendario mensual interactivo.
 * **Registro de Accesos:** Historial y control de los registros de entrada/salida.
@@ -13,7 +13,7 @@ Mentoría APP es una aplicación nativa para Android diseñada para la gestión 
 
 ## Especificaciones
 
-La aplicación está construida utilizando el estado del arte del ecosistema moderno de Android:
+La aplicación está construida utilizando el prototipo de arquitectura moderno de Android:
 
 * **UI:** [Jetpack Compose](https://developer.android.com/jetpack/compose) - UI declarativa nativa.
 * **Navegación:** `androidx-navigation3-compose` (última versión Alpha) para una navegación estructurada y segura en Compose.
@@ -44,7 +44,6 @@ Implementa los repositorios y se encarga de obtener los datos de fuentes externa
 * **Ejemplo:** `AuthRepositoryImpl`, `UsuarioApiService` (Remote), `SessionManager` (Local/DataStore), `AppDatabase` (Local/Room).
 
 ### Inyección de Dependencias (DI)
-El módulo principal `MainModule.kt` orquesta la inyección de Koin, centralizando la creación de Singletons (Repositorios, APIs) y ViewModels.
 La aplicación está divida en tres módulos principales que crean los Singletons correspondientes:
 * `NetworkModule.kt`. Para la conexión con la API.
 * `AuthModule.kt`. Para el manejo de la autenticación y sesiones.
@@ -56,8 +55,8 @@ La aplicación está divida en tres módulos principales que crean los Singleton
 * [Android Studio](https://developer.android.com/studio) (Ladybug o superior recomendado).
 * JDK 17 o superior.
 
-### Entorno de Red (Importante)
-La app está configurada para conectar con un backend local. La dirección IP base está definida en el módulo de Koin (`MainModule.kt` o equivalente).
+### Entorno de Red
+La app está configurada para conectar con un backend local. La dirección IP base está definida en el módulo de Koin (`NetworkModule.kt`).
 * **Si usas el Emulador de Android:** La URL debe ser `http://10.0.2.2:8080/`.
 * **Si usas un Dispositivo Físico:** Debes cambiar la URL por la IP local de tu ordenador en la red WiFi (ej: `http://192.168.1.XX:8080/`).
 
@@ -68,8 +67,8 @@ La app está configurada para conectar con un backend local. La dirección IP ba
 4.  Revisa/Modifica la Base URL en la configuración de Retrofit según tu entorno (ver sección anterior).
 5.  Pulsa `Run` (▶️) para compilar e instalar en tu emulador o dispositivo físico.
 
-## Próximos Pasos (Roadmap)
+## Próximos Pasos
 * Implementar la persistencia y caché de Usuarios mediante Room.
-* Migrar llamadas *Fake* de la API a endpoints reales del Backend.
-* Añadir Test Unitarios para los Casos de Uso y ViewModels.
+* Migrar llamadas *Fake* restantes de la API a endpoints reales del Backend.
+* Añadir Test Unitarios para los Casos de Uso y ViewModels del paquete core.
 * Refinar el diseño visual (UI/UX) general aplicando el sistema de Material Design 3.

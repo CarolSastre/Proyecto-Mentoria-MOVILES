@@ -411,7 +411,6 @@ fun MainScaffold(
 }
 
 @Preview(
-    //uiMode = Configuration.UI_MODE_TYPE_NORMAL
     showSystemUi = true,
     showBackground = true
 )

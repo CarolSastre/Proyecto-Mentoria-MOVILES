@@ -75,9 +75,7 @@ val appModule = module {
     factoryOf(::GetAllUsuariosUseCase)
     factoryOf(::GetUsuarioUseCase)
 
-    // ==========================================
     // 4. PRESENTATION (VIEW MODELS)
-    // ==========================================
     viewModelOf(::RegisterViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::MainViewModel)

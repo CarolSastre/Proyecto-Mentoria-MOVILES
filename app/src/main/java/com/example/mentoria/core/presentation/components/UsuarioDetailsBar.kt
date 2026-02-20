@@ -31,6 +31,7 @@ import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import java.time.LocalDate
 
+// TODO: creo que este componente no se usa
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UsuarioDetailsBar(

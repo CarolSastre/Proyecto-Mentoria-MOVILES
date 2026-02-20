@@ -33,16 +33,8 @@ fun UsuarioDetailsScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             MainTopAppBar(
-                title = "Detalles de Usuario", // Título genérico, el nombre va en el contenido
+                title = "Detalles de Usuario",
                 onBack = onBack,
-                // Opcional: Agregar botón de editar en la TopBar
-                /*
-                actions = {
-                    IconButton(onClick = { onAction(UsuarioDetailsAction.OnEditClick) }) {
-                        Icon(Icons.Default.Edit, contentDescription = "Editar")
-                    }
-                }
-                 */
             )
         },
     ) { innerPadding ->
