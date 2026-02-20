@@ -32,7 +32,7 @@ fun ProfileHeader(usuario: Usuario?) {
         ) {
             if (usuario?.fotoPerfilUrl != null) {
                 ProfileImage(
-                    drawableResource = R.drawable.prueba_background,//usuario.fotoPerfilUrl,
+                    fotoPerfilUrl = usuario.fotoPerfilUrl,
                     description = "Foto de perfil",
                     modifier = Modifier.fillMaxSize(),
                 )
@@ -60,7 +60,7 @@ fun ProfileHeader(usuario: Usuario?) {
         // Chip del Rol
         AssistChip(
             onClick = { },
-            label = { Text(usuario?.rol.toString()) }, // Asegúrate de que tu Rol tenga un toString() bonito
+            label = { Text(usuario?.rol.toString()) },
             leadingIcon = {
                 Icon(Icons.Default.VerifiedUser, contentDescription = null, modifier = Modifier.size(16.dp))
             }

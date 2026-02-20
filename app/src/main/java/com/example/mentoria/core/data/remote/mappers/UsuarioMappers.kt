@@ -20,8 +20,6 @@ fun UsuarioEntity.toDomain(): Usuario {
         fechaNacimiento = fechaNacimiento,
         gmail = gmail,
         baja = baja,
-
-        // YA NO DA ERROR: String? a String? es válido
         curso = curso,
 
         departamento = departamento?.toDomain(),
@@ -41,10 +39,7 @@ fun UsuarioDto.toDomain(): Usuario {
         fechaNacimiento = fechaNacimiento?.let { LocalDate.parse(it) },
         gmail = gmail ?: "",
         baja = baja ?: false,
-
-        // Si el JSON viene null, pasamos null (para profesores)
         curso = curso,
-
         departamento = departamento?.toDomain(),
         fotoPerfilUrl = fotoPerfil?.let { "$BASE_URL_IMAGENES$it" }
     )
@@ -62,8 +57,6 @@ fun UsuarioDto.toEntity(): UsuarioEntity {
         fechaNacimiento = fechaNacimiento?.let { LocalDate.parse(it) },
         gmail = gmail ?: "",
         baja = baja ?: false,
-
-        // Guardamos null en la BDD si no hay curso
         curso = curso,
         departamento = departamento?.toEntity(),
         fotoPerfil = fotoPerfil

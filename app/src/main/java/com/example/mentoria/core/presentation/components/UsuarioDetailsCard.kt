@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Card
@@ -81,11 +83,20 @@ fun UsuarioDetailsCard(
                     if (it) {
                         SelectedProfileImage(clickModifier)
                     } else {
-                        ProfileImage(
-                            drawableResource = R.drawable.prueba_background,//usuario.avatar,
-                            description = "${usuario.nombre} ${usuario.apellidos}",
-                            clickModifier,
-                        )
+                        if (usuario.fotoPerfilUrl != null) {
+                            ProfileImage(
+                                fotoPerfilUrl = usuario.fotoPerfilUrl,
+                                description = "Foto de perfil",
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = null,
+                                modifier = Modifier.size(60.dp),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
 

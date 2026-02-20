@@ -26,7 +26,6 @@ class UsuarioDetailsViewModel(
     init {
         viewModelScope.launch {
             val token = session.getToken()
-            // TODO: hay que hacer la petición
             getUsuarioUseCase(usuarioId).collect { usuario ->
                 _uiState.value = usuario
             }
@@ -37,7 +36,6 @@ class UsuarioDetailsViewModel(
 
     fun onAction(action: UsuarioDetailsAction) {
         when(action) {
-            // TODO: borrar usuario si se es profesor o admin ?
             else -> {}
         }
     }

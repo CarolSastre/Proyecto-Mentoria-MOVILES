@@ -3,9 +3,13 @@ package com.example.mentoria.core.presentation.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,13 +29,20 @@ fun UsuarioDetails(
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painterResource(R.drawable.prueba_background), // TODO: perfil
-            contentDescription = "Perfil",
-            modifier = modifier
-                .size(60.dp)
-                .clip(CircleShape)
-        )
+        if (usuario?.fotoPerfilUrl != null) {
+            ProfileImage(
+                fotoPerfilUrl = usuario.fotoPerfilUrl,
+                description = "Foto de perfil",
+                modifier = Modifier.fillMaxSize(),
+            )
+        } else {
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = null,
+                modifier = Modifier.size(60.dp),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
         Column(
             modifier = modifier
                 .padding(start = 15.dp, bottom = 6.dp)

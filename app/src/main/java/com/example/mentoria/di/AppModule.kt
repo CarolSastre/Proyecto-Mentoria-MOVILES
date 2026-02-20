@@ -9,6 +9,7 @@ import org.koin.dsl.module
 import androidx.room.Room
 import com.example.mentoria.core.data.local.AppDatabase
 import com.example.mentoria.core.data.repositories.FakeUsuarioRepositoryImpl
+import com.example.mentoria.core.data.repositories.UsuarioRepositoryRemoteImpl
 import com.example.mentoria.core.domain.repositories.UsuarioRepository
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
 import com.example.mentoria.core.domain.usecase.GetUsuarioUseCase
@@ -50,7 +51,6 @@ val appModule = module {
     // DAOs
     single { get<AppDatabase>().usuarioDao() }
     // --- Session Manager (SINGLETON) ---
-    // Actúa como AuthLocalDataSource y gestor de sesión
     single { SessionManager(androidContext()) } bind AuthLocalDataSource::class
 
     // --- APIs (Retrofit Creates) ---
@@ -61,16 +61,13 @@ val appModule = module {
     singleOf(::AuthRemoteDataSourceImpl) { bind<AuthRemoteDataSource>() }
 
     // --- Repositories (SINGLETONS) ---
-    // AuthRepository: Mantiene el usuario en memoria
     singleOf(::AuthRepositoryImpl) { bind<AuthRepository>() }
 
     // UsuarioRepository
     //singleOf(::UsuarioRepositoryRemoteImpl) { bind<UsuarioRepository>() }
     single<UsuarioRepository> { FakeUsuarioRepositoryImpl() }
 
-    // ==========================================
     // 3. DOMAIN (USE CASES)
-    // ==========================================
     factoryOf(::RegisterUseCase)
     factoryOf(::LoginUseCase)
     factoryOf(::LogoutUseCase)
@@ -78,9 +75,7 @@ val appModule = module {
     factoryOf(::GetAllUsuariosUseCase)
     factoryOf(::GetUsuarioUseCase)
 
-    // ==========================================
     // 4. PRESENTATION (VIEW MODELS)
-    // ==========================================
     viewModelOf(::RegisterViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::MainViewModel)

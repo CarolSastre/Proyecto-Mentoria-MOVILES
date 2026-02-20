@@ -11,12 +11,14 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -82,11 +84,20 @@ fun RegistroDetailsCard(
                     if (it) {
                         SelectedProfileImage(clickModifier)
                     } else {
-                        ProfileImage(
-                            drawableResource = R.drawable.prueba_background, // registro.usuario.perfil,
-                            description = "${registro.usuario.nombre} ${registro.usuario.apellidos}",
-                            clickModifier,
-                        )
+                        if (registro.usuario.fotoPerfilUrl != null) {
+                            ProfileImage(
+                                fotoPerfilUrl = registro.usuario.fotoPerfilUrl,
+                                description = "Foto de perfil",
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = null,
+                                modifier = Modifier.size(60.dp),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
 
