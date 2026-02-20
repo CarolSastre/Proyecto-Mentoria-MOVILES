@@ -1,5 +1,6 @@
 package com.example.mentoria.core.domain.model
 
+import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import java.time.LocalDate
 
 data class Usuario(

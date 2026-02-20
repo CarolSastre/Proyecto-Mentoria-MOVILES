@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import com.example.mentoria.core.data.MockDataProvider
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -22,6 +23,7 @@ fun CalendarioRoute(
     }
 
     CalendarioScreen(
+        registros = MockDataProvider.registros, // viewModel.registros.value,
         onDateSelected = {}, // viewModel::getRegistros
     )
 }

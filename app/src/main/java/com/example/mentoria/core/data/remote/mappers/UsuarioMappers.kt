@@ -1,10 +1,7 @@
 package com.example.mentoria.core.data.remote.mappers
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.data.local.entities.UsuarioEntity
-import com.example.mentoria.core.domain.model.Departamento
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.domain.model.Rol
 import java.time.LocalDate
@@ -34,7 +31,7 @@ fun UsuarioEntity.toDomain(): Usuario {
 
 fun UsuarioDto.toDomain(): Usuario {
     return Usuario(
-        id = id ?: "",
+        id = _id ?: "",
         dni = dni ?: "",
         nombre = nombre ?: "Sin nombre",
         apellidos = apellidos ?: "",
@@ -55,7 +52,7 @@ fun UsuarioDto.toDomain(): Usuario {
 
 fun UsuarioDto.toEntity(): UsuarioEntity {
     return UsuarioEntity(
-        id = id ?: "",
+        id = _id ?: "",
         dni = dni ?: "",
         nombre = nombre ?: "",
         apellidos = apellidos ?: "",
@@ -70,5 +67,23 @@ fun UsuarioDto.toEntity(): UsuarioEntity {
         curso = curso,
         departamento = departamento?.toEntity(),
         fotoPerfil = fotoPerfil
+    )
+}
+
+fun Usuario.toDto(): UsuarioDto {
+    return UsuarioDto(
+        _id = id,
+        dni = dni,
+        nombre = nombre,
+        apellidos = apellidos,
+        password = password,
+        nfc = nfc,
+        rol = rol.toString(),
+        fechaNacimiento = fechaNacimiento?.toString(),
+        gmail = gmail,
+        baja = baja,
+        curso = curso,
+        departamento = departamento?.toDto(),
+        fotoPerfil = fotoPerfilUrl
     )
 }

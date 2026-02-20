@@ -10,13 +10,13 @@ class AuthInterceptor(
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = sesion.getInMemoryToken()
-        // Imprimimos el token para depuración
+        val token = sesion.getTokenFromMemory()
+
         println("AuthInterceptor: Intentando usar el token: $token")
 
         val request = chain.request().newBuilder()
             .apply {
-                token?.let{
+                token?.let {
                     addHeader("Authorization", "Bearer $it")
                 }
             }.build()

@@ -10,6 +10,7 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.example.mentoria.core.data.MockDataProvider
 import com.example.mentoria.core.domain.model.Departamento
 import com.example.mentoria.core.domain.model.Horario
 import com.example.mentoria.core.domain.model.RegistroAcceso
@@ -49,69 +50,6 @@ fun NavigationRoot(
         }
     }
 
-    // TODO: quitar todo esto ///////////////
-    val usuarios = listOf(
-        Usuario(
-            id = "1",
-            dni = "12345678A",
-            nombre = "Carolina",
-            apellidos = "Sastre Garrido",
-            rol = Rol.ALUMNO,
-            nfc = null,
-            fechaNacimiento = LocalDate.parse("2001-06-12"),
-            gmail = "carolina@gmail.com",
-            baja = false,
-            curso = "7DMT",
-            departamento = null,
-            fotoPerfilUrl = null,
-            password = ""
-        ), Usuario(
-            id = "2",
-            dni = "12345678A",
-            nombre = "Profesor",
-            apellidos = "Xavier",
-            rol = Rol.PROFESOR,
-            nfc = null,
-            fechaNacimiento = LocalDate.now(),
-            gmail = "xavier@gmail.com",
-            baja = false,
-            curso = null,
-            departamento = Departamento(
-                id = "1",
-                nombre = "Ciencias"
-            ),
-            fotoPerfilUrl = null,
-            password = ""
-        )
-    )
-
-    val registros = listOf(
-        RegistroAcceso(
-            id = "1",
-            fechaHora = LocalDateTime.now(),
-            accesoPermitido = true,
-            mensaje = "Acceso permitido",
-            usuario = usuarios[0]
-        ),
-        RegistroAcceso(
-            id = "2",
-            fechaHora = LocalDateTime.now(),
-            accesoPermitido = false,
-            mensaje = "Acceso denegado",
-            usuario = usuarios[1]
-        )
-    )
-
-    val horarios = listOf(
-        Horario("1", "Mates", "Lunes", LocalTime.of(8, 0), LocalTime.of(9, 30)),
-        Horario("2", "Física", "Martes", LocalTime.of(9, 0), LocalTime.of(11, 0)),
-        Horario("3", "Historia", "Miércoles", LocalTime.of(11, 0), LocalTime.of(12, 0)),
-        Horario("4", "Kotlin", "Jueves", LocalTime.of(15, 0), LocalTime.of(17, 0)),
-        Horario("5", "Inglés", "Viernes", LocalTime.of(8, 0), LocalTime.of(10, 0)),
-        Horario("6", "Deporte", "Viernes", LocalTime.of(10, 0), LocalTime.of(11, 30))
-    )
-
-    ////////////////////////////////////////
     sessionManager.events.ObserveAsEvents { event ->
         when (event) {
             SessionEvent.LoggedOut -> {
@@ -172,8 +110,8 @@ fun NavigationRoot(
 
                         is HorarioKey ->
                             HorarioRoute(
-                                usuario = usuarios[0],
-                                horarios = horarios
+                                usuario = MockDataProvider.usuarios[0],
+                                horarios = MockDataProvider.horarios
                             )
 
                         else -> error("Ruta no reconocida: $key")

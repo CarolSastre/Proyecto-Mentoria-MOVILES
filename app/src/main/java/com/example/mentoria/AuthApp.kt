@@ -18,7 +18,6 @@ class AuthApp : Application() {
         startKoin {
             androidContext(this@AuthApp)
 
-            //modules(commonAuthModule)
             modules(
                 networkModule,
                 appModule)

@@ -54,7 +54,7 @@ fun LoginScreen(
             /*
         Image(
             painter = painterResource(
-                id = // TODO: R.drawable.ic_login_image, añadir logo
+                _id = // TODO: R.drawable.ic_login_image, añadir logo
                 ),
             contentDescription = "Image Login",
             modifier = modifier

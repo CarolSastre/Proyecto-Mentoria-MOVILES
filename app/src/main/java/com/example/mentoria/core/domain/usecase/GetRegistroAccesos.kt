@@ -10,6 +10,6 @@ class GetRegistrosFromUsuarioUseCase(
 ) {
     operator fun invoke(usuarioId: String): Flow<List<RegistroAcceso>> {
         //return repository.login(LoginRequest(dni, password)).usuario?.toDomain()
-        return flowOf(emptyList())
+        return repository.getRegistrosFromUsuario(usuarioId)
     }
 }

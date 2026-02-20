@@ -7,6 +7,9 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.mentoria.core.domain.model.Usuario
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,31 +18,34 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 
-// Se cambia el nombre para forzar la creación de un nuevo almacén de datos y limpiar datos corruptos.
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings_v2")
 
 class SessionManager(
     context: Context
-): AuthLocalDataSource {
+) : AuthLocalDataSource {
 
-    private val _events = Channel<SessionEvent>()
-    val events = _events.receiveAsFlow()
     private val dataStore = context.dataStore
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     // Caché en memoria para el token.
     @Volatile
-    private var inMemoryToken: String?
+    private var inMemoryToken: String? = null
+
+    private val _events = Channel<SessionEvent>()
+    val events = _events.receiveAsFlow()
+
 
     private val _user = MutableStateFlow<Usuario?>(null)
     val userFlow: StateFlow<Usuario?> = _user.asStateFlow()
 
     init {
-        // Inicializa el token en memoria desde DataStore.
-        // runBlocking aquí es aceptable porque se ejecuta una sola vez durante la inyección
-        // de dependencias, antes de que se realicen peticiones de red.
-        inMemoryToken = runBlocking { getTokenFlow().firstOrNull() }
+        // Al iniciar, carga el token desde DataStore a la caché en memoria
+        scope.launch {
+            inMemoryToken = getTokenFlow().firstOrNull()
+            println("SessionManager init: Token cargado desde DataStore: $inMemoryToken")
+        }
     }
 
     companion object {
@@ -47,41 +53,36 @@ class SessionManager(
         private val USER_ID_KEY = stringPreferencesKey("user_id")
     }
 
-    /**
-     * Devuelve el token desde la caché en memoria. Es síncrono y seguro para llamar
-     * desde el AuthInterceptor.
-     */
-    fun getInMemoryToken(): String? = inMemoryToken
-
     override suspend fun saveToken(token: String) {
+        // Guardar en la caché y en DataStore
+        inMemoryToken = token
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = token
         }
-        // Actualiza la caché en memoria.
-        inMemoryToken = token
     }
 
     fun setCurrentUser(user: Usuario?) {
         _user.value = user
     }
 
-    // Guardar Token y ID juntos
     suspend fun saveSession(token: String, userId: String?) {
+        println("Token del usuario guardado: $token")
+        // 1. Guardar en caché para acceso inmediato
+        inMemoryToken = token
+        // 2. Persistir en DataStore para futuras sesiones
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = token
             preferences[USER_ID_KEY] = userId ?: ""
         }
-        // Actualiza la caché en memoria.
-        inMemoryToken = token
     }
 
     suspend fun clearSession() {
+        // Limpiar caché y DataStore
+        inMemoryToken = null
         dataStore.edit { preferences ->
             preferences.remove(TOKEN_KEY)
             preferences.remove(USER_ID_KEY)
         }
-        // Actualiza la caché en memoria.
-        inMemoryToken = null
     }
 
     override fun getTokenFlow(): Flow<String?> {
@@ -90,16 +91,28 @@ class SessionManager(
         }
     }
 
-    override suspend fun getToken(): String? {
-        return dataStore.data.map { it[TOKEN_KEY] }.firstOrNull()
+    /**
+     * Devuelve el token de la caché en memoria de forma síncrona.
+     * Ideal para el `AuthInterceptor` que no puede ser suspend.
+     */
+    fun getTokenFromMemory(): String? {
+        println("getTokenFromMemory: Devolviendo token desde memoria: $inMemoryToken")
+        return inMemoryToken
     }
 
-    override suspend fun clearToken() {
-        dataStore.edit { preferences ->
-            preferences.remove(TOKEN_KEY)
+    /**
+     * Implementación de la interfaz. Devuelve el token, priorizando la caché
+     * y consultando DataStore si es necesario.
+     */
+    override suspend fun getToken(): String? {
+        return inMemoryToken ?: getTokenFlow().firstOrNull().also { loadedToken ->
+            inMemoryToken = loadedToken
         }
-        // Actualiza la caché en memoria.
-        inMemoryToken = null
+    }
+
+
+    override suspend fun clearToken() {
+        clearSession()
         setCurrentUser(null)
     }
 

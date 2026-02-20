@@ -15,7 +15,6 @@ class AuthRemoteDataSourceImpl(
     }
 
     override suspend fun register(usuarioDto: UsuarioDto): RegisterResponse {
-        val response = api.register(usuarioDto)
-        return response.body() ?: throw Exception("Error al registrar el usuario")
+        return api.register(usuarioDto).body() ?: throw Exception("Error al registrar el usuario")
     }
 }

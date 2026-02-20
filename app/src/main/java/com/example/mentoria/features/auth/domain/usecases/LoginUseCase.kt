@@ -11,10 +11,10 @@ class LoginUseCase(
 ) {
     suspend operator fun invoke(dni: String, password: String): Usuario {
         if (dni.isBlank() || password.isBlank()) {
-            throw IllegalArgumentException("Dni o contraseña en blanco")
+            throw IllegalArgumentException("DNI o contraseña en blanco")
         }
         val usuario = authRepository.login(dni, password)
 
-        return usuario ?: throw Exception("Dni o contraseña incorrecto")
+        return usuario ?: throw Exception("DNI o contraseña incorrecto")
     }
 }

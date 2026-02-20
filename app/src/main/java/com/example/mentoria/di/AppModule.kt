@@ -8,7 +8,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import androidx.room.Room
 import com.example.mentoria.core.data.local.AppDatabase
-import com.example.mentoria.core.data.repositories.UsuarioRepositoryRemoteImpl
+import com.example.mentoria.core.data.repositories.FakeUsuarioRepositoryImpl
 import com.example.mentoria.core.domain.repositories.UsuarioRepository
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
 import com.example.mentoria.core.domain.usecase.GetUsuarioUseCase
@@ -65,7 +65,8 @@ val appModule = module {
     singleOf(::AuthRepositoryImpl) { bind<AuthRepository>() }
 
     // UsuarioRepository
-    singleOf(::UsuarioRepositoryRemoteImpl) { bind<UsuarioRepository>() }
+    //singleOf(::UsuarioRepositoryRemoteImpl) { bind<UsuarioRepository>() }
+    single<UsuarioRepository> { FakeUsuarioRepositoryImpl() }
 
     // ==========================================
     // 3. DOMAIN (USE CASES)

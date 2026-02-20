@@ -5,8 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface UsuarioApiService {
-
-    // TODO: aquí hay que definir (y modificar) los endpoints para usuarios
     @GET("/api/usuarios")
     suspend fun getAllUsuarios(): List<UsuarioDto>
 
@@ -15,7 +13,4 @@ interface UsuarioApiService {
 
 //    @GET("/usuarios/{query}")
 //    suspend fun searchUsuario(@Path("query") query: String): UsuarioResponse
-
-    //@POST("usuario")
-    //suspend fun createUsuario(@Body usuario: RegisterUsuarioRequest): UsuarioDto
 }

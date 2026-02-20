@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RegistroAccesoRepository {
     fun getAllRegistros(): Flow<List<RegistroAcceso>>
-    fun getRegistro(): Flow<RegistroAcceso>
+    fun getRegistro(id: String): Flow<RegistroAcceso>
     fun getRegistrosFromUsuario(id: String): Flow<List<RegistroAcceso>>
     suspend fun deleteRegistro(registroId: String)
     suspend fun createRegistro(registro: RegistroAcceso)

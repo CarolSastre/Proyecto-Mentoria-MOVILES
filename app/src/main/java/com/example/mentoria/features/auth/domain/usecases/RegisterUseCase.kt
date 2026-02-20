@@ -14,7 +14,6 @@ class RegisterUseCase(
     suspend operator fun invoke(
         usuarioDto: UsuarioDto
     ): Unit {
-        val result = repository.register(usuarioDto)
-        return result
+        return repository.register(usuarioDto)
     }
 }
