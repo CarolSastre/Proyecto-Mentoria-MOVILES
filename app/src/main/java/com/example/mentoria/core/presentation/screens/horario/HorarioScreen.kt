@@ -1,4 +1,3 @@
-
 package com.example.mentoria.core.presentation.screens.horario
 
 import androidx.compose.foundation.background
@@ -48,7 +47,7 @@ fun HorarioScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             MainTopAppBar(
-                title = "Horario ${usuario?.curso}",
+                title = "Horario " + usuario?.curso,
                 onBack = LocalOnNavigationBack.current,
             )
         }
@@ -87,27 +86,21 @@ fun HorarioScreen(
                     .fillMaxSize()
                     .verticalScroll(scrollState)
             ) {
-                // Calculamos el ancho de cada columna dinámicamente
                 val screenWidth = maxWidth
                 val columnWidth = (screenWidth - SIDEBAR_WIDTH) / 5
 
-                // A. Columna de Horas (Izquierda)
                 HoursSidebarWeekly(height = maxHeight)
 
-                // B. Parrilla de fondo (Líneas divisorias)
                 GridBackground(
                     columnWidth = columnWidth,
-                    //totalHeight = maxHeight
-                ) // Simplificado visualmente
+                )
 
-                // C. Los bloques de las clases
                 Box(
                     modifier = Modifier
                         .padding(start = SIDEBAR_WIDTH)
                         .fillMaxSize()
                 ) {
                     horarios.forEach { horario ->
-                        // Buscamos el índice del día (0=Lunes, 4=Viernes)
                         val dayIndex = getDayIndex(horario.diaSemana)
 
                         if (dayIndex != -1) {

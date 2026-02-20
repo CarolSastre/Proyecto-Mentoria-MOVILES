@@ -24,6 +24,6 @@ fun CalendarioRoute(
 
     CalendarioScreen(
         registros = MockDataProvider.registros, // viewModel.registros.value,
-        onDateSelected = {}, // viewModel::getRegistros
+        onDateSelected = {},
     )
 }

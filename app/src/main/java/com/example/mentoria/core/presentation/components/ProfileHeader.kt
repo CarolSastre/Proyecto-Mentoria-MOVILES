@@ -33,7 +33,6 @@ fun ProfileHeader(usuario: Usuario?) {
             if (usuario?.fotoPerfilUrl != null) {
                 ProfileImage(
                     fotoPerfilUrl = usuario.fotoPerfilUrl,
-                    //drawableResource = R.drawable.prueba_background,//usuario.fotoPerfilUrl,
                     description = "Foto de perfil",
                     modifier = Modifier.fillMaxSize(),
                 )

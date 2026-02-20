@@ -1,5 +1,6 @@
 package com.example.mentoria.features.auth.presentation.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.CircleShape
@@ -15,12 +16,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mentoria.R
 import com.example.mentoria.features.auth.presentation.components.PasswordOutTextField
 import com.example.mentoria.features.auth.presentation.components.TextOutOfTextField
 
@@ -51,18 +52,6 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
         ) {
-            /*
-        Image(
-            painter = painterResource(
-                _id = // TODO: R.drawable.ic_login_image, añadir logo
-                ),
-            contentDescription = "Image Login",
-            modifier = modifier
-                .fillMaxWidth()
-                .size(300.dp),
-            alignment = Alignment.Center
-        )
-         */
             Text(
                 text = "Login",
                 fontSize = 30.sp

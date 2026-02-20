@@ -22,11 +22,6 @@ class RegistroAccesoRepositoryImpl(
         }
 
         //return local.map { it.toDomain() }
-        /*
-        val remote = api
-        usuarioDao.insertAll(remote.map { it.toEntity() })
-        return remote.map { it.toDomain() }
-         */
         TODO("Not yet implemented")
     }
 

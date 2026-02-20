@@ -55,10 +55,8 @@ fun UsuarioDetailsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // 1. Cabecera (Foto, Nombre, Rol, Estado)
             ProfileHeader(usuario)
 
-            // 2. Información Personal
             InfoSectionCard(title = "Información Personal") {
                 InfoRow(icon = Icons.Default.Badge, label = "DNI", value = usuario?.dni)
                 InfoRow(icon = Icons.Default.Email, label = "Email", value = usuario?.gmail)
@@ -74,7 +72,6 @@ fun UsuarioDetailsScreen(
                 }
             }
 
-            // 3. Información Académica / Laboral (Solo si aplica)
             if (usuario?.curso != null || usuario?.departamento != null) {
                 InfoSectionCard(title = "Académico / Laboral") {
                     usuario.curso?.let { curso ->
@@ -90,7 +87,6 @@ fun UsuarioDetailsScreen(
                 }
             }
 
-            // Espacio extra al final para que no se corte con la navegación por gestos
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

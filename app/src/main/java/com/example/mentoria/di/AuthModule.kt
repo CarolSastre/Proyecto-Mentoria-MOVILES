@@ -1,8 +1,6 @@
 package com.example.mentoria.di
 
-import com.example.mentoria.core.data.remote.UsuarioApiService
 import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
-import com.example.mentoria.features.auth.data.local.AuthLocalDataSourceDataStoreImpl
 import com.example.mentoria.features.auth.data.remote.AuthApi
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSourceImpl
@@ -26,28 +24,25 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val authModule = module {
-    single { SessionManager(androidContext()) } bind AuthLocalDataSource::class
+    // --- Session Manager (SINGLETON) ---
+    single<AuthLocalDataSource> { SessionManager(androidContext()) }
 
-    // 1. Proveer AuthApi usando Retrofit
+    // --- APIs (Retrofit Creates) ---
     single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
-    single<UsuarioApiService> { get<Retrofit>().create(UsuarioApiService::class.java) }
 
-    // 2. Proveer AuthRemoteDataSource
+    // --- Data Sources ---
     singleOf(::AuthRemoteDataSourceImpl) { bind<AuthRemoteDataSource>() }
-    // 3. Proveer AuthLocalDataSource (DataStore)
-    singleOf(::AuthLocalDataSourceDataStoreImpl) { bind<AuthLocalDataSourceDataStoreImpl>() }
 
-    // Y para el repositorio
-    single<AuthRepository> {
-        AuthRepositoryImpl(get(), get(), get())
-    }
+    // --- Repositories (SINGLETONS) ---
+    singleOf(::AuthRepositoryImpl) { bind<AuthRepository>() }
 
-    // Domain
+    // --- DOMAIN (USE CASES) ---
     factoryOf(::RegisterUseCase)
     factoryOf(::LoginUseCase)
     factoryOf(::LogoutUseCase)
     factoryOf(::IsUserLoggedInUseCase)
-    // Presentation
-    viewModel { RegisterViewModel(get()) }
-    viewModel { LoginViewModel(get()) }
+
+    // --- PRESENTATION (VIEW MODELS) ---
+    viewModelOf(::RegisterViewModel)
+    viewModelOf(::LoginViewModel)
 }

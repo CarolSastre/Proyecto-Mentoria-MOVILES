@@ -1,20 +1,22 @@
 package com.example.mentoria.di
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import com.example.mentoria.core.data.local.dataStore
-import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
-import com.example.mentoria.features.auth.data.local.AuthLocalDataSourceDataStoreImpl
+import androidx.room.Room
+import com.example.mentoria.core.data.local.AppDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val dataStoreModule = module {
-
-    single<DataStore<Preferences>> {
-        androidContext().dataStore
+val databaseModule = module {
+    // Base de Datos (Room)
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            AppDatabase::class.java,
+            "mentoria_database"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
-    single<AuthLocalDataSource> {
-        AuthLocalDataSourceDataStoreImpl(get())
-    }
+    // DAOs
+    single { get<AppDatabase>().usuarioDao() }
 }

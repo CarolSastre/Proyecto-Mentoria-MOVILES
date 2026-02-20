@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfileImage(
     fotoPerfilUrl: String,
-    //drawableResource: Int,
     description: String,
     modifier: Modifier = Modifier
 ) {
@@ -22,7 +21,6 @@ fun ProfileImage(
             .size(40.dp)
             .clip(CircleShape),
         painter = painterResource(fotoPerfilUrl.hashCode()),
-        //painter = painterResource(id = drawableResource),
         contentDescription = description,
         contentScale = ContentScale.FillWidth
     )
