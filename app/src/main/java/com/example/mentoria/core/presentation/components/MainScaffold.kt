@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Nfc
 import androidx.compose.material.icons.filled.People
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Search
@@ -350,13 +351,20 @@ fun MainScaffold(
                                 }
                             },
                         ) {
-                            ProfileImage(
-                                drawableResource = R.drawable.prueba_background,
-                                description = "Perfil de ${usuario?.nombre} ${usuario?.apellidos}",
-                                modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .fillMaxSize()
-                            )
+                            if (usuario?.fotoPerfilUrl != null) {
+                                ProfileImage(
+                                    fotoPerfilUrl = usuario.fotoPerfilUrl,
+                                    description = "Foto de perfil",
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.Person,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(60.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
                     },
                     title = {
