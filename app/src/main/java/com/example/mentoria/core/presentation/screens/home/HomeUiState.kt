@@ -14,7 +14,7 @@ data class HomeUiState (
     val usuarios: List<Usuario> = emptyList(),
         /*listOf(
         Usuario(
-            id = "69935128cd34aa5b7685a3f4",
+            _id = "69935128cd34aa5b7685a3f4",
             dni = "10000000P",
             nombre="Profesor1",
             apellidos="Docente1",
@@ -23,7 +23,7 @@ data class HomeUiState (
             fechaNacimiento = LocalDate.parse("1979-12-31"),
             gmail = "profe1@instituto.com",
             departamento = Departamento(
-                id = "69935128cd34aa5b7685a3f0",
+                _id = "69935128cd34aa5b7685a3f0",
                 nombre = "Informática"
             ),
             baja = false,

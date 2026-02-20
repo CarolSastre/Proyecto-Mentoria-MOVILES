@@ -9,4 +9,5 @@ fun RegistroAccesoEntity.toDomain() = RegistroAcceso(
     fechaHora = fechaHora,
     accesoPermitido = accesoPermitido,
     mensaje = mensaje,
+    usuario = TODO()
 )*/

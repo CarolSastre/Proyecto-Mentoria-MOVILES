@@ -3,10 +3,8 @@ package com.example.mentoria.features.auth.data.repository
 import com.example.mentoria.core.data.remote.UsuarioApiService
 import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import com.example.mentoria.core.domain.model.Usuario
-import com.example.mentoria.core.domain.util.RsaHelper
 import com.example.mentoria.core.data.remote.mappers.toDomain
 import com.example.mentoria.features.auth.data.local.SessionManager
-import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSource
 import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSourceImpl
 import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
@@ -16,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 
 class AuthRepositoryImpl(
     private val sessionManager: SessionManager,
@@ -30,21 +27,16 @@ class AuthRepositoryImpl(
 
     override suspend fun login(dni: String, passwordRaw: String): Usuario? {
         return try {
-            // 1. Encriptar
-            //val passwordEncrypted = RsaHelper.encrypt(passwordRaw)
-            //if (passwordEncrypted.isEmpty()) return null
-
-            // 2. Petición
+            // Petición
             val request = LoginRequest(dni = dni, password = passwordRaw)
 
-            // 3. Red
             val response = remote.login(request)
 
-            // 4. Guardar Token
+            //Guardar Token
             response.token?.let { token ->
                 val usuarioDto = response.usuario
                 //localDataSource.saveToken(it)
-                usuarioDto?.id?.let { id ->
+                usuarioDto?._id?.let { id ->
                     sessionManager.saveSession(token, id)
                     sessionManager.setCurrentUser(usuarioDto.toDomain())
                 }
@@ -57,7 +49,7 @@ class AuthRepositoryImpl(
                 }
             }
 
-            // 5. Mapear Usuario
+            // Mapear Usuario
             return response.usuario?.toDomain()
         } catch (e: Exception) {
             e.printStackTrace()

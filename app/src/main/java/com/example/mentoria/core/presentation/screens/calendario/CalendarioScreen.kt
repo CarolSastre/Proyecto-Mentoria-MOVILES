@@ -22,6 +22,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mentoria.core.data.MockDataProvider
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
@@ -35,55 +36,13 @@ import java.time.LocalDate
 @Composable
 fun CalendarioScreen(
     modifier: Modifier = Modifier,
-    startDate: LocalDate = LocalDate.now(),
+    registros: List<RegistroAcceso>,
     onBack: () -> Unit = LocalOnNavigationBack.current,
     onDateSelected: (LocalDate) -> Unit,
 ) {
+    val startDate = LocalDate.now()
     val daySelected = rememberSaveable { mutableStateOf<LocalDate?>(startDate) }
-    //val registros = rememberSaveable { mutableStateOf<List<RegistroAcceso>>(emptyList()) }
-    val usu = Usuario(
-        id = "1",
-        dni = "12345678A",
-        nombre = "Carolina",
-        apellidos = "Sastre Garrido",
-        rol = Rol.ALUMNO,
-        nfc = null,
-        fechaNacimiento = LocalDate.now(),
-        gmail = "carolina@gmail.com",
-        baja = false,
-        curso = "7DMT",
-        departamento = null,
-        fotoPerfilUrl = null,
-        password = ""
-    )
 
-    val registros = rememberSaveable { mutableStateOf<List<RegistroAcceso>>(listOf(
-        RegistroAcceso(
-            id = "1",
-            fechaHora = LocalDate.now().atStartOfDay(),
-            accesoPermitido = true,
-            mensaje = "Acceso permitido",
-            usuario = usu
-        ),RegistroAcceso(
-            id = "2",
-            fechaHora = LocalDate.now().atTime(15, 0),
-            accesoPermitido = true,
-            mensaje = "Acceso permitido",
-            usuario = usu
-        ),RegistroAcceso(
-            id = "3",
-            fechaHora = LocalDate.parse("2026-02-07").atTime(15, 0),
-            accesoPermitido = true,
-            mensaje = "Acceso permitido",
-            usuario = usu
-        ),RegistroAcceso(
-            id = "4",
-            fechaHora = LocalDate.parse("2026-02-06").atTime(15, 0),
-            accesoPermitido = false,
-            mensaje = null,
-            usuario = usu
-        ),
-    )) }
 
     Scaffold(
         modifier = Modifier
@@ -120,7 +79,7 @@ fun CalendarioScreen(
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     items(
-                        items = registros.value,
+                        items = registros,
                         key = { it.id }
                     ) { registro ->
                         if (registro.fechaHora.toLocalDate() == daySelected.value)
@@ -142,6 +101,7 @@ fun CalendarioScreen(
 @Composable
 fun CalendarioPreview() {
     CalendarioScreen(
+        registros = MockDataProvider.registros,
         onDateSelected = {}
     )
 }

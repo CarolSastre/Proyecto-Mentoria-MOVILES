@@ -18,3 +18,8 @@ fun DepartamentoDto.toDomain() = Departamento(
     id = id,
     nombre = nombre
 )
+
+fun Departamento.toDto() = DepartamentoDto(
+    id = id,
+    nombre = nombre
+)

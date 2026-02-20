@@ -19,12 +19,11 @@ interface RegistroDao {
     fun getRegistro(registroId: String): Flow<RegistroAccesoEntity>
 
     @Insert(onConflict = REPLACE)
-    suspend fun insertAll(registros: List<RegistroAccesoEntity>): List<Long>
+    suspend fun insertAll(registros: List<RegistroAccesoEntity>)
 
     @Query("DELETE FROM registro_acceso WHERE id = :registroId")
     suspend fun deleteRegistro(registroId: String)
 
-    // CAMBIO: Devuelve Int (filas afectadas) en lugar de Unit
     @Query("DELETE FROM registro_acceso")
-    suspend fun deleteAll(): Int
+    suspend fun deleteAll()
 }

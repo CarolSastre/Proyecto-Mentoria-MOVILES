@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RegistroAccesoDto(
     @SerialName("_id")
-    val id: String,
+    val _id: String,
     @SerialName("fechaHora")
     val fechaHora: String,
     @SerialName("accesoPermitido")

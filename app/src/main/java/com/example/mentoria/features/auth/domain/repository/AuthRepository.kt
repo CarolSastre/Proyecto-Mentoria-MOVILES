@@ -9,9 +9,7 @@ interface AuthRepository {
     val currentUser: StateFlow<Usuario?>
     suspend fun fetchCurrentUser()
     suspend fun login(dni: String, password: String): Usuario?
-    suspend fun register(
-        usuarioDto: UsuarioDto
-    ): Unit
+    suspend fun register(usuarioDto: UsuarioDto): Unit
 
     suspend fun logout()
     fun getSessionState(): Flow<Boolean>

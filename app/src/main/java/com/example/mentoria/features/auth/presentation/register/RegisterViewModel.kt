@@ -31,25 +31,15 @@ class RegisterViewModel(
     }
 
     private fun register(usuario: UsuarioDto, passwordConfirmation: String) {
-        val password = usuario.password
-
-        // 1. Validar que los campos obligatorios no estén vacíos
-        if (usuario.dni.isNullOrBlank() || usuario.nombre.isNullOrBlank() || usuario.apellidos.isNullOrBlank() || password.isNullOrBlank()) {
-            _uiState.update { it.copy(error = "DNI, nombre, apellidos y contraseña son obligatorios") }
-            return
-        }
-
-        // 2. Validar que las contraseñas coinciden
-        if (password != passwordConfirmation) {
+        if (usuario.password != passwordConfirmation) {
             _uiState.update { it.copy(error = "Las contraseñas no coinciden") }
             return
         }
 
-        // 3. Si la validación es correcta, iniciar el proceso de registro
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val result = runCatching {
-                registerUseCase.invoke(usuario)
+                registerUseCase(usuario)
             }
 
             result.onSuccess {

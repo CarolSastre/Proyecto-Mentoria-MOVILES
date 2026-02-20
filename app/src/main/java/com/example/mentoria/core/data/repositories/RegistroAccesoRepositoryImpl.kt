@@ -2,13 +2,14 @@ package com.example.mentoria.core.data.repositories
 
 import com.example.mentoria.core.data.local.dao.RegistroDao
 import com.example.mentoria.core.data.remote.UsuarioApiService
+import com.example.mentoria.core.data.remote.RegistroApiService
 import com.example.mentoria.core.domain.model.RegistroAcceso
 import com.example.mentoria.core.domain.repositories.RegistroAccesoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class RegistroAccesoRepositoryImpl(
-    private val api: UsuarioApiService,
+    private val api: RegistroApiService,
     private val registroAccesoDao: RegistroDao
 ): RegistroAccesoRepository {
     override fun getAllRegistros(): Flow<List<RegistroAcceso>> {
@@ -29,7 +30,7 @@ class RegistroAccesoRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getRegistro(): Flow<RegistroAcceso> {
+    override fun getRegistro(id: String): Flow<RegistroAcceso> {
         TODO("Not yet implemented")
     }
 

@@ -10,7 +10,7 @@ class FakeUsuariosApiService{}
     ): List<UsuarioDto> {
         return listOf(
             UsuarioDto(
-                id = "1",
+                _id = "1",
                 dni = "12345678A",
                 nombre = "Carolina",
                 apellidos = "Sastre Garrido",
@@ -29,7 +29,7 @@ class FakeUsuariosApiService{}
 
     override suspend fun login(request: LoginRequest): UsuarioDto {
         return UsuarioDto(
-            id = "1",
+            _id = "1",
             dni = "12345678A",
             nombre = "Carolina",
             apellidos = "Sastre Garrido",
