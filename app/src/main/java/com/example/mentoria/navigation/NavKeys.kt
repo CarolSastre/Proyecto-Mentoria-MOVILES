@@ -19,4 +19,6 @@ object CalendarKey: NavKey
 object HorarioKey: NavKey
 
 @Serializable
-data class UsuarioDetailsKey(val id: String) : NavKey // --------->> MIRAR DI>koin>list_navigation_viewmodel
+data class UsuarioDetailsKey(val id: String) : NavKey
+@Serializable
+data class CrearUsuarioKey(val tipo: String) : NavKey

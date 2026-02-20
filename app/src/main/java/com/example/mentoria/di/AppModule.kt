@@ -14,6 +14,7 @@ import com.example.mentoria.core.domain.repositories.UsuarioRepository
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
 import com.example.mentoria.core.domain.usecase.GetUsuarioUseCase
 import com.example.mentoria.core.presentation.screens.MainViewModel
+import com.example.mentoria.core.presentation.screens.crearUsuario.CrearUsuarioViewModel
 import com.example.mentoria.core.presentation.screens.usuariodetails.UsuarioDetailsViewModel
 import com.example.mentoria.features.auth.data.local.AuthLocalDataSource
 import com.example.mentoria.features.auth.data.local.SessionManager
@@ -82,6 +83,8 @@ val appModule = module {
     viewModelOf(::HomeViewModel)
     viewModelOf(::CalendarioViewModel)
     viewModelOf(::HorarioViewModel)
+    viewModelOf(::CrearUsuarioViewModel)
+    viewModelOf(::UsuarioDetailsViewModel)
 
     // ViewModel con parámetros
     viewModel { (usuarioId: String) ->

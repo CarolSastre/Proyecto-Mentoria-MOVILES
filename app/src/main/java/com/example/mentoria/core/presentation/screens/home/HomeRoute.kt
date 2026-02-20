@@ -19,6 +19,8 @@ fun HomeRoute(
     onCalendarioClick: () -> Unit,
     onHorarioClick: () -> Unit,
     onNavigateToUsuario: (String) -> Unit,
+    onCrearProfesor: (String) -> Unit,
+    onCrearAlumno: (String) -> Unit,
 ){
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
@@ -27,6 +29,8 @@ fun HomeRoute(
     viewModel.events.ObserveAsEvents { event ->
         when(event) {
             is HomeUiEvent.OnSelectUser -> onNavigateToUsuario(event.userId)
+            is HomeUiEvent.OnCrearProfesor -> onCrearProfesor(event.tipo)
+            is HomeUiEvent.OnCrearAlumno -> (event.tipo)
             HomeUiEvent.LoggedOut -> onLoggedOut()
             HomeUiEvent.OnCalendario -> onCalendarioClick()
             HomeUiEvent.OnHorario -> onHorarioClick()
@@ -37,6 +41,8 @@ fun HomeRoute(
     fun onAction(action: HomeUiAction) {
         when(action) {
             is HomeUiAction.OnUsuarioSelected -> onNavigateToUsuario(action.id)
+            is HomeUiAction.OnCrearAluSelec -> onCrearAlumno(action.id)
+            is HomeUiAction.OnCrearProfeSele -> onCrearProfesor(action.id)
             else -> viewModel.onAction(action)
         }
     }

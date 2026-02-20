@@ -106,30 +106,6 @@ fun MainScaffold(
                         unselectedTextColor = MaterialTheme.colorScheme.onSurface
                     )
 
-                    NavigationDrawerItem(
-                        label = {
-                            Text(
-                                text = "Asistencias",
-                                style = MaterialTheme.typography.headlineSmall
-                            )
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Filled.Schedule,
-                                contentDescription = "Register"
-                            )
-                        },
-                        modifier = modifier
-                            .padding(horizontal = 8.dp),
-                        selected = false,
-                        onClick = {
-                            scope.launch {
-                                drawerState.close()
-                                /*TODO*/
-                            }
-                        },
-                        colors = drawerItemColors,
-                    )
                     if (usuario?.rol != Rol.ALUMNO) {
                         NavigationDrawerItem(
                             label = {
@@ -173,8 +149,8 @@ fun MainScaffold(
                             selected = false,
                             onClick = {
                                 scope.launch {
+                                    onAction(HomeUiAction.OnCrearAluSelec("Alumno"))
                                     drawerState.close()
-                                    /*TODO*/
                                 }
                             },
                             colors = drawerItemColors,
@@ -208,7 +184,7 @@ fun MainScaffold(
                         NavigationDrawerItem(
                             label = {
                                 Text(
-                                    text = "Crear alumno",
+                                    text = "Crear profesor",
                                     style = MaterialTheme.typography.headlineSmall
                                 )
                             },
@@ -223,8 +199,8 @@ fun MainScaffold(
                             selected = false,
                             onClick = {
                                 scope.launch {
+                                    onAction(HomeUiAction.OnCrearAluSelec("Profesor"))
                                     drawerState.close()
-                                    /*TODO*/
                                 }
                             },
                             colors = drawerItemColors,

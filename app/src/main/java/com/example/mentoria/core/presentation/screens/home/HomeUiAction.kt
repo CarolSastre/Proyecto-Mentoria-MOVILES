@@ -6,6 +6,8 @@ sealed interface HomeUiAction {
     object OnLogOutClick : HomeUiAction
     object ActivateNFC : HomeUiAction
     data class OnUsuarioSelected(val id: String): HomeUiAction
+    data class OnCrearAluSelec(val id: String): HomeUiAction
+    data class OnCrearProfeSele(val id: String): HomeUiAction
     data class OnQueryChange(val query: String) : HomeUiAction
     data class OnSearchClick(val expanded: Boolean) : HomeUiAction // OnExpandedClick
 }

@@ -49,6 +49,8 @@ class HomeViewModel(
             is HomeUiAction.OnUsuarioSelected -> usuarioSelected(action.id)
             is HomeUiAction.OnQueryChange -> queryChange(action.query)
             is HomeUiAction.OnSearchClick -> searchClick(action.expanded)
+            is HomeUiAction.OnCrearProfeSele -> notifyEvent(HomeUiEvent.OnCrearProfesor(action.id))
+            is HomeUiAction.OnCrearAluSelec -> notifyEvent(HomeUiEvent.OnCrearAlumno(action.id))
             HomeUiAction.OnLogOutClick -> onLogOut()
             HomeUiAction.OnCalendarioClick -> onCalendario()
             HomeUiAction.OnHorarioClick -> onHorario()

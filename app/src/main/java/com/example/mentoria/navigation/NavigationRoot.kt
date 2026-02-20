@@ -18,6 +18,7 @@ import com.example.mentoria.core.domain.model.Rol
 import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.presentation.ObserveAsEvents
 import com.example.mentoria.core.presentation.screens.calendario.CalendarioRoute
+import com.example.mentoria.core.presentation.screens.crearUsuario.CrearUsuarioRoute
 import com.example.mentoria.core.presentation.screens.home.HomeRoute
 import com.example.mentoria.core.presentation.screens.horario.HorarioRoute
 import com.example.mentoria.core.presentation.screens.usuariodetails.UsuarioDetailsRoute
@@ -98,11 +99,25 @@ fun NavigationRoot(
                                 onNavigateToUsuario = { usuarioId ->
                                     backStack.add(UsuarioDetailsKey(usuarioId))
                                 },
+                                onCrearProfesor = { tipo ->
+                                    backStack.add(CrearUsuarioKey(tipo))
+                                },
+                                onCrearAlumno = { tipo ->
+                                    backStack.add(CrearUsuarioKey(tipo))
+                                }
                             )
 
                         is UsuarioDetailsKey ->
                             UsuarioDetailsRoute(
                                 usuarioId = key.id,
+                            )
+
+                        is CrearUsuarioKey ->
+                            CrearUsuarioRoute(
+                                tipo = key.tipo,
+                                onRegisterSuccess = {
+                                    backStack.removeLastOrNull()
+                                }
                             )
 
                         is CalendarKey ->
