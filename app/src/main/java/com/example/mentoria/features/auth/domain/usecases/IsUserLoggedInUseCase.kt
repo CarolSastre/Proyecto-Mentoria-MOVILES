@@ -1,17 +1,12 @@
-package es.rafapuig.pmdm.clean.authentication.auth.domain.usecase
+package com.example.mentoria.features.auth.domain.usecases
 
-import es.rafapuig.pmdm.clean.authentication.auth.domain.repository.AuthRepository
-
-/**
- * 👉
- * El dominio solo pregunta si hay sesión
- * No sabe de tokens, DataStore, Flow, etc.
- */
+import com.example.mentoria.features.auth.domain.repository.AuthRepository
 
 class IsUserLoggedInUseCase(
     private val repository: AuthRepository
 ) {
     suspend operator fun invoke(): Boolean {
-        return repository.isUserLoggedIn()
+        //return true
+        return repository.currentUser.value != null
     }
 }

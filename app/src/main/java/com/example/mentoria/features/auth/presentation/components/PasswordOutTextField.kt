@@ -37,8 +37,8 @@ fun PasswordOutTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp),
-        label = { Text(text = "Password") },
-        placeholder = { Text(text = "passw0rd") },
+        label = { Text(text = "Contraseña") },
+        placeholder = { Text(text = "nombre1") },
         trailingIcon = {
             val (icon, iconColor) = if (visibilityPassword) {
                 Pair(

@@ -1,7 +1,7 @@
-package es.rafapuig.pmdm.clean.authentication.auth.domain.usecase
+package com.example.mentoria.features.auth.domain.usecases
 
-import es.rafapuig.pmdm.clean.authentication.auth.domain.repository.AuthRepository
-import es.rafapuig.pmdm.clean.authentication.auth.navigation.SessionManager
+import com.example.mentoria.features.auth.domain.repository.AuthRepository
+import com.example.mentoria.features.auth.data.local.SessionManager
 
 /**
  * No devuelve nada

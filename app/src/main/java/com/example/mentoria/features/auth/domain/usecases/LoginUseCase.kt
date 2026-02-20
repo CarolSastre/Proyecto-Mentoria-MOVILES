@@ -1,21 +1,20 @@
-package es.rafapuig.pmdm.clean.authentication.auth.domain.usecase
+package com.example.mentoria.features.auth.domain.usecases
 
-import es.rafapuig.pmdm.clean.authentication.auth.domain.model.User
-import es.rafapuig.pmdm.clean.authentication.auth.domain.repository.AuthRepository
+import com.example.mentoria.core.data.remote.mappers.toDomain
+import com.example.mentoria.core.domain.model.Usuario
+import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSourceImpl
+import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
+import com.example.mentoria.features.auth.data.repository.AuthRepositoryImpl
 
-
-/**
- * Cada acción del negocio es un UseCase.
- * 👉 Ventaja: el login se puede testear sin Android, sin red, sin nada
- */
 class LoginUseCase(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepositoryImpl
 ) {
-    suspend operator fun invoke(email: String, password: String): User {
-        // Validacion
-        if (email.isBlank() || password.isBlank()) {
-            throw IllegalArgumentException("Email or password is empty")
+    suspend operator fun invoke(dni: String, password: String): Usuario {
+        if (dni.isBlank() || password.isBlank()) {
+            throw IllegalArgumentException("DNI o contraseña en blanco")
         }
-        return authRepository.login(email, password)
+        val usuario = authRepository.login(dni, password)
+
+        return usuario ?: throw Exception("DNI o contraseña incorrecto")
     }
 }

@@ -1,46 +1,52 @@
-package es.rafapuig.pmdm.clean.authentication.di
+package com.example.mentoria.di
 
-import es.rafapuig.pmdm.clean.authentication.auth.data.remote.AuthApi
-import es.rafapuig.pmdm.clean.authentication.core.network.AuthInterceptor
-import es.rafapuig.pmdm.clean.authentication.core.network.json
+import androidx.room.Room
+import com.example.mentoria.core.data.local.AppDatabase
+import com.example.mentoria.features.auth.data.remote.AuthInterceptor
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 val networkModule = module {
-
+    // 1. configuración JSON
     single {
-        json
+        Json {
+            ignoreUnknownKeys = true
+            explicitNulls = false
+            isLenient = true
+
+            encodeDefaults = false
+        }
     }
 
-    single {
-        AuthInterceptor(get())
-    }
+    // 2. Interceptor
+    singleOf(::AuthInterceptor)
 
-    // Para inyectar la dependencia de un OkHttpClient como un singleton
+    // 3. OkHttpClient
     single {
         OkHttpClient.Builder()
             .addInterceptor(get<AuthInterceptor>())
             .build()
     }
 
-
+    // 4. Instancia de retrofit
     single {
+        // IMPORTANTE:
+        // Usa "http://10.0.2.2:8080/" si usas el Emulador de Android.
+        // Usa "http://TU_IP_LOCAL:8080/" si usas un móvil físico. // 10.161.63.163 // 192.168.0.110
+        val baseUrl = "http://10.161.63.163:8080/"
+        val contentType = "application/json".toMediaType()
+
         Retrofit.Builder()
-            .baseUrl("https://api.tuapp.com/")
-            .client(get()) // Aqui se usa el OkHttpClient inyectado
-            .addConverterFactory(
-                get<Json>().asConverterFactory(
-                    "application/json".toMediaType()
-                )
-            )
+            .baseUrl(baseUrl)
+            .client(get()).addConverterFactory(get<Json>().asConverterFactory(contentType))
             .build()
     }
-
-    single<AuthApi> {
-        get<Retrofit>().create(AuthApi::class.java)
-    }
 }
+
+

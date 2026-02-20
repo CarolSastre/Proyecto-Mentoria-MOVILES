@@ -1,23 +1,12 @@
-package es.rafapuig.pmdm.clean.authentication.auth.data.remote
+package com.example.mentoria.features.auth.data.remote
 
-import es.rafapuig.pmdm.clean.authentication.auth.data.remote.dto.LoginRequest
-import es.rafapuig.pmdm.clean.authentication.auth.data.remote.dto.LoginResponse
-import es.rafapuig.pmdm.clean.authentication.auth.data.remote.dto.RegisterRequest
-import es.rafapuig.pmdm.clean.authentication.auth.data.remote.dto.RegisterResponse
+import com.example.mentoria.core.data.remote.dto.UsuarioDto
+import com.example.mentoria.core.domain.model.Usuario
+import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
+import com.example.mentoria.features.auth.data.remote.dto.LoginResponse
+import com.example.mentoria.features.auth.data.remote.dto.RegisterResponse
 
-/**
- * Fuente de datos para la autenticación remota
- *
- * Depende de la API remota
- */
-class AuthRemoteDataSource(
-    private val api: AuthApi
-) {
-    suspend fun login(email: String, password: String): LoginResponse {
-        return api.login(LoginRequest(email, password))
-    }
-
-    suspend fun register(email: String, password: String): RegisterResponse {
-        return api.register(RegisterRequest(email, password))
-    }
+interface AuthRemoteDataSource {
+    suspend fun login(request: LoginRequest): LoginResponse
+    suspend fun register(usuarioDto: UsuarioDto): RegisterResponse
 }

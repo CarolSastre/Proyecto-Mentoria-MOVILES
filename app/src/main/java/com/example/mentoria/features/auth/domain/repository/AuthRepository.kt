@@ -1,14 +1,16 @@
-package es.rafapuig.pmdm.clean.authentication.auth.domain.repository
+package com.example.mentoria.features.auth.domain.repository
 
-import es.rafapuig.pmdm.clean.authentication.auth.domain.model.User
-
-/**
- * El contrato para las implementaciones de la capa de datos
- */
+import com.example.mentoria.core.data.remote.dto.UsuarioDto
+import com.example.mentoria.core.domain.model.Usuario
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 interface AuthRepository {
-    suspend fun login(email: String, password: String): User
-    suspend fun register(email: String, password: String): User
+    val currentUser: StateFlow<Usuario?>
+    suspend fun fetchCurrentUser()
+    suspend fun login(dni: String, password: String): Usuario?
+    suspend fun register(usuarioDto: UsuarioDto): Unit
+
     suspend fun logout()
-    suspend fun isUserLoggedIn(): Boolean
+    fun getSessionState(): Flow<Boolean>
 }

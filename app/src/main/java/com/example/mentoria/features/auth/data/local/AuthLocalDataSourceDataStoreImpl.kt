@@ -1,23 +1,16 @@
-package es.rafapuig.pmdm.clean.authentication.auth.data.local
+package com.example.mentoria.features.auth.data.local
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-
-/**
- * Fuente de datos para autenticación local
- * Proporciona el token de autenticación
- *
- * Depende de un DataStore para persistir el token
- */
 
 class AuthLocalDataSourceDataStoreImpl(
     private val dataStore: DataStore<Preferences>
-) : AuthLocalDataSource {
-
+): AuthLocalDataSource {
     private object AuthPreferencesKeys {
         val TOKEN = stringPreferencesKey("auth_token")
     }
@@ -28,14 +21,15 @@ class AuthLocalDataSourceDataStoreImpl(
         }
     }
 
-    override fun getToken(): Flow<String?> {
-        return dataStore.data.map { prefs ->
-            prefs[AuthPreferencesKeys.TOKEN]
-        }
+    override fun getTokenFlow(): Flow<String?> {
+        return dataStore.data.map { it[AuthPreferencesKeys.TOKEN] }
     }
 
-    override suspend fun clear() {
+    override suspend fun getToken(): String? {
+        return dataStore.data.map { it[AuthPreferencesKeys.TOKEN] }.firstOrNull()
+    }
+
+    override suspend fun clearToken() {
         dataStore.edit { it.clear() }
     }
 }
-

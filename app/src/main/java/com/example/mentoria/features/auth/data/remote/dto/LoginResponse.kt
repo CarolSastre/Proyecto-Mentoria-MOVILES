@@ -1,21 +1,11 @@
-package es.rafapuig.pmdm.clean.authentication.auth.data.remote.dto
+package com.example.mentoria.features.auth.data.remote.dto
 
+import com.example.mentoria.core.data.remote.dto.UsuarioDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-/**
- * 👉 Regla clave:
- * El DTO refleja EXACTAMENTE lo que devuelve el backend.
- */
 @Serializable
 data class LoginResponse(
-    @SerialName("user_id")
-    val id: String = "",
-
-    @SerialName("user_email")
-    val email: String = "",
-
-    @SerialName("access_token")
-    val token: String = ""
+    @SerialName("token") val token: String?,
+    @SerialName("usuario") val usuario: UsuarioDto?
 )
-

@@ -1,46 +1,101 @@
-package es.rafapuig.pmdm.clean.authentication.auth.data.repository
+package com.example.mentoria.features.auth.data.repository
 
-import es.rafapuig.pmdm.clean.authentication.auth.data.local.AuthLocalDataSource
-import es.rafapuig.pmdm.clean.authentication.auth.data.mapper.toDomain
-import es.rafapuig.pmdm.clean.authentication.auth.data.remote.AuthRemoteDataSource
-import es.rafapuig.pmdm.clean.authentication.auth.domain.model.User
-import es.rafapuig.pmdm.clean.authentication.auth.domain.repository.AuthRepository
-import kotlinx.coroutines.flow.first
-
-/**
- * Implementacion del repositorio de autenticación
- *
- * Depende de dos fuentes de datos:
- * - Una fuente de datos remota que depende del API
- * - Una fuente de datos local que depende del DataStore
- */
+import com.example.mentoria.core.data.remote.UsuarioApiService
+import com.example.mentoria.core.data.remote.dto.UsuarioDto
+import com.example.mentoria.core.domain.model.Usuario
+import com.example.mentoria.core.data.remote.mappers.toDomain
+import com.example.mentoria.features.auth.data.local.SessionManager
+import com.example.mentoria.features.auth.data.remote.AuthRemoteDataSourceImpl
+import com.example.mentoria.features.auth.data.remote.dto.LoginRequest
+import com.example.mentoria.features.auth.domain.repository.AuthRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 
 class AuthRepositoryImpl(
-    private val remote: AuthRemoteDataSource,
-    private val local: AuthLocalDataSource
+    private val sessionManager: SessionManager,
+    private val remote: AuthRemoteDataSourceImpl,
+    //private val localDataSource: AuthLocalDataSource,
+    private val usuarioApi: UsuarioApiService,
 ) : AuthRepository {
 
-    override suspend fun login(email: String, password: String): User {
-        val response = remote.login(email, password)
-        local.saveToken(response.token)
-        return response.toDomain()
+    private val _currentUser = MutableStateFlow<Usuario?>(null)
+    override val currentUser: StateFlow<Usuario?> = _currentUser.asStateFlow()
+
+    override suspend fun login(dni: String, passwordRaw: String): Usuario? {
+        return try {
+            // Petición
+            val request = LoginRequest(dni = dni, password = passwordRaw)
+
+            val response = remote.login(request)
+
+            //Guardar Token
+            response.token?.let { token ->
+                val usuarioDto = response.usuario
+                //localDataSource.saveToken(it)
+                usuarioDto?._id?.let { id ->
+                    sessionManager.saveSession(token, id)
+                    sessionManager.setCurrentUser(usuarioDto.toDomain())
+                }
+
+                if (usuarioDto != null) {
+                    _currentUser.value = usuarioDto.toDomain()
+                    println("AuthRepository: Usuario actualizado en memoria: ${usuarioDto.nombre}") // Log de control
+                } else {
+                    println("AuthRepository: ¡ALERTA! El usuario viene nulo del login")
+                }
+            }
+
+            // Mapear Usuario
+            return response.usuario?.toDomain()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
-    override suspend fun register(email: String, password: String): User {
-        val response = remote.register(email, password)
-        local.saveToken(response.token)
-        return response.toDomain()
+    override suspend fun register(
+        usuarioDto: UsuarioDto
+    ): Unit {
+        return try {
+            val response = remote.register(usuarioDto)
+            println("Respuesta: $response")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override suspend fun logout() {
-        local.clear()
+        sessionManager.clearSession()
+        _currentUser.value = null
     }
 
-    /**
-     * ✔ Esto es correcto porque el repositorio puede decidir cómo consumir el Flow
-     * ✔ Domain no sabe que existe DataStore
-     */
-    override suspend fun isUserLoggedIn(): Boolean {
-        return local.getToken().first() != null
+    override fun getSessionState(): Flow<Boolean> {
+        return sessionManager.getTokenFlow().map { !it.isNullOrBlank() }
+    }
+
+    // Esta es la función que llama el MainViewModel al iniciar
+    override suspend fun fetchCurrentUser() {
+        try {
+            // 1. Recuperamos el ID guardado
+            val userId = sessionManager.userIdFlow.firstOrNull()
+
+            if (userId != null) {
+                // 2. Pedimos los datos frescos a la API
+                usuarioApi.getUsuarioById(userId).let {
+                    _currentUser.value = it.toDomain()
+                }
+            } else {
+                // No hay ID, no estamos logueados realmente
+                logout()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Si falla la red o el token caducó -> Logout
+            logout()
+        }
     }
 }

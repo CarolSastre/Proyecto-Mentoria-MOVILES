@@ -1,0 +1,204 @@
+package com.example.mentoria.core.presentation.components
+
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.mentoria.R
+import com.example.mentoria.core.domain.model.Departamento
+import com.example.mentoria.core.domain.model.RegistroAcceso
+import com.example.mentoria.core.domain.model.Rol
+import com.example.mentoria.core.domain.model.Usuario
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun RegistroDetailsCard(
+    modifier: Modifier = Modifier,
+    registro: RegistroAcceso,
+    navigateToDetail: (String) -> Unit,
+    toggleSelection: (String) -> Unit,
+    onDeleteRegistro: (String) -> Unit = {},
+    isSelected: Boolean = false,
+    modificable: Boolean = false, // los alumnos no pueden modificar los registros
+) {
+    Card(
+        modifier = modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .semantics { selected = isSelected }
+            .clip(CardDefaults.shape)
+            .combinedClickable(
+                onClick = { navigateToDetail(registro.id) },
+                onLongClick = { toggleSelection(registro.id) },
+            )
+            .clip(CardDefaults.shape),
+
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+        ) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                val clickModifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) { toggleSelection(registro.id) }
+                AnimatedContent(targetState = isSelected, label = "avatar") {
+                    if (it) {
+                        SelectedProfileImage(clickModifier)
+                    } else {
+                        ProfileImage(
+                            drawableResource = R.drawable.prueba_background, // registro.usuario.perfil,
+                            description = "${registro.usuario.nombre} ${registro.usuario.apellidos}",
+                            clickModifier,
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        text = "${registro.usuario.nombre} ${registro.usuario.apellidos}",
+                        style = MaterialTheme.typography.labelMedium,
+                    )
+                    Text(
+                        text = registro.fechaHora.format(
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+                        ).toString(),
+                        style = MaterialTheme.typography.labelMedium,
+                    )
+                }
+                if (modificable) {
+                    IconButton(
+                        onClick = { onDeleteRegistro(registro.id) },
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(35.dp)
+                            .background(Color.Red),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = "Delete",
+                            tint = MaterialTheme.colorScheme.surfaceVariant,
+                        )
+                    }
+                }
+            }
+            Text(
+                text = registro.usuario.curso.toString(),
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+            )
+            if (registro.mensaje != "") {
+                Text(
+                    text = registro.mensaje ?: "No hay ningún mensaje",
+                    style = MaterialTheme.typography.bodyMedium,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+    }
+}
+
+
+@Preview
+@Composable
+fun RegistroAccesoPreview() {
+    val alumnas = listOf(
+        Usuario(
+            id = "1",
+            dni = "12345678A",
+            nombre = "Carolina",
+            apellidos = "Sastre Garrido",
+            rol = Rol.ALUMNO,
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "carolina@gmail.com",
+            baja = false,
+            curso = "7DMT",
+            departamento = null,
+            fotoPerfilUrl = null,
+            password = ""
+        ), Usuario(
+            id = "2",
+            dni = "12345678A",
+            nombre = "Profesor",
+            apellidos = "Xavier",
+            rol = Rol.PROFESOR,
+            nfc = null,
+            fechaNacimiento = LocalDate.now(),
+            gmail = "xavier@gmail.com",
+            baja = false,
+            curso = null,
+            departamento = Departamento(
+                id = "1",
+                nombre = "Ciencias"
+            ),
+            fotoPerfilUrl = null,
+            password = ""
+        )
+    )
+
+    val lista = listOf(
+        RegistroAcceso(
+            id = "1",
+            fechaHora = LocalDateTime.now(),
+            accesoPermitido = true,
+            mensaje = "Acceso permitido",
+            usuario = alumnas[0]
+        ),
+        RegistroAcceso(
+            id = "2",
+            fechaHora = LocalDateTime.now(),
+            accesoPermitido = false,
+            mensaje = null,
+            usuario = alumnas[1]
+        )
+    )
+    RegistroDetailsCard(
+        registro = lista[0],
+        navigateToDetail = {},
+        toggleSelection = {},
+        onDeleteRegistro = {},
+        modificable = true
+    )
+}
