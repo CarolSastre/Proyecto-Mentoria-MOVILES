@@ -38,6 +38,7 @@ import org.koin.dsl.bind
 import retrofit2.Retrofit
 
 val appModule = module {
+    /*
     // Base de Datos (Room)
     single {
         Room.databaseBuilder(
@@ -51,6 +52,7 @@ val appModule = module {
 
     // DAOs
     single { get<AppDatabase>().usuarioDao() }
+     */
     // --- Session Manager (SINGLETON) ---
     single { SessionManager(androidContext()) } bind AuthLocalDataSource::class
 
@@ -66,6 +68,7 @@ val appModule = module {
 
     // UsuarioRepository
     //singleOf(::UsuarioRepositoryRemoteImpl) { bind<UsuarioRepository>() }
+    //single<UsuarioRepository> { UsuarioRepositoryRemoteImpl(get(), get(), get()) }
     single<UsuarioRepository> { FakeUsuarioRepositoryImpl() }
 
     // 3. DOMAIN (USE CASES)

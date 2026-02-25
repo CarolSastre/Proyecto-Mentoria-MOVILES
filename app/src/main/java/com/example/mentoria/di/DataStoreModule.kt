@@ -18,5 +18,8 @@ val databaseModule = module {
     }
 
     // DAOs
+    single { get<AppDatabase>().horarioDao() }
+    single { get<AppDatabase>().departamentoDao() }
     single { get<AppDatabase>().usuarioDao() }
+    single { get<AppDatabase>().registroDao() }
 }

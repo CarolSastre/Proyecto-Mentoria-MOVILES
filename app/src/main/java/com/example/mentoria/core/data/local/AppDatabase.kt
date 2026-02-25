@@ -5,6 +5,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.mentoria.core.data.local.dao.UsuarioDao
 import com.example.mentoria.core.data.local.Converters
+import com.example.mentoria.core.data.local.dao.DepartamentoDao
+import com.example.mentoria.core.data.local.dao.HorarioDao
+import com.example.mentoria.core.data.local.dao.RegistroDao
 import com.example.mentoria.core.data.local.entities.DepartamentoEntity
 import com.example.mentoria.core.data.local.entities.RegistroAccesoEntity
 import com.example.mentoria.core.data.local.entities.UsuarioEntity
@@ -23,4 +26,7 @@ import com.example.mentoria.core.data.local.entities.HorarioEntity
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun usuarioDao(): UsuarioDao
+    abstract fun registroDao(): RegistroDao
+    abstract fun departamentoDao(): DepartamentoDao
+    abstract fun horarioDao(): HorarioDao
 }

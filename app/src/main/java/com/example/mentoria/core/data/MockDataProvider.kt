@@ -56,7 +56,7 @@ object MockDataProvider {
             fechaNacimiento = null,
             baja = false,
             curso = null,
-            departamento = null,
+            departamento = departamentos[0],
             nfc = "NFC_PROFE_1",
             fotoPerfilUrl = null
         ),
@@ -64,7 +64,7 @@ object MockDataProvider {
             id = "user_3",
             dni = "20000001B",
             nombre = "Alumno1",
-            apellidos = "Estudiente<1",
+            apellidos = "Estudiente1",
             password = "alumno",
             gmail = "alumno1@gmail.com",
             rol = Rol.ALUMNO,
@@ -73,6 +73,36 @@ object MockDataProvider {
             curso = "7DMT",
             departamento = null,
             nfc = "NFC_ALU_1",
+            fotoPerfilUrl = null
+        ),
+        Usuario(
+            id = "user_4",
+            dni = "10000001P",
+            nombre = "Profesor2",
+            apellidos = "Docente2",
+            password = "1234",
+            gmail = "profe2@instituto.com",
+            rol = Rol.PROFESOR,
+            fechaNacimiento = null,
+            baja = false,
+            curso = null,
+            departamento = departamentos[1],
+            nfc = "NFC_PROFE_2",
+            fotoPerfilUrl = null
+        ),
+        Usuario(
+            id = "user_5",
+            dni = "20000002B",
+            nombre = "Alumno2",
+            apellidos = "Estudiente2",
+            password = "alumno",
+            gmail = "alumno2@gmail.com",
+            rol = Rol.ALUMNO,
+            fechaNacimiento = null,
+            baja = false,
+            curso = "7DMT",
+            departamento = null,
+            nfc = "NFC_ALU_2",
             fotoPerfilUrl = null
         ),
     )
@@ -126,6 +156,27 @@ object MockDataProvider {
             accesoPermitido = false,
             mensaje = "Acceso denegado",
             usuario = usuarios[1]
+        ),
+        RegistroAcceso(
+            id = "reg_7",
+            fechaHora = LocalDateTime.parse("2025-02-15T17:00:00"),
+            accesoPermitido = true,
+            mensaje = "Acceso permitido",
+            usuario = usuarios[4]
+        ),
+        RegistroAcceso(
+            id = "reg_8",
+            fechaHora = LocalDateTime.parse("2025-02-16T20:00:00"),
+            accesoPermitido = true,
+            mensaje = "Acceso permitido",
+            usuario = usuarios[4]
+        ),
+        RegistroAcceso(
+            id = "reg_9",
+            fechaHora = LocalDateTime.parse("2025-02-18T19:00:00"),
+            accesoPermitido = false,
+            mensaje = "Acceso denegado",
+            usuario = usuarios[4]
         ),
     )
 

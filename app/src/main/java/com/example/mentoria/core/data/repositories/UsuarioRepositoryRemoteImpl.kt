@@ -19,8 +19,7 @@ class UsuarioRepositoryRemoteImpl(
     private val api: UsuarioApiService, // remote
 ) : UsuarioRepository {
     override fun getAllUsuarios(): Flow<List<Usuario>> = channelFlow {
-        // 1. Inicia una corrutina para escuchar los cambios de la base de datos y emitirlos.
-        // Esto emitirá primero los datos en caché.
+        // Recoge los datos en cache
         val job = launch {
             dao.getUsuarios().map { entities ->
                 entities.map { it.toDomain() }
@@ -29,19 +28,17 @@ class UsuarioRepositoryRemoteImpl(
             }
         }
 
-        // 2. Obtiene los datos de la API y actualiza la base de datos local.
+        // Recoge los datos de la API
         try {
             val remoteUsers = api.getAllUsuarios()
             dao.insertAll(
                 usuarios = remoteUsers.map { it.toEntity() }
             )
         } catch (e: Exception) {
-            // Maneja las excepciones de red, por ejemplo, registrándolas.
-            // El flujo continuará sirviendo datos en caché.
             e.printStackTrace()
         }
 
-        // 3. Mantiene el canal abierto hasta que el colector cancele el flujo.
+        // Mantiene el canal abierto hasta que el colector cancele el flujo.
         awaitClose { job.cancel() }
     }
 
