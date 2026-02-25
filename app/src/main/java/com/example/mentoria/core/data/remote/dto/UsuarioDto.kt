@@ -1,11 +1,16 @@
 package com.example.mentoria.core.data.remote.dto
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class UsuarioDto(
-    @SerialName("_id") val _id: String? = null,
+    @OptIn(ExperimentalSerializationApi::class)
+    @JsonNames("_id")
+    @SerialName("id")
+    val _id: String? = null,
     @SerialName("dni") val dni: String? = null,
     @SerialName("nombre") val nombre: String? = null,
     @SerialName("apellidos") val apellidos: String? = null,

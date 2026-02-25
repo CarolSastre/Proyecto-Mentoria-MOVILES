@@ -2,7 +2,6 @@ package com.example.mentoria.core.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mentoria.core.domain.model.Usuario
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
 import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
@@ -11,7 +10,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -22,7 +20,6 @@ class HomeViewModel(
     private val logoutUseCase: LogoutUseCase,
     private val authRepository: AuthRepository,
     private val getAllUsuariosUseCase: GetAllUsuariosUseCase,
-    //private val getRegistrosFromUsuarioUseCase: GetRegistrosFromUsuarioUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState = _uiState.asStateFlow()
@@ -30,22 +27,19 @@ class HomeViewModel(
     private val _eventChannel = Channel<HomeUiEvent>()
     val events = _eventChannel.receiveAsFlow()
 
-    private val _usuarios = MutableStateFlow<List<Usuario>>(emptyList<Usuario>())
-    val usuarios = _usuarios.asStateFlow()
-
     init {
         observeCurrentUser()
         val result = getAllUsuariosUseCase()
 
         viewModelScope.launch {
-            result.collect {
-                _usuarios.value = it
+            result.collect { usuarios ->
+                _uiState.update { it.copy(usuarios = usuarios) }
             }
         }
     }
 
     fun onAction(action: HomeUiAction) {
-        when(action) {
+        when (action) {
             is HomeUiAction.OnUsuarioSelected -> usuarioSelected(action.id)
             is HomeUiAction.OnQueryChange -> queryChange(action.query)
             is HomeUiAction.OnSearchClick -> searchClick(action.expanded)

@@ -39,6 +39,7 @@ class AuthRepositoryImpl(
                 usuarioDto?._id?.let { id ->
                     sessionManager.saveSession(token, id)
                     sessionManager.setCurrentUser(usuarioDto.toDomain())
+                    println("Acciones dentro del let de AuthRepositoryImpl finalizadas")
                 }
 
                 if (usuarioDto != null) {

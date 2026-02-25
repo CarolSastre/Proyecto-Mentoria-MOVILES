@@ -96,7 +96,8 @@ fun HomeScreen(
                                 it.apellidos.startsWith(prefix = state.query, ignoreCase = true)
                     }
                     LazyColumn {
-                        if (state.usuarios.isNotEmpty()) items(
+                        if (state.usuarios.isNotEmpty())
+                            items(
                             items = searchResults,
                             key = { it.id }
                         ) { usuarioLista ->

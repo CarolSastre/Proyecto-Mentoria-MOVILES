@@ -12,6 +12,7 @@ import com.example.mentoria.core.data.repositories.FakeUsuarioRepositoryImpl
 import com.example.mentoria.core.data.repositories.UsuarioRepositoryRemoteImpl
 import com.example.mentoria.core.domain.repositories.UsuarioRepository
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
+import com.example.mentoria.core.domain.usecase.GetRegistrosFromUsuarioUseCase
 import com.example.mentoria.core.domain.usecase.GetUsuarioUseCase
 import com.example.mentoria.core.presentation.screens.MainViewModel
 import com.example.mentoria.core.presentation.screens.crearUsuario.CrearUsuarioViewModel
@@ -68,8 +69,8 @@ val appModule = module {
 
     // UsuarioRepository
     //singleOf(::UsuarioRepositoryRemoteImpl) { bind<UsuarioRepository>() }
-    //single<UsuarioRepository> { UsuarioRepositoryRemoteImpl(get(), get(), get()) }
-    single<UsuarioRepository> { FakeUsuarioRepositoryImpl() }
+    single<UsuarioRepository> { UsuarioRepositoryRemoteImpl(get(), get(), get()) }
+    //single<UsuarioRepository> { FakeUsuarioRepositoryImpl() }
 
     // 3. DOMAIN (USE CASES)
     factoryOf(::RegisterUseCase)
@@ -78,6 +79,7 @@ val appModule = module {
     factoryOf(::IsUserLoggedInUseCase)
     factoryOf(::GetAllUsuariosUseCase)
     factoryOf(::GetUsuarioUseCase)
+    factoryOf(::GetRegistrosFromUsuarioUseCase)
 
     // 4. PRESENTATION (VIEW MODELS)
     viewModelOf(::RegisterViewModel)
