@@ -110,7 +110,7 @@ fun HomeScreen(
                             )
                         } else item {
                             Text(
-                                text = "No hay usuarios",
+                                text = "No hay usuarios con ese nombre",
                                 modifier = Modifier.padding(16.dp),
                             )
                         }

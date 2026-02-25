@@ -1,4 +1,3 @@
-
 package com.example.mentoria.core.presentation.components
 
 import android.content.res.Configuration
@@ -106,31 +105,32 @@ fun MainScaffold(
                         unselectedTextColor = MaterialTheme.colorScheme.onSurface
                     )
 
+                    NavigationDrawerItem(
+                        label = {
+                            Text(
+                                text = "Lista de asistencias",
+                                style = MaterialTheme.typography.headlineSmall
+                            )
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.FormatListNumbered,
+                                contentDescription = "List"
+                            )
+                        },
+                        modifier = modifier
+                            .padding(horizontal = 8.dp),
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                                /*TODO*/
+                            }
+                        },
+                        colors = drawerItemColors,
+                    )
+
                     if (usuario?.rol != Rol.ALUMNO) {
-                        NavigationDrawerItem(
-                            label = {
-                                Text(
-                                    text = "Lista de alumnos",
-                                    style = MaterialTheme.typography.headlineSmall
-                                )
-                            },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Filled.FormatListNumbered,
-                                    contentDescription = "List"
-                                )
-                            },
-                            modifier = modifier
-                                .padding(horizontal = 8.dp),
-                            selected = false,
-                            onClick = {
-                                scope.launch {
-                                    drawerState.close()
-                                    /*TODO*/
-                                }
-                            },
-                            colors = drawerItemColors,
-                        )
                         NavigationDrawerItem(
                             label = {
                                 Text(
@@ -157,30 +157,6 @@ fun MainScaffold(
                         )
                     }
                     if (usuario?.rol == Rol.ADMIN) {
-                        NavigationDrawerItem(
-                            label = {
-                                Text(
-                                    text = "Lista de profesores",
-                                    style = MaterialTheme.typography.headlineSmall
-                                )
-                            },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Filled.FormatListNumbered,
-                                    contentDescription = "List"
-                                )
-                            },
-                            modifier = modifier
-                                .padding(horizontal = 8.dp),
-                            selected = false,
-                            onClick = {
-                                scope.launch {
-                                    drawerState.close()
-                                    /*TODO*/
-                                }
-                            },
-                            colors = drawerItemColors,
-                        )
                         NavigationDrawerItem(
                             label = {
                                 Text(

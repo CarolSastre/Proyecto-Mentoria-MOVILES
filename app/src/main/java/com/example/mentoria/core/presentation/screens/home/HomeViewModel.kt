@@ -3,6 +3,7 @@ package com.example.mentoria.core.presentation.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
+import com.example.mentoria.core.domain.usecase.GetRegistrosFromUsuarioUseCase
 import com.example.mentoria.features.auth.domain.repository.AuthRepository
 import com.example.mentoria.features.auth.domain.usecases.LogoutUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,6 +21,7 @@ class HomeViewModel(
     private val logoutUseCase: LogoutUseCase,
     private val authRepository: AuthRepository,
     private val getAllUsuariosUseCase: GetAllUsuariosUseCase,
+    private val getRegistrosFromUsuarioUseCase: GetRegistrosFromUsuarioUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState = _uiState.asStateFlow()
@@ -34,6 +36,13 @@ class HomeViewModel(
         viewModelScope.launch {
             result.collect { usuarios ->
                 _uiState.update { it.copy(usuarios = usuarios) }
+            }
+        }
+        val id = _uiState.value.usuario?.id ?: ""
+
+        viewModelScope.launch {
+            getRegistrosFromUsuarioUseCase(id).collect { registros ->
+                _uiState.update { it.copy(registros = registros) }
             }
         }
     }

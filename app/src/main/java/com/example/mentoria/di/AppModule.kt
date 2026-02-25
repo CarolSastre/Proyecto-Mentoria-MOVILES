@@ -8,8 +8,11 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import androidx.room.Room
 import com.example.mentoria.core.data.local.AppDatabase
+import com.example.mentoria.core.data.remote.RegistroApiService
 import com.example.mentoria.core.data.repositories.FakeUsuarioRepositoryImpl
+import com.example.mentoria.core.data.repositories.RegistroAccesoRepositoryImpl
 import com.example.mentoria.core.data.repositories.UsuarioRepositoryRemoteImpl
+import com.example.mentoria.core.domain.repositories.RegistroAccesoRepository
 import com.example.mentoria.core.domain.repositories.UsuarioRepository
 import com.example.mentoria.core.domain.usecase.GetAllUsuariosUseCase
 import com.example.mentoria.core.domain.usecase.GetRegistrosFromUsuarioUseCase
@@ -60,6 +63,7 @@ val appModule = module {
     // --- APIs (Retrofit Creates) ---
     single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
     single<UsuarioApiService> { get<Retrofit>().create(UsuarioApiService::class.java) }
+    single<RegistroApiService> { get<Retrofit>().create(RegistroApiService::class.java) }
 
     // --- Data Sources ---
     singleOf(::AuthRemoteDataSourceImpl) { bind<AuthRemoteDataSource>() }
@@ -68,9 +72,9 @@ val appModule = module {
     singleOf(::AuthRepositoryImpl) { bind<AuthRepository>() }
 
     // UsuarioRepository
-    //singleOf(::UsuarioRepositoryRemoteImpl) { bind<UsuarioRepository>() }
-    single<UsuarioRepository> { UsuarioRepositoryRemoteImpl(get(), get(), get()) }
     //single<UsuarioRepository> { FakeUsuarioRepositoryImpl() }
+    single<UsuarioRepository> { UsuarioRepositoryRemoteImpl(get(), get(), get()) }
+    single<RegistroAccesoRepository> { RegistroAccesoRepositoryImpl(get(), get(), get()) }
 
     // 3. DOMAIN (USE CASES)
     factoryOf(::RegisterUseCase)
